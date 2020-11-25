@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+nav {
+    position: sticky;
+    display: block;
+    background-color: white;
+    width: 100%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    top: 0;
+    z-index: 1000;
+}
+
+img {
+    width: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: 3px black solid;
+}
+
+.caption {
+    font-style: italic;
+    text-align: center;
+}
+
+button {
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+    height: 50px;
+    font-size: 15px;
+    text-align: center;
+}
+
+aside {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px 20px 30px 30px;
+    background-color: rgb(240,240,240);
+    border-radius: 10px;
+    line-height: 1.8;
+}
+
+.quote {
+    margin-left: 95px;
+    margin-right: 95px;
+    color: rgb(80, 80, 80);
+    font-size: 23px;
+    font-style: italic;
+    font-weight: 400;
+}
+
+#visible {
+    margin-bottom: 80px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    padding: 0px 40px 20px 40px;
+    border-radius: 20px;
+}
+
+nav h1 {
+    text-align: center;
+    font-family: "Amiri";
+}
+
+a {
+    color: black;
+    transition: color 800ms;
+}
+
+a:hover {
+    color: burlywood !important;
+}
+
+a:visited {
+    color: black;
+}
+
+h1 {
+    font-family: "Amiri";
+    font-weight: 600;
+}
+
+h2 {
+    font-family: "Amiri";
+    font-weight: 600;
+}
+
+.center {
+    text-align: center;
+}
+
+ul, ol {
+    font-family: "Amiri";
+}
+
+h3 {
+    font-family: "Amiri";
+    font-weight: 600;
+}
+
+h4 {
+    font-family: "Amiri";
+}
+
+p {
+    font-family: "Amiri";
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-style: bold;
+}

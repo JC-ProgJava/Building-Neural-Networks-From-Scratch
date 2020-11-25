@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="book.css" type="text/css" rel="stylesheet">
+    <title>Introduction</title>
+</head>
+<body>
+    <nav>
+        <a href="index.html">
+            <h1>Building Neural Networks from Scratch</h1>
+        </a>
+    </nav>
+    <div id="visible">
+        <h2>Chapter 1: Introduction</h2>
+        <h4 class="quote">“Success in creating AI would be the biggest event in human history. Unfortunately,
+            it might also be the last, unless we learn how to avoid the risks.”<br>– Stephen Hawking</h4>
+        <p>In this introduction, I hope to give clear and coherent answers to a few common questions about
+            machine learning, artificial intelligence, and alike areas in data science.</p>
+        <h3>What is machine learning?</h3>
+        <p>The simple answer is, it is an algorithm that a machine uses to be able to give a correct output
+            for a given set of inputs. Expanding on that, it is one that identifies possible similarities in
+            a given set of inputs and outputs and uses it to classify new inputs that haven’t been seen before.</p>
+        <p>Machine learning can be separated into three categories: supervised and unsupervised learning; and reinforcement
+            learning. Supervised learning requires all data to be labeled, which the computer uses to learn from its
+            mistakes and get better. Unsupervised learning does the opposite, given a set of data with no labels whatsoever,
+            a computer identifies characteristics commonly found among a cluster of the data and uses this to identify or
+            classify different sets of inputs. And lastly, reinforcement learning, which makes a machine learn by “rewarding”
+            it when a correct or ideal interpretation is made.</p>
+        <p>Here, what I mean by <em>labeling</em> is being marked with an answer. For example, supervised learning requires a
+            picture of a cat to be labeled “this is a cat”, and for a picture of a dog to be labeled “this is a dog”. This form
+            of learning requires an extensive amount of work for humans, who need to manually label an entire collection of images,
+            to get a computer to classify different inputs. This is why people will tell you “machine learning is all about the
+            data you have”. This is not always entirely true. You can achieve state-of-the-art results(or nearly) with a small dataset.
+            So, I usually say “machine learning is all about the choice of hyperparameters and methods used”. I mention another word
+            <em>hyperparameter</em>, which just means a parameter that controls a set of parameters. You will get a more thorough
+            definition in later chapters.</p>
+        <p>You may also wonder about the applications of each category of machine learning. Supervised learning is usually used for
+            classification or regression problems. For example, classifying digits or predicting costs of houses by the number of rooms,
+            location, etc. Unsupervised learning is usually used for identifying unique features in data. This may mean trying to find
+            a correlation between two seemingly unrelated topics or ideas. Reinforcement learning typically occurs in artificial intelligence
+            in the games industry/area. For example, you could train a computer to play Go, Chess, Snake, Super Mario, etc. with reinforcement
+            learning.</p>
+        <h3>How does machine learning work?</h3>
+        <p>People tend to assume that only professional data scientists can apply machine learning to different areas in the modern world and
+            assume that the topic is extremely deep-reaching and complex. This is false. For example, I am not a professional data scientist,
+            yet I understand various techniques in machine learning relatively well. Machine learning is just a series of steps that a computer
+            takes that turn any problem into one that has numbers. As you may know, computers are not good at evaluating <em>anything</em> other than numbers.
+            All information is stored as 0s and 1s, which is why people state that “computers will never have emotions”. This series of steps consist of:</p>
+        <ol>
+            <li>Gathering Data</li>
+            <ul>
+                <li>Gather relevant data that can be used to predict an output with a set of inputs.</li>
+            </ul>
+            <li>Preparing Data</li>
+            <ul>
+                <li>Make sure data is relevant and in the same format so that when the computer learns with the data, it doesn’t mistake certain characteristics
+                    as a feature. For example, make sure that images of digits are all centered so that the computer doesn’t determine a digit by location on the image.</li>
+                <li>Resizing images to be proportional</li>
+            </ul>
+            <li>Modeling</li>
+            <ul>
+                <li>Choosing an appropriate architecture/model for the particular problem</li>
+            </ul>
+            <li>Training</li>
+            <ul>
+                <li>Forward propagation</li>
+                <li>Backward propagation/learning</li>
+                <li>Error calculation</li>
+            </ul>
+            <li>Evaluation</li>
+            <ul>
+                <li>Validation/testing</li>
+                <ul>
+                    <li>Prevent overfitting or underfitting, where features are too narrow(starting
+                        to be biased to the training dataset) or too broad/abstract(not determining
+                        key features, but small characteristics), more will be said of this topic.</li>
+                </ul>
+            </ul>
+            <li>Hyperparameter adjustment</li>
+            <ul>
+                <li>Adjust hyperparameters to get the best result possible</li>
+                <ul>
+                    <li>Learning rate</li>
+                    <li>Activation function</li>
+                    <li>Optimization</li>
+                </ul>
+            </ul>
+            <li>Prediction/Deployment</li>
+            <ul>
+                <li>Interpret new inputs using the trained model!</li>
+            </ul>
+        </ol>
+        <br>
+        <p>This may all sound like gibberish to you, it’s fine! By the end of this
+            book, you should have a solid fundamental understanding of each of these unique peculiar terms!</p>
+        <h3>Chapter Summary</h3>
+        <ol>
+            <li>Machine learning is simply a set of algorithms a computer runs to learn characteristics from a
+                given set of inputs, which enables them to classify sets of unseen input data.</li><br>
+            <li>Machine learning consists of three categories: supervised learning, unsupervised learning,
+                and reinforcement learning.</li><br>
+            <li>Supervised learning requires data to be labeled. Common uses for supervised learning are
+                for classification(recognizing) or regression(estimating/predicting a value).</li><br>
+            <li>Unsupervised learning does not require data to be labeled. Uses for unsupervised learning
+                are to identify features that appear in data, often finding a correlation between two
+                seemingly unrelated factors.</li><br>
+            <li>Reinforcement learning embraces a reward-based learning system, where the computer is
+                “rewarded” when it achieves something and “penalized” when failing to achieve a goal.
+                Common uses for reinforcement learning are in game-based AI, for example, Chess, Go,
+                Snake, etc.</li><br>
+            <li>Labeling is the action of putting the correct answer onto data so that a computer can learn from its mistakes.</li><br>
+            <li>Machine learning consists of seven main steps:</li>
+            <ul>
+                <li>Gathering Data</li>
+                <li>Preparing Data</li>
+                <li>Modeling</li>
+                <li>Training</li>
+                <li>Evaluation</li>
+                <li>Hyperparameter adjustment</li>
+                <li>Prediction/Deployment</li>
+            </ul>
+        </ol>
+        <br>
+        <button onclick="location.href = 'perceptron.html';">Next Chapter</button>
+    </div>
+</body>
+</html>

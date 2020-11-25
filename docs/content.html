@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contents</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+        nav {
+            position: fixed;
+            background-color: white;
+            width: 100%;
+            top: 0;
+        }
+
+        nav h1 {
+            text-align: center;
+            font-family: "Amiri";
+        }
+
+        a {
+            color: black;
+            transition: color 800ms;
+        }
+
+        a:hover {
+            color: burlywood !important;
+        }
+
+        a:visited {
+            color: black;
+        }
+
+        ol, ul, li {
+            margin-left: 40px;
+            font-family: "Amiri";
+            line-height: 1.8;
+        }
+
+        #stat {
+            font-family: "Amiri";
+            background-color: rgb(180, 220, 255);
+            border-radius: 20px;
+            padding: 10px 20px 10px 20px;
+            width: 150px;
+            position: absolute;
+            right: 30px;
+            text-align: center;
+        }
+
+        #stat p {
+            background-color: rgb(240, 240, 240);
+            border-radius: 20px;
+            padding: 5px 5px 5px 5px;
+            font-family: "Source Code Pro";
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">
+            <h1>Building Neural Networks from Scratch</h1>
+        </a>
+    </nav>
+    <br><br><br><br><br><br><br>
+
+    <div id="stat">
+        <h4>Read count</h4>
+        <p id="count">-----</p>
+    </div>
+    <ol>
+        <li>
+            <a href="preface.html">Preface</a>
+        </li>
+        <ol>
+            <li>Citation</li>
+            <li>License Notice</li>
+            <li>Contact</li>
+            <li>Foreword - Motivation</li>
+        </ol>
+        <li>
+            <a href="intro.html">Introduction</a>
+        </li>
+        <li>
+            <a href="perceptron.html">The Perceptron</a>
+        </li>
+        <li>
+            <a>Activation Functions and Derivatives</a>
+        </li>
+        <li>Neural Networks and Learning</li>
+        <li>Recognizing Digits</li>
+    </ol>
+</body>
+
+<script>
+    const countEl = document.getElementById('count');
+
+    updateVisitCount();
+
+    function updateVisitCount() {
+        fetch('https://api.countapi.xyz/hit/buildingnnsfromscratch.com/key')
+        .then(res => res.json())
+        .then(res => {
+            countEl.innerHTML = res.value;
+        })
+    }
+</script>
+</html>

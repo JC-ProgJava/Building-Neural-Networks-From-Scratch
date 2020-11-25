@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Perceptron</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="book.css" type="text/css">
+</head>
+<body>
+    <nav>
+        <a href="index.html">
+            <h1>Building Neural Networks from Scratch</h1>
+        </a>
+    </nav>
+    <div id="visible">
+        <h2>Chapter 2: The Perceptron</h2>
+        <h4 class="quote">“I think the brain is essentially a computer and consciousness
+            is like a computer program. It will cease to run when the computer is turned
+            off. Theoretically, it could be re-created on a neural network, but that would
+            be very difficult, as it would require all one's memories.”<br>— Stephen Hawking</h4>
+        <p>Now that we had an introduction, it is time to introduce a basic computational model
+            called the perceptron, which is a model in a collection of models called <em>artificial
+            neurons</em>, in general. The perceptron was invented by Frank Rosenblatt in 1958. Rosenblatt
+            defined the perceptron as a unit of computation that had a threshold \(\Theta\), and received inputs
+            \(i_1, i_2, ..., i_n\), which are multiplied by \(w_1, w_2, ..., w_n\) respectively. He then proposed that
+            all of the products be summed together and another constant called the <em>bias</em> was added, for
+            which the perceptron would output 1 if the sum was greater than or equal to the threshold,
+            and 0 if it was smaller.</p>
+        <p>In mathematical terms, \(\begin{align}t = \smash{\sum^{n}_{k = 1}{w_{k} i_{k}}}\end{align}\),</p>
+        <p>output \(\{^{\ 1,\ b\ +\ t\ >\ \Theta}_{\ 0,\ b\ +\ t\ ≤\ \Theta}\).
+            In other words, a perceptron is a unit consisting of something called a <em>weight</em>, which was multiplied
+            by the <em>input</em> (sometimes called the <em>activation</em>), and if the product of the two was bigger than a
+            number called the threshold, the perceptron would output a 1, or 0 if not.</p>
+        <p>Another way to think about this is, the threshold is a value for which classifies all events \(a\) as similar if the
+            summation of the product of their inputs and a set of weights with another constant called the <em>bias</em> is higher
+            than the threshold. This also could be thought of as an event with a point \((x,\ y)\). The threshold would therefore
+            be a line \(y\ =\ \Theta\), which separated two different sets of points. Here is a graphical representation:</p>
+        <img src="Images/perceptronGraph.png">
+        <p class="caption">Figure 2.1 - A graphical representation of a threshold separating two points</p>
+        <p>Like the diagram, the perceptron can similarly “separate” two different inputs and classify or predict the output
+            for that input. So, now that we have these two basic properties, we can start to understand why machine learning
+            and artificial intelligence are important in the field of data science. For example, say you want to classify whether
+            a 3 by 3 grid of inputs is a 0 or 1. This requires a method to separate different sets of inputs and identify common
+            features. In the perceptron model, since the weights, biases, and threshold are the only unknown variables, these
+            are the ones we need to figure out to have the desired classification result. Machine learning, therefore, can be
+            defined as the method that achieves this task of finding ideal values for the weights, bias, and threshold. Do
+            note that other models may not have a threshold, but require an <em>activation function</em> which we will discuss
+            in later chapters.</p>
+        <p>This was a ground-breaking invention that inspired others after Rosenblatt and caused the first AI winter. An AI
+            winter is a period when no or little progress was made in the field of artificial intelligence. After the invention
+            of the perceptron, professor Marvin Minsky in his book <em>Perceptrons</em> proved that a single layer of these perceptrons
+            wasn’t able to predict anything. This led to a misunderstanding which resulted in a decrease in research on the area.
+            Minsky actually also wrote in the same book that a network of several layers would have the ability to approximate
+            any function, which resulted in the Universal Approximation Theorem, stating that a neural network with multiple layers
+            could approximate any continuous(predictable) function to any degree of accuracy.</p>
+        <p>Given this information, neural networks are just a collection or array of these perceptrons(although they may have a
+            different type of neuron instead), connected through multiple layers. Usually, the first layer is called the <em>input
+            layer</em>, the middle layers are called the <em>hidden layers</em> and the last layer is called the <em>output layer</em>. Below is a diagram
+            of a neural network.</p>
+        <img style="width: 40%;" src="Images/neural-network.png">
+        <p class="caption">Figure 2.2 - Neural Network Architecture</p>
+        <p>This network can be called a neural network with structure 3-4-2(appears in the layer order from left to right).
+            The lines on the diagram show the different connections between neurons in the network, which are represented by
+            orange circles. The connections can be referred to as weights, which (if you remember) are multiplied by the <em>input</em>
+            or <em>activation</em>. It is important to note that the number of sets of weights should be one less than the number of layers
+            and that there is only one bias per layer. Usually, there are no connections <em>towards</em> a bias, but biases are connected
+            to the next layer’s neurons. Networks can be called “single-layered networks” when there are only two layers in it(input and output).
+            We will talk more about neural networks in Chapter 4.</p>
+        <h3>Chapter Summary</h3>
+        <ol>
+            <li>A perceptron is a type of artificial neuron(I will be calling it a ‘neuron’ instead, throughout most of the book).</li><br>
+            <li>The perceptron is a computational model consisting of <em>weights</em>, a set of <em>inputs</em> or <em>activations</em>, <em>biases</em>,
+                and a <em>threshold</em>.</li><br>
+            <li>The <em>input</em> to the perceptron is multiplied by the <em>weight</em> and a <em>bias</em> is added. If the result is bigger than another
+                value the <em>threshold</em>, then the perceptron outputs a 1, otherwise, it outputs 0.</li><br>
+            <li>The perceptron model was invented by Frank Rosenblatt in 1958.</li><br>
+            <li><p>A perceptron in mathematical terms is: \(\begin{align}t = \smash{\sum^{n}_{k = 1}{w_{k} i_{k}}}\end{align}\),</p>
+                <p>where the output of the perceptron
+                is \(\{^{\ 1,\ b\ +\ t\ >\ \Theta}_{\ 0,\ b\ +\ t\ ≤\ \Theta}\), where \(w_k\) and \(i_k\) are the weights and inputs at index \(k\) respectively.
+                \(n\) is the total number of weights connected to the perceptron and \(\Theta\) is the threshold value. The output is also alternatively expressed as:
+                \(\{^{\ 1,\ b\ +\ t\ ≥\ \Theta}_{\ 0,\ b\ +\ t\ <\ \Theta}\), which rarely makes a difference to the overall output of the perceptron and the accuracy
+                of the neural network.</p></li><br>
+            <li>Machine learning is a set of algorithms that finds ideal values for the <em>weights</em>, <em>biases</em>, and <em>threshold</em>.</li><br>
+            <li>A threshold is like a line that separates two different sets of labeled inputs.</li><br>
+            <li>Marvin Minsky in his book <em>Perceptrons</em> proved that a layer of perceptrons could not predict anything, he also stated that multiple layers of perceptrons
+                were able to approximate any function. This led to an AI winter.</li><br>
+            <li>The Universal Approximation Theorem states that any continuous function can be approximated to any degree of accuracy using a multilayer neural network.</li><br>
+            <li>An AI winter is a period when there is little or no further advancement in the field of Artificial Intelligence. This usually is caused by a lack of sponsoring or
+                money that motivates the research in the field of AI.</li><br>
+            <li>Perceptrons may not have a <em>threshold</em> or <em>bias</em>, but(in that case) will require an <em>activation function</em>(Chapter 3).</li><br>
+            <li>A network consists of several layers of neurons. Single-layer networks have two layers, the first called the <em>input layer</em> and the last called the <em>output layer</em>.
+                Multi-layer networks also have <em>hidden layers</em>, which are the layers in between the <em>input layer</em> and the <em>output layer</em>.</li>
+        </ol>
+        <br>
+        <button onclick="location.href = 'activation.html';">Next Chapter</button>
+    </div>
+</body>
+</html>
