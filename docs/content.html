@@ -3,15 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Contents</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        @media only screen and (max-width: 550px) {
+            #stat {
+                display: block;
+                width: 85% !important;
+                right: auto !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                font-size: 30px;
+                position: static !important;
+            }
+
+            p, ol, ul, li {
+                font-size: 24px;
+            }
+
+            ol, ul, li {
+                margin-left: 20px !important;
+                font-family: "Amiri";
+                line-height: 1.8;
+            }
+        }
+
         @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
 
         nav {
-            position: fixed;
+            position: sticky;
+            display: block;
             background-color: white;
             width: 100%;
+            padding-top: 2px;
+            padding-bottom: 2px;
             top: 0;
+            z-index: 1000;
         }
 
         nav h1 {
@@ -21,10 +48,14 @@
 
         a {
             color: black;
-            transition: color 800ms;
+            text-decoration: underline;
+            text-decoration-color: burlywood;
+            overflow-wrap: anywhere;
+            transition: color 800ms, text-decoration-color 800ms;
         }
 
         a:hover {
+            text-decoration-color: rgb(242, 204, 155);
             color: burlywood !important;
         }
 
@@ -35,18 +66,31 @@
         ol, ul, li {
             margin-left: 40px;
             font-family: "Amiri";
-            line-height: 1.8;
+            line-height: 2.5;
+        }
+
+        ol ul li {
+            font-weight: 500;
+        }
+
+        ol li {
+            font-weight: 600;
         }
 
         #stat {
             font-family: "Amiri";
-            background-color: rgb(180, 220, 255);
+            background: rgb(2,0,36);
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(151,151,224,1) 0%, rgba(0,212,255,1) 100%);
             border-radius: 20px;
             padding: 10px 20px 10px 20px;
             width: 150px;
-            position: absolute;
+            position: fixed;
             right: 30px;
             text-align: center;
+        }
+
+        #stat h4 {
+            color: rgb(51, 51, 100);
         }
 
         #stat p {
@@ -63,7 +107,6 @@
             <h1>Building Neural Networks from Scratch</h1>
         </a>
     </nav>
-    <br><br><br><br><br><br><br>
 
     <div id="stat">
         <h4>Read count</h4>
@@ -73,23 +116,91 @@
         <li>
             <a href="preface.html">Preface</a>
         </li>
-        <ol>
-            <li>Citation</li>
-            <li>License Notice</li>
-            <li>Contact</li>
-            <li>Foreword - Motivation</li>
-        </ol>
+        <ul>
+            <li>
+                <a href="preface.html#citation">Citation</a>
+            </li>
+            <li>
+                <a href="preface.html#license">License Notice</a>
+            </li>
+            <li>
+                <a href="preface.html#contact">Contact</a>
+            </li>
+            <li>
+                <a href="preface.html#foreword">Foreword - Motivation</a>
+            </li>
+        </ul>
+
         <li>
             <a href="intro.html">Introduction</a>
         </li>
+        <ul>
+            <li>
+                <a href="intro.html#def-machine-learning">What is machine learning?</a>
+            </li>
+            <li>
+                <a href="intro.html#works">How does machine learning work?</a>
+            </li>
+            <li>
+                <a href="intro.html#summary">Chapter Summary</a>
+            </li>
+        </ul>
+
         <li>
             <a href="perceptron.html">The Perceptron</a>
         </li>
+        <ul>
+            <li>
+                <a href="perceptron.html#summary">Chapter Summary</a>
+            </li>
+        </ul>
+
         <li>
-            <a>Activation Functions and Derivatives</a>
+            <a href="activation.html">Activation Functions and Derivatives</a>
         </li>
-        <li>Neural Networks and Learning</li>
-        <li>Recognizing Digits</li>
+        <ul>
+            <li>
+                <a href="activation.html#identity">Identity Activation Function</a>
+            </li>
+            <li>
+                <a href="activation.html#sigmoid">Sigmoid Activation Function</a>
+            </li>
+            <li>
+                <a href="activation.html#tanh">TanH Activation Function</a>
+            </li>
+            <li>
+                <a href="activation.html#relu">ReLU Activation Function</a>
+            </li>
+            <li>
+                <a href="activation.html#leak-relu">Leaky ReLU Activation Function</a>
+            </li>
+            <li>
+                <a href="activation.html#softplus">SoftPlus Activation Function</a>
+            </li>
+            <li>
+                <a href="activation.html#notation">Notation</a>
+            </li>
+            <li>
+                <a href="activation.html#derivatives">Derivatives</a>
+            </li>
+            <li>
+                <a href="activation.html#summary">Chapter Summary</a>
+            </li>
+        </ul>
+
+        <li>
+            <a href="networksAndLearning.html">Neural Networks and Learning</a>
+        </li>
+        <ul>
+            <li>
+                <a href="networksAndLearning.html#single-layer-learning">Single-layer Neural Network Initialization and Learning</a>
+            </li>
+            <li>
+                <a href="networksAndLearning.html#summary">Chapter Summary</a>
+            </li>
+        </ul>
+
+        <li>Task 1: Recognizing Digits</li>
     </ol>
 </body>
 

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Neural Networks and Learning</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="book.css" type="text/css">
+    <style>
+        .equations {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            margin-left: 30px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html">
+        <h1>Building Neural Networks from Scratch</h1>
+    </a>
+</nav>
+<div id="visible">
+    <h2>Chapter 4 - Neural Networks and Learning</h2>
+    <h4 class="quote">“The worst enemy to creativity is self-doubt.”<br>— The Unabridged
+        Journals of Sylvia Plath by Sylvia Plath</h4>
+    <p>We have introduced most of the components in a neural network including the neuron,
+        weights or connections, biases, layer terminology and activation functions. So now
+        it is time to introduce learning rates and algorithms.</p>
+    <p>The perceptron –which is a common neuron paradigm used– consists of several variables:
+        the weights, the biases, and the threshold value. We need to know how to initialize
+        them, and how to find the most suitable values for them. To do this, we need to first
+        pass through the network once, the process of which is called <em>forward propagation</em>.
+        Afterward, we need to choose a learning algorithm that works well with the current neural
+        network structure and use it to find the most suitable set of values for the variables.</p>
+    <p>In this chapter, we will cover some single-layer neural network learning algorithms.</p>
+    <h3 id="single-layer-learning">Single-layer Neural Network Initialization and Learning</h3>
+    <p>Usually, the weights and biases of a single-layer neural network are initialized using
+        Gaussian distribution(sometimes called normal distribution) or assigned a value of 0.
+        Here is a diagram of what gaussian distribution does:</p>
+    <img src="Images/gaussianDistribution.jpg">
+    <p class="caption">Figure 4.1 - Gaussian Distribution Chart</p>
+    <p>It distributes a series of values with the most common values being the ones closest
+        to a middle value, and having values further away from the middle value appears less.
+        Usually, the middle value is 0 for initializing weights and biases. The reason that this
+        method is used is that it randomly initializes all weights and biases with distributed
+        values so that you can start at a different location each time, perhaps altering the
+        accuracy of the network. People tend to stick to the initialization with 0s when trying
+        to compare different models with each other.</p>
+    <p>These values are then adjusted using a learning algorithm called the delta rule.
+        The delta rule is expressed mathematically as:</p>
+    <div class="equations">
+        <p>\(\Delta w = \alpha(t - y)\sigma\,'(h)x\)</p>
+        <p>\(w_{t} = w_{t\ -\ 1} + \Delta w\)</p>
+    </div>
+    <p>In the first equation above, \(\Delta w\) signifies the change calculated for each of the
+        individual weights or biases in the network. \(\alpha\) refers to the learning rate,
+        which is a constant that is multiplied with the other values. The learning rate helps
+        to increase or decrease the change in weights or biases depending on whether it is bigger
+        than 1 or smaller. This can be thought of as the length of step you take as you try to run
+        down a valley. Your goal is to get to the bottom, so you cannot take massive steps, or
+        else you will never reach that minimum point. You cannot take tiny steps either because
+        it will take you an unimaginably long time to get to the lowest point in the valley. The
+        reason why I use a valley as an analogy for the learning rate instead of a mountain is
+        that data scientists like to think of machine learning as a method that leads you to the
+        lowest point on a function(“valley”) or the minima of the graph, which best fits the
+        appropriate case, giving the best result. Some functions may also have several “peaks”(also
+        called maxima) and “valleys”(minima), so the highest “peak” is usually called the global
+        maximum, and the deepest “valley” is called the global minimum. Here is an example of what
+        I mean:</p>
+
+    <div style="overflow-x: scroll;">
+        <img src="Images/graph1.png">
+        <p class="caption">Figure 4.2 - Multivariable Graph Result for the equation:</p>
+        <p class="equations">\(\begin{align}\smash{z = 0.5 + {{cos(sin(|y^{2}\ -\ x^{2}|))^{2}\ -\ 0.5}\over{[1\ +\ 0.001(y^{2}\ +\ x^{2})]^{2}}}
+            + 0.2 \times cos(xy)^{2}}\end{align}\)</p>
+    </div>
+
+    <p>Any other “peaks” or “valleys” that are not the highest and lowest respectively are called local maximums and minimums respectively.
+        The \(t\) and \(y\) variables in the equation stand for the target value or expected value and predicted value(the output of the
+        network) and their difference is usually referred to as the <em>training error</em>. \(\sigma\,'(h)\) stands for the derivative
+        of the activation function on a particular value \(h\) which is the weighted sum of inputs. Finally, \(x\) stands for the single
+        input at the current index. The second equation shows that the next generation or iterations’ weights should be the sum of the
+        previous weight and the change in the weight calculated above. The delta rule is sometimes
+        simplified when the activation function is linear(<em>not</em> non-linear) as:</p>
+    <p class="equations">\(\Delta w = a(t - y)x\).</p>
+    <p>So, here are the steps in machine learning:</p>
+    <ol>
+        <li><em>Initialization</em>: The step where all weights, biases are initialized using
+            Gaussian distribution or assigned a value of 0.</li>
+        <li><em>Forward-propagation</em>: The step where the input is passed through the network
+            once to get the output of the network at the current stage.</li>
+        <li><em>Backpropagation</em> or <em>learning</em>: The step where parameters are
+            adjusted to find the most optimal in the current input’s case. May take the average
+            change required for multiple training data inputs. For single-layer neural networks,
+            the <em>delta rule</em> is commonly used, which takes the product of the training
+            error of the current input set, a learning rate, and input at the current index.</li>
+    </ol>
+    <p>Note that the learning process should be repeated a certain amount of
+        times(called <em>epoch</em>), for which all input sets are used for learning a certain
+        number of times.</p>
+    <h3 id="summary">Chapter Summary</h3>
+    <ol>
+        <li>The goal of learning algorithms is to find the most suitable values for multiple
+            different variables or unknown values in a perceptron, including weights, biases,
+            and threshold value.</li><br>
+        <li>The first pass through a network before learning is called <em>forward propagation</em>.</li><br>
+        <li>Unknown values need to be initialized before <em>forward propagating</em>.</li><br>
+        <li>Usually weights, biases and thresholds are assigned a value of 0 or randomly
+            distributed values using Gaussian distribution. Usually, people assign all variables
+            a value of 0 to compare different models against each other in terms of training and
+            learning efficiency.</li><br>
+        <li>The delta rule is used for single-layer neural networks to learn.
+            Equation: \(\Delta w = \alpha(t - y)\sigma\,'(h)x\). \(\Delta w\) signifies the change
+            for the current weight, \(\alpha\) represents the learning rate, \(t\) and \(y\) represent
+            the target and predicted value respectively, \(\sigma\,'(h)\) represents the derivative
+            of the function at \(h\), and \(x\) is the input value to the neuron.</li><br>
+        <li>The learning rate helps to increase or decrease the change in weights or biases
+            depending on whether it is bigger than 1 or smaller. This can be thought of as the
+            length of step you take as you try to run down a valley. Your goal is to get to the
+            bottom, so you cannot take massive steps, or else you will never reach that minimum
+            point. You cannot take tiny steps either because it will take you an unimaginably
+            long time to get to the lowest point in the valley.</li><br>
+        <li>Data scientists like to think of machine learning as a method that leads you to the
+            lowest point on a function(“valley”) or the minima of the graph, which gives the
+            best overall result. Some functions may also have several “peaks”(also called maxima)
+            and “valleys”(minima), so the highest “peak” is usually called the global maximum,
+            and the deepest “valley” is called the global minimum. Any other “peaks” or “valleys”
+            that are not the highest and lowest respectively are called local maximums and
+            minimums respectively.</li><br>
+        <li><em>Epoch</em> refers to the number of cycles a learning network runs through the
+            <em>entire</em> dataset.</li><br>
+        <li>Steps to machine learning:</li>
+        <ul>
+            <li><em>Initialization</em>: The step where all weights, biases are initialized using
+                Gaussian distribution or assigned a value of 0.</li>
+            <li><em>Forward-propagation</em>: The step where the input is passed through the
+                network once to get the output of the network at the current stage.</li>
+            <li><em>Backpropagation</em> or <em>learning</em>: The step where parameters are
+                adjusted to find the most optimal in the current input’s case. May take the
+                average change required for multiple training data inputs. For single-layer
+                neural networks, the <em>delta rule</em> is commonly used, which takes the
+                product of the training error of the current input set, a learning rate,
+                and input at the current index.</li>
+        </ul>
+    </ol>
+    <br>
+    <button onclick="location.href = 'activation.html';">Next Chapter</button>
+</div>
+</body>
+</html>

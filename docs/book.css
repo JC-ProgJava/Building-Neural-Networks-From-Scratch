@@ -1,4 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+@media only screen and (max-width: 550px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    p, ol, ul, li {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 35px;
+    }
+
+    h3 {
+        font-size: 25px;
+    }
+
+    .quote {
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+    }
+
+    ol, ul, li {
+        margin-left: 10px !important;
+        font-family: "Amiri";
+        line-height: 1.8;
+    }
+
+    #visible {
+        width: 90% !important;
+    }
+
+    img {
+        width: 90% !important;
+    }
+}
 
 nav {
     position: sticky;
@@ -68,6 +106,9 @@ nav h1 {
 
 a {
     color: black;
+    text-decoration: underline;
+    text-decoration-color: burlywood;
+    overflow-wrap: anywhere;
     transition: color 800ms;
 }
 
