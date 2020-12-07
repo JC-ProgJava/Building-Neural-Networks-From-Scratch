@@ -99,6 +99,31 @@
             padding: 5px 5px 5px 5px;
             font-family: "Source Code Pro";
         }
+
+        /* https://www.w3schools.com/howto/howto_js_collapsible.asp */
+        .collapsible {
+          color: #444;
+          cursor: pointer;
+          padding: 18px;
+          width: 100%;
+          border: none;
+          text-align: left;
+          outline: none;
+          transition: background-color .8s;
+        }
+
+        .active, .collapsible:hover {
+          background-color: #eee;
+        }
+
+        .content {
+          padding: 0 18px;
+          background-color: white;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.2s ease-out;
+        }
+        /* END https://www.w3schools.com/howto/howto_js_collapsible.asp */
     </style>
 </head>
 <body>
@@ -114,9 +139,12 @@
     </div>
     <ol>
         <li>
+            <a href="cover.html">Cover</a>
+        </li>
+        <li class="collapsible">
             <a href="preface.html">Preface</a>
         </li>
-        <ul>
+        <ul class="content">
             <li>
                 <a href="preface.html#citation">Citation</a>
             </li>
@@ -131,10 +159,10 @@
             </li>
         </ul>
 
-        <li>
+        <li class="collapsible">
             <a href="intro.html">Introduction</a>
         </li>
-        <ul>
+        <ul class="content">
             <li>
                 <a href="intro.html#def-machine-learning">What is machine learning?</a>
             </li>
@@ -146,19 +174,19 @@
             </li>
         </ul>
 
-        <li>
+        <li class="collapsible">
             <a href="perceptron.html">The Perceptron</a>
         </li>
-        <ul>
+        <ul class="content">
             <li>
                 <a href="perceptron.html#summary">Chapter Summary</a>
             </li>
         </ul>
 
-        <li>
+        <li class="collapsible">
             <a href="activation.html">Activation Functions and Derivatives</a>
         </li>
-        <ul>
+        <ul class="content">
             <li>
                 <a href="activation.html#identity">Identity Activation Function</a>
             </li>
@@ -188,10 +216,10 @@
             </li>
         </ul>
 
-        <li>
+        <li class="collapsible">
             <a href="networksAndLearning.html">Neural Networks and Learning</a>
         </li>
-        <ul>
+        <ul class="content">
             <li>
                 <a href="networksAndLearning.html#single-layer-learning">Single-layer Neural Network Initialization and Learning</a>
             </li>
@@ -200,7 +228,112 @@
             </li>
         </ul>
 
-        <li>Task 1: Recognizing Digits</li>
+        <li class="collapsible">
+            <a href="task1.html">Task 1: Recognizing Digits</a>
+        </li>
+        <ul class="content">
+            <li>
+                <a href="task1.html#description">Task Description</a>
+            </li>
+            <ul>
+                <li>
+                    <a href="task1.html#goal">Goal</a>
+                </li>
+                <li>
+                    <a href="task1.html#background">Background</a>
+                </li>
+                <li>
+                    <a href="task1.html#descript">Description</a>
+                </li>
+            </ul>
+            <li>
+                <a href="task1.html#steps">Steps to Take</a>
+            </li>
+            <li>
+                <a href="task1.html#solution">Solution</a>
+            </li>
+            <ul>
+                <li>
+                    <a href="task1.html#layer-java">Layer.java</a>
+                </li>
+                <li>
+                    <a href="task1.html#neuron-java">Neuron.java</a>
+                </li>
+                <li>
+                    <a href="task1.html#test2-java">test2.java</a>
+                </li>
+            </ul>
+            <li>
+                <a href="task1.html#questions">Common Questions</a>
+            </li>
+            <ul>
+                <li>
+                    <a href="task1.html#modelSaving">Saving Models</a>
+                </li>
+                <li>
+                    <a href="task1.html#differentInputLengths">Feeding Networks Different Input Lengths</a>
+                </li>
+                <li>
+                    <a href="task1.html#findingDatasets">Finding Datasets For Model Training</a>
+                </li>
+            </ul>
+            <li>
+                <a href="task1.html#challenge">Challenge: A Real-World Application of Digit Recognition</a>
+            </li>
+            <ul>
+                <li>
+                    <a href="task1.html#challenge-description">Task Description</a>
+                </li>
+                <ul>
+                    <li>
+                        <a href="task1.html#challenge-goal">Goal</a>
+                    </li>
+                    <li>
+                        <a href="task1.html#challenge-background">Background</a>
+                    </li>
+                    <li>
+                        <a href="task1.html#challenge-descript">Description</a>
+                    </li>
+                </ul>
+                <li>
+                    <a href="task1.html#challenge-steps">Steps to Take</a>
+                </li>
+                <li>
+                    <a href="task1.html#challenge-estimation">Estimating Computational Time</a>
+                </li>
+                <li>
+                    <a href="task1.html#challenge-solution">Solution</a>
+                </li>
+                <ul>
+                    <li>
+                        <a href="task1.html#challenge-layer-java">Layer.java</a>
+                    </li>
+                    <li>
+                        <a href="task1.html#challenge-neuron-java">Neuron.java</a>
+                    </li>
+                    <li>
+                        <a href="task1.html#challenge-initarray-java">initArray.java</a>
+                    </li>
+                    <li>
+                        <a href="task1.html#challenge-application-java">application.java</a>
+                    </li>
+                    <li>
+                        <a href="task1.html#challenge-test3-java">test3.java</a>
+                    </li>
+                </ul>
+                <li>
+                    <a href="task1.html#visualizing">Visualizing Weights</a>
+                </li>
+                <ul>
+                    <li>
+                        <a href="task1.html#challenge-visualize-java">visualize.java</a>
+                    </li>
+                </ul>
+            </ul>
+        </ul>
+        <li>
+            <a>Overfitting and Underfitting</a>
+        </li>
     </ol>
 </body>
 
@@ -216,5 +349,24 @@
             countEl.innerHTML = res.value;
         })
     }
+
+    // Courtesy to https://www.w3schools.com/howto/howto_js_collapsible.asp BELOW
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight){
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    }
+    // Code borrowed, please look at the link for the tutorial to make collapsible sections
+    // Code was modified for suitability purposes
+    // END W3SCHOOL CODE
 </script>
 </html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cover</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+        @media only screen and (max-width: 550px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            #visible {
+                width: 90% !important;
+            }
+        }
+
+        nav {
+            position: sticky;
+            display: block;
+            background-color: white;
+            width: 100%;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            top: 0;
+            z-index: 1000;
+        }
+
+        img {
+            width: 100% !important;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button {
+            margin-left: auto;
+            margin-right: auto;
+            width: 150px;
+            height: 50px;
+            font-size: 15px;
+            text-align: center;
+        }
+
+        #visible {
+            margin-bottom: 80px;
+            width: 70%;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: white;
+            padding: 0px 40px 20px 40px;
+            border-radius: 20px;
+        }
+
+        nav h1 {
+            text-align: center;
+            font-family: "Amiri";
+        }
+
+        a {
+            color: black;
+            text-decoration: underline;
+            text-decoration-color: burlywood;
+            overflow-wrap: anywhere;
+            transition: color 800ms;
+        }
+
+        a:hover {
+            color: burlywood !important;
+        }
+
+        a:visited {
+            color: black;
+        }
+
+        h1 {
+            font-family: "Amiri";
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html">
+        <h1>Building Neural Networks from Scratch</h1>
+    </a>
+</nav>
+<div id="visible">
+    <img src="cover/Cover.jpg">
+    <br><br>
+    <button onclick="location.href = 'preface.html';">Next</button>
+</div>
+</body>
+</html>

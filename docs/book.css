@@ -6,7 +6,7 @@
         overflow-x: hidden;
     }
 
-    p, ol, ul, li {
+    p, ol, ul, li, span {
         font-size: 24px;
     }
 
@@ -16,6 +16,10 @@
 
     h3 {
         font-size: 25px;
+    }
+
+    .indent {
+        margin-left: 10px;
     }
 
     .quote {
@@ -145,10 +149,22 @@ h3 {
 
 h4 {
     font-family: "Amiri";
+    font-size: 25px;
+}
+
+h5 {
+    font-family: "Amiri";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 25px;
 }
 
 p {
     font-family: "Amiri";
+}
+
+.indent {
+    margin-left: 20px;
 }
 
 .italic {
@@ -158,3 +174,48 @@ p {
 .bold {
     font-style: bold;
 }
+
+.codeword {
+    font-family: "Source Code Pro";
+    display: inline;
+}
+
+.functionBlue {
+    font-family: "Source Code Pro";
+    display: inline;
+    color: #00627A;
+}
+
+.keyword {
+    font-family: "Source Code Pro";
+    display: inline;
+    color: #0033B3;
+}
+
+.annotation {
+    font-family: "Source Code Pro";
+    color: #9E880D;
+    display: inline;
+}
+
+.error {
+    font-family: "Source Code Pro";
+    color: #F50000;
+    display: inline;
+}
+
+code {
+    font-family: "Source Code Pro";
+    padding: 0px 20px 0px 40px !important;
+    display: block;
+    border-radius: 30px !important;
+    overflow-x: scroll;
+}
+
+.globalVar {
+    font-style: italic;
+    font-family: "Source Code Pro";
+    color: #871094;
+    display: inline;
+}
+

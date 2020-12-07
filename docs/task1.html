@@ -1,0 +1,1464 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recognizing Digits</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <link rel="stylesheet" type="text/css" href="prism.css">
+    <script src="prism.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="book.css" type="text/css">
+    <style>
+        @media only screen and (max-width: 550px) {
+            .singleImg {
+                width: 50%;
+            }
+
+            .grid-small {
+                grid-template-columns: 1fr 1fr 1fr 1fr 1fr !important;
+            }
+
+            .grid-small img {
+                margin-bottom: 20px;
+            }
+        }
+
+        .grid {
+            display: grid !important;
+            flex-wrap: wrap;
+            margin: none !important;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        }
+
+        .grid-small {
+            display: grid !important;
+            flex-wrap: wrap;
+            margin: none !important;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        }
+
+        .grid img {
+            margin-bottom: 20px;
+        }
+
+        .singleImg {
+            width: 20%;
+        }
+
+        .nobreak {
+            display: inline;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html">
+        <h1>Building Neural Networks from Scratch</h1>
+    </a>
+</nav>
+<div id="visible">
+    <h2>Task 1 - Recognizing Digits</h2>
+    <h4 class="quote">“And, now that you don’t have to be perfect you can be good.”<br>— East of Eden by John Steinbeck</h4>
+    <p>That was a <em>lot</em> of theoretical information. Now, it is just about time to start on
+        our first project! Istrongly recommend you try to solve the problem before I provide a
+        solution. Once again, all solutions are in Java, and pseudocode will be used otherwise.
+        Usually, I will state the task requirements and solution steps before providing the
+        solution so you can try and make the program yourselves before looking at my solution.
+        My solution may not be the best, most accurate, or efficient, but should give you an
+        understanding of how all the previous concepts you learned work together. Let’s start!</p>
+    <h3 id="description">Task Description</h3>
+    <h5 id="goal">Goal</h5>
+    <p class="indent">Recognize digits 0-9 that are represented by a 5x3(row * column) grid.</p>
+    <h5 id="background">Background</h5>
+    <p class="indent">This task requires knowledge of activation functions, the delta learning
+        rule and the perceptron model.</p>
+    <h5 id="descript">Description</h5>
+    <p>All digits from 0-9 can be represented as a matrix that is 5 x 3, so digits should look
+        roughly like the following:</p>
+    <div class="grid">
+        <img src="Images/Project 1 Images/5x3/0.png">
+        <img src="Images/Project 1 Images/5x3/1.png">
+        <img src="Images/Project 1 Images/5x3/2.png">
+        <img src="Images/Project 1 Images/5x3/3.png">
+        <img src="Images/Project 1 Images/5x3/4.png">
+        <img src="Images/Project 1 Images/5x3/5.png">
+        <img src="Images/Project 1 Images/5x3/6.png">
+        <img src="Images/Project 1 Images/5x3/7-1.png">
+        <img src="Images/Project 1 Images/5x3/8.png">
+        <img src="Images/Project 1 Images/5x3/9.png">
+    </div>
+    <p class="caption">Figure T1-1: A visual representation of 5x3 grid digits.</p>
+    <p>In the pictures, the grids colored blue represent 1s and white represent 0s. The network
+        should learn from the above samples and be able to classify unseen data. Something that
+        may be classified as unseen data looks like:</p>
+    <img class="singleImg" src="Images/Project 1 Images/5x3/7-2.png">
+    <p class="caption">Figure T1-2: Another digit 7 that should be used to test the network</p>
+    <p>You may now be wondering: how do we represent images as numbers? Well, given that each
+        blue square is a 1 and each white square is a 0, the 7 above looks like:
+        \([\,1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0\,]\). Likewise, we can represent all other
+        digits in the same way:</p>
+    <p class="center">0: \([\,1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1\,]\),<br>
+       1: \([\,0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0\,]\),<br>
+       2: \([\,1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1\,]\),<br>
+       3: \([\,1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1\,]\),<br>
+       4: \([\,1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1\,]\),<br>
+       5: \([\,1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1\,]\),<br>
+       6: \([\,1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1\,]\),<br>
+       7: \([\,1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1\,]\),<br>
+       8: \([\,1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1\,]\),<br>
+       9: \([\,1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1\,]\).</p>
+    <p>So, the above set of arrays should be our <em>input</em> array. Next, we need to define a
+        <em>learning rate</em>, <em>input neuron number</em>, <em>output neuron number</em>,
+        <em>target array</em> and <em>epoch</em>. For our example(after I experimented around a
+        while), here are the optimal values(that work as expected):</p>
+    <p><em>Learning rate</em> (\(\alpha\) or \(\eta\)): 0.5<br>
+       <em>Epoch</em>: 1000<br>
+       <em>Input Neuron Number</em>: 15(5 * 3 = 15, one for each square)<br>
+       <em>Output Neuron Number</em>: 10(0-9, one for each digit)<br>
+       And the <em>target array</em> should be a set of arrays that contain the correct prediction:</p>
+    <p class="center">0: \([\,1, 0, 0, 0, 0, 0, 0, 0, 0, 0\,]\),<br>
+1: \([\,0, 1, 0, 0, 0, 0, 0, 0, 0, 0\,]\),<br>
+2: \([\,0, 0, 1, 0, 0, 0, 0, 0, 0, 0\,]\),<br>
+3: \([\,0, 0, 0, 1, 0, 0, 0, 0, 0, 0\,]\),<br>
+4: \([\,0, 0, 0, 0, 1, 0, 0, 0, 0, 0\,]\),<br>
+5: \([\,0, 0, 0, 0, 0, 1, 0, 0, 0, 0\,]\),<br>
+6: \([\,0, 0, 0, 0, 0, 0, 1, 0, 0, 0\,]\),<br>
+7: \([\,0, 0, 0, 0, 0, 0, 0, 1, 0, 0\,]\),<br>
+8: \([\,0, 0, 0, 0, 0, 0, 0, 0, 1, 0\,]\),<br>
+9: \([\,0, 0, 0, 0, 0, 0, 0, 0, 0, 1\,]\).
+    </p>
+    <p>Our neuron model will not have a <em>bias</em> or <em>threshold</em>, but instead use an
+       <em>activation function</em>.</p>
+    <p>Now you should be able to program the perceptron! You may still feel unconfident, so I
+        will list a few steps below to do it all in a systematic manner so as to not forget any
+        of the components for our digit recognizing network. Try to make your network adaptable,
+        meaning that it can be easily converted to train another model for something else.</p>
+    <h3 id="steps">Steps to Take</h3>
+    <ol>
+        <li>First, design an object called <p class="codeword">Layer</p>, with a constructor that
+            takes in a <em>learning rate</em>, the number of neurons in the current and next layer
+            and the next layer as an object. Make the <p class="codeword">Layer</p> class keep track
+            of the number of neurons in the next and current layer, neurons in the layer(as objects of
+            <p class="codeword">Neuron</p> class), the learning rate, and the next layer. Call the
+            <p class="functionBlue">initialise</p><p class="codeword">()</p> function in
+            the Neuron class once the values are kept. An <p class="functionBlue">initialise</p><p class="codeword">()</p>
+            method in the Layer class should call an <p class="functionBlue">initialise</p><p class="codeword">()</p>
+            method in the Neuron class, and use <p class="functionBlue">connect</p><p class="codeword">()</p>
+            (in the Neuron class which we define later) to connect the neuron to all neurons in the next layer.</li><br>
+        <li>Design another constructor for Layer for output layers, which should only require the
+            number of neurons in the current layer. Call a different initialising method called
+            <p class="functionBlue">outputInit</p><p class="codeword">()</p>.</li><br>
+        <li>Create another class called Neuron. Make the Neuron class have a constructor that
+            requires the number of neurons the current neuron is connected to. This constructor
+            is for hidden layer and input layer neurons.</li><br>
+        <li>Then create another constructor in class Neuron, which accepts nothing at all. This
+            is for the output layer neurons.</li><br>
+        <li>Create two initialisation methods in the Neuron class. One initialises an array of
+            weights using Gaussian distribution(for input and hidden layer neurons), and one that
+            initialises output neurons, which should have a weight of 1 and the result of the
+            neuron should only have an array length of 1.</li><br>
+        <li>The <p class="functionBlue">outputInit</p><p class="codeword">()</p> function
+            in the Layer class should initialise an array of output neurons using
+            <p class="keyword">new</p><p class="codeword">&nbsp;Neuron()</p>, the constructor
+            that we created for output neurons.</li><br>
+        <li>Make the Neuron class keep track of the neurons that the current neuron connects
+            to using an array of Neurons. Then create a function called
+            <p class="functionBlue">connect</p><p class="codeword">(Neuron neuron)</p>,
+            which accepts a neuron as input and adds this to the array of neurons the neuron
+            connects to.</li><br>
+        <li>Create a function called <p class="functionBlue">setInput</p><p class="codeword">(</p><p class="keyword">double</p>
+            <p class="codeword">input)</p>, that takes in a number as input. Then, add this to a
+            number stored locally because it will be used later. Along with it, create a
+            <p class="functionBlue">getInput</p><p class="codeword">()</p>
+            function that returns the input to the caller.</li><br>
+        <li>Create a function called <p class="functionBlue">finalise</p><p class="codeword">()</p>,
+            which runs the sigmoid activation function on the input.</li><br>
+        <li>Create a function called <p class="functionBlue">clear</p><p class="codeword">()</p>,
+            which will reset the input to the neuron.</li><br>
+        <li>Create a function called <p class="functionBlue">step</p><p class="codeword">()</p>, which
+            takes the input to the neuron and multiply it with the array of weights. If the neuron
+            connects to another layer, call the <p class="functionBlue">setInput</p><p class="codeword">()</p>
+            function of that neuron and set its input with the output of the neuron to the neuron.</li><br>
+        <li>To allow the Layer class to adjust the weights in the current Neuron, create another
+            function called <p class="functionBlue">adjustWeight</p><p class="codeword">(</p><p class="keyword">double</p><p class="codeword">[] adjustment)</p>, which takes an
+            array of numbers and adds it to each weight in the neuron.</li><br>
+        <li>Finally for the Neuron class, create three functions: <p class="functionBlue">getResult</p><p class="codeword">(</p><p class="keyword">int</p>&nbsp;<p class="codeword">index)</p>,
+            <p class="keyword">getResult</p><p class="codeword">()</p>, and <p class="functionBlue">toString</p><p class="codeword">()</p>.
+            The first function takes an index and gets the result(from <p class="functionBlue">step</p><p class="codeword">()</p>)
+            at the index, the second function returns the entire result array, and the third prints the
+            result array as a string(for debugging purposes).</li><br>
+        <li>(Back to Layer class): create <p class="functionBlue">inputFired</p><p class="codeword">()</p>,
+            <p class="functionBlue">setInput</p><p class="codeword">(</p><p class="keyword">double</p><p class="codeword">[] input)</p>,
+            <p class="functionBlue">setTarget</p><p class="codeword">(</p><p class="keyword">double</p><p class="codeword">[] target)</p>,
+            and <p class="functionBlue">clear</p><p class="codeword">()</p> functions. <p class="functionBlue">inputFired</p><p class="codeword">()</p>
+            calls the <p class="functionBlue">finalise</p><p class="codeword">()</p> method in Neuron class for each neuron in the layer,
+            <p class="functionBlue">setInput</p><p class="codeword">(</p><p class="keyword">double</p><p class="codeword">[] input)</p>
+            sets the input for the Layer, and <p class="functionBlue">setTarget</p><p class="codeword">(</p><p class="keyword">double</p><p class="codeword">[] target)</p>
+            sets the target for the neurons in the output layer. Lastly, <p class="functionBlue">clear</p><p class="codeword">()</p> calls the
+            <p class="functionBlue">clear</p><p class="codeword">()</p> function for each neuron in the next and current layer.</li><br>
+        <li>Forward propagation: create a method <p class="functionBlue">step</p><p class="codeword">()</p>.
+            In the method, set the input for each neuron in the current layer and call the <p class="functionBlue">step</p><p class="codeword">()</p>
+            function for the neuron. Then, add the result of the neuron to a list and repeat until all neurons have fired.</li><br>
+        <li>Learning: create a method <p class="functionBlue">learn</p><p class="codeword">()</p>. First call the <p class="functionBlue">step</p><p class="codeword">()</p>
+            method. Then, initialize a multidimensional array to contain the change in weights for each neuron in the current layer.
+            Apply the delta rule to each input value and weight, then use the <p class="functionBlue">adjustWeight</p><p class="codeword">(</p><p class="keyword">double</p><p class="codeword">[] adjustment)</p>
+            function in the Neuron class to adjust the neuron’s weights accordingly. Finally, call the <p class="functionBlue">clear</p><p class="codeword">()</p>
+            function to prepare the network for learning another set of data.</li><br>
+        <li>Testing: create a function <p class="functionBlue">test</p><p class="codeword">(</p><p class="keyword">double</p><p class="codeword">[] input)</p>
+            that tests a certain input set and returns the result as an array of values.</li><br>
+        <li>In here, I have used two peculiar terms: <p class="keyword">double</p> and <p class="keyword">int</p>.
+            These are basically just two data types that Java uses, somewhat like what we call(mathematically)
+            <em>rational numbers</em> and <em>whole numbers</em>. I also use the symbol <p class="codeword">[]</p>,
+            which basically just means an array or matrix of the data type in front of the brackets.</li><br>
+    </ol>
+    <h3 id="solution">Solution</h3>
+    <div class="nobreak">
+        <span>First, I will show the entire code solution, which can be found with this book. There
+           are two versions: one with extensive comments in a folder with path</span>
+        <p class="codeword">Project1/Code/Task/Commented</p><span>, and one without comments in a
+        folder with path </span><p class="codeword">Project1/Code/Task/Clean</p><span>. I will show you a clean
+        version and walk you through it by using the comments along with a further explanation.
+        The entire project only takes up 280 lines of code, which is considerably small for a program
+        that is doing something so <em>seemingly</em> complex. You can see the code below according to
+        file name:</span>
+    </div>
+    <br><br>
+    <h5 id="layer-java" class="keyword">Layer</h5><h5 class="codeword">.java</h5>
+    <!--
+        Regex replace extra space:
+        "        (?=[0-9])" (without quotes)
+    -->
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+001    public class Layer {
+002      private int neuronNumber;
+003      private int nextNeuronNumber;
+004      private Neuron[] neurons;
+005      private Layer nextLayer;
+006      private double[] input;
+007      private double[] result;
+008      private double[] target;
+009      private double learningRate;
+010
+011      public Layer(int neuronNumber) {
+012        this.neuronNumber = neuronNumber;
+013        neurons = new Neuron[neuronNumber];
+014        result = new double[nextNeuronNumber];
+015        outputInit();
+016      }
+017
+018      public Layer(int neuronNumber, int next, Layer nextLayer, double learningRate) {
+019        this.neuronNumber = neuronNumber;
+020        nextNeuronNumber = next;
+021        neurons = new Neuron[neuronNumber];
+022        this.learningRate = learningRate;
+023        result = new double[nextNeuronNumber];
+024        this.nextLayer = nextLayer;
+025        initialise();
+026      }
+027
+028      private void inputFired() {
+029        for (Neuron x : neurons) {
+030          x.finalise();
+031        }
+032      }
+033
+034      public void setInput(double[] input) {
+035        this.input = input;
+036      }
+037
+038      public void setTarget(double[] target) {
+039        this.target = target;
+040      }
+041
+042      private void outputInit() {
+043        for (int i = 0; i < neuronNumber; i++) {
+044          neurons[i] = new Neuron();
+045          neurons[i].initialise();
+046        }
+047      }
+048
+049      private void initialise() {
+050        for (int i = 0; i < neuronNumber; i++) {
+051          neurons[i] = new Neuron(nextNeuronNumber);
+052          neurons[i].initialise();
+053        }
+054
+055        if (nextLayer != null) {
+056          for (int j = 0; j < neuronNumber; j++) {
+057            for (int k = 0; k < nextNeuronNumber; k++) {
+058              neurons[j].connect(nextLayer.getNeurons()[k]);
+059            }
+060          }
+061        }
+062      }
+063
+064      public void learn() {
+065        step();
+066        double[][] changeWeights = new double[neurons.length][nextNeuronNumber];
+067        for (int i = 0; i < nextNeuronNumber; i++) {
+068          for (int j = 0; j < neurons.length; j++) {
+069            changeWeights[j][i] = learningRate * input[j] * (target[i] - result[i]) * derivedSigmoid(neurons[j].getInput());
+070          }
+071        }
+072
+073        for (int index = 0; index < neurons.length; index++) {
+074          neurons[index].adjustWeight(changeWeights[index]);
+075        }
+076
+077        clear();
+078      }
+079
+080      private void step() {
+081        for (int i = 0; i < input.length; i++) {
+082          neurons[i].setInput(input[i]);
+083          neurons[i].step();
+084          for (int j = 0; j < result.length; j++) {
+085            result[j] += neurons[i].getResult()[j];
+086          }
+087        }
+088        result = sigmoid(result);
+089        nextLayer.inputFired();
+090      }
+091
+092      public double[] test(double[] input) {
+093        for (int i = 0; i < input.length; i++) {
+094          neurons[i].setInput(input[i]);
+095          neurons[i].step();
+096          for (int j = 0; j < result.length; j++) {
+097            result[j] += neurons[i].getResult()[j];
+098          }
+099        }
+100        result = sigmoid(result);
+101        clear();
+102        return result;
+103      }
+104
+105      private void clear() {
+106        for (Neuron neuron : neurons) {
+107          neuron.clear();
+108        }
+109
+110        for (Neuron neuron : nextLayer.getNeurons()) {
+111          neuron.clear();
+112        }
+113      }
+114
+115      private double[] sigmoid(double[] result) {
+116        for (int i = 0; i < result.length; i++) {
+117          result[i] = sigmoid(result[i]);
+118        }
+119        return result;
+120      }
+121
+122      private double sigmoid(double result) {
+123        return 1 / (1 + Math.exp(-result));
+124      }
+125
+126      private double derivedSigmoid(double x) {
+127        return sigmoid(x) * (1 - sigmoid(x));
+128      }
+129
+130      private Neuron[] getNeurons() {
+131        return neurons;
+132      }
+133    }
+    </code>
+    <p>Whoa! Let’s first start with an explanation of what is happening before we continue.</p>
+<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 1: This will be our layer class, which does all the work for machine learning.
+Line 2: Store the number of neurons in this layer. Used during for-loops.
+Line 3: Store the number of neurons in the next layer.
+Line 4: The neurons in this layer as an array of </span><p class="codeword">Neuron</p><span> objects.
+Line 5: Keep the next layer's instance/object reference point.
+Line 6: This stores the input, or current dataset that is being used to train or test the neural network.
+Line 7: Stores the result from the output neurons from </span><p class="functionBlue">step</p><p class="codeword">()</p><span> method/function.
+Line 8: Stores the best result for each output neuron for the current input set.
+Line 9: Stores the learning rate or constant that is multiplied with the rest of the calculations to increase/decrease the step taken/adjustment made to prevent missing a minima.
+Line 11: First constructor option for output layer. Output layers are not a separate class but are initialized differently. Output layers only require the neuron number in the layer.
+Line 18: Second constructor option for hidden and input layers. Requires neuron number in current layer, next layer, the next layer's reference.
+Line 28: After stepping through the network, each neuron will have a sum of neuron outputs as input, but sigmoid function is not taken yet, so we finalise all the neurons' inputs before stepping through the layer.
+Line 34: Set the input to the layer for current iteration of learning. The input is given as an array, which should have the same length as the number of neurons in the current layer.
+Line 38: Set the target, which is an array with zeros and ones. The ones indicate the neuron that should fire if the prediction is correct. See the 'test' class for the target array.
+Line 42: Initialise the neurons for an output neuron, which is constructed differently from the hidden and input neurons.
+Line 49: Initialise the neurons normally(for input and hidden layer neurons), we connect the neurons to the next layer's neurons here as well.
+Line 64: Learning method. First, step through the layer with inputs using the </span><p class="functionBlue">step</p><p class="codeword">()</p><span> method. Then, we initialise a multidimensional array that contains the changes for each neuron. Then, we use the delta rule to calculate the change in weights for each neuron's weights. I use the general delta rule formula, which multiplies the product with an additional number which is the derived sigmoid given an input of the weighted sum of inputs to a neuron. Then, we give each neuron a list of changes that are added to the weight for the next epoch. Then, we perform the </span><p class="functionBlue">clear</p><p class="codeword">()</p><span> function which uses the </span><p class="functionBlue">clear</p><p class="codeword">()</p><span> in the </span><p class="codeword">Neuron</p><span> class for each neuron in the layer. This makes it ready for another epoch of learning.
+Line 80: Step function named the same as one in the </span><p class="codeword">Neuron</p><span> class. Sets the input for the neuron using the input array initialised with the constructor and calls the </span><p class="functionBlue">step</p><p class="codeword">()</p><span> function on the neuron. Then, the result array gets the value of the output of the neuron, and is run through the Sigmoid activation function. Then call the </span><p class="functionBlue">inputFired</p><p class="codeword">()</p><span> function for the next layer.
+Line 92: After learning, provide a method to test the network on a given input set/array. Basically, it performs a </span><p class="functionBlue">step</p><p class="codeword">()</p><span> on the network, and prevents it from getting ready to learn the sample. Then, it calls </span><p class="functionBlue">clear</p><p class="codeword">()</p><span> to get the network ready for another round of recognising if needed. Then, it returns the result as an array to the caller.
+Line 105: Clear the inputs and indexes kept in the current and next layer.
+Line 115: Take in an array of values and run the sigmoid activation function calculations on each of them, then return the array to the caller.
+Line 122: Method overriding, used in the </span><p class="functionBlue">sigmoid</p><p class="codeword">()</p><span> method above for calculating sigmoid of single value. Returns the value back to the caller.
+Line 126: This method returns the value of the derived sigmoid function calculated on an input.
+Line 130: Return the neurons in the current layer to the caller. Used for the layer to access the next layer's neurons.
+</span></div>
+    <h5 id="neuron-java" class="keyword">Neuron</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+01    import java.util.Arrays;
+02    import java.util.Random;
+03
+04    public class Neuron {
+05      Random rand = new Random();
+06      Neuron[] connectTo;
+07      double[] weight;
+08      double input;
+09      double[] result;
+10      int index = 0;
+11
+12      public Neuron() {
+13        weight = new double[]{1};
+14        result = new double[1];
+15      }
+16
+17      public Neuron(int connectCount) {
+18        connectTo = new Neuron[connectCount];
+19        weight = new double[connectCount];
+20        result = new double[connectCount];
+21        initialise();
+22      }
+23
+24      public void connect(Neuron neuron) {
+25        connectTo[index] = neuron;
+26        index++;
+27      }
+28
+29      public void setInput(double input) {
+30        this.input += input;
+31      }
+32
+33      public double getInput() {
+34        return input;
+35      }
+36
+37      public void finalise() {
+38        input = sigmoid(this.input);
+39      }
+40
+41      public double sigmoid(double input) {
+42        return 1 / (1 + Math.exp(-input));
+43      }
+44
+45      public void initialise() {
+46        for (int i = 0; i < weight.length; i++) {
+47          weight[i] = rand.nextGaussian();
+48        }
+49      }
+50
+51      public void step() {
+52        for (int i = 0; i < weight.length; i++) {
+53          result[i] = input * weight[i];
+54        }
+55
+56        if (connectTo != null) {
+57          for (int index = 0; index < connectTo.length; index++) {
+58          	connectTo[index].setInput(this.getResult(index));
+59          }
+60        }
+61      }
+62
+63      public void adjustWeight(double[] adjustment) {
+64        for (int i = 0; i < weight.length; i++) {
+65          weight[i] += adjustment[i];
+66        }
+67      }
+68
+69      public double getResult(int index) {
+70        return this.result[index];
+71      }
+72
+73      public double[] getResult() {
+74        return this.result;
+75      }
+76
+77      public void clear() {
+78        input = 0;
+79        index = 0;
+80      }
+81
+82      @Override
+83      public String toString() {
+84        return Arrays.toString(result);
+85      }
+86    }
+    </code>
+    <p>Explanation:</p>
+<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 1: Java Utilities Array import: used 1 time in </span><p class="annotation">@Override</p><p class="functionBlue"> toString</p><p class="codeword">()</p><span> method below </span><p class="functionBlue">clear</p><p class="codeword">()</p><span>.
+Line 2: Gaussian distribution for weights is done in </span><p class="functionBlue">initialise</p><p class="codeword">()</p><span>, requires the Random package.
+Line 4: This will be our </span><p class="codeword">Neuron</p><span> class, based on the perceptron. Note that I have not included the bias component or threshold component. They are not necessary for the network to classify digits extremely accurately.
+Line 5: Random instance for entire class. This makes the class more efficient because a new Random instance is not initialised/created for every new weight when finding a Gaussian-distributed value for it.
+Line 6: This array stores the </span><p class="codeword">Neuron</p><span> objects that the current neuron connects to in the next layer. This is used to directly transfer the result to the neuron instead of implementing it in the </span><p class="codeword">Layer</p><span> class. The connections are made in the </span><p class="functionBlue">initialise</p><p class="codeword">()</p><span> function in the </span><p class="codeword">Layer</p><span> class.
+Line 7: This stores the weight values that connect the current neuron to a neuron in the next layer according to index. The weights are initialised using Gaussian distribution in this program.
+Line 8: I store all inputs as a single variable. If this neuron is the input neuron, a single value is passed to it. If it is from a hidden or output layer, the input is added to it. Then, the </span><p class="codeword">Layer</p><span> class calls the </span><p class="functionBlue">finalise</p><p class="codeword">()</p><span> method, when all neurons have fired their inputs to the next layer's neurons which runs the Sigmoid activation function on the overall input.
+Line 9: The result from firing the input into the </span><p class="codeword">Neuron</p><span> is stored as an array to each of the neurons this neuron is connected to. Then, each of them is given to the next neuron using the </span><p class="functionBlue">setInput</p><p class="codeword">()</p><span> method.
+Line 10: I put a global 'index' variable to store the connections the current neuron has with the next layer's neurons. It is incremented, and just in case there is some </span><p class="error">ArrayIndexOutOfBoundsException</p><span>, I use a </span><p class="functionBlue">clear</p><p class="codeword">()</p><span> method, which is called after stepping through the neuron. The </span><p class="functionBlue">clear</p><p class="codeword">()</p><span> method also clears the input to the neuron so the input doesn't accumulate throughout the epochs for training the network.
+Line 12: Initialise </span><p class="codeword">Neuron</p><span>, providing nothing. This is how the </span><p class="codeword">Layer</p><span> class initialises the output layer's neurons. Other neurons are initialised using the other constructor.
+Line 17: This is how hidden and input layers' neurons are initialised. The arrays are given lengths and initialised using the </span><p class="functionBlue">initialise</p><p class="codeword">()</p><span> function.
+Line 24: The layer class uses this method to connect neurons to other neurons. Another alternative is to get a </span><p class="codeword">Neuron</p><span> array (</span><p class="codeword">Neuron[]</p><span>), and set the array here instead. In that case, the 'index' global variable can be removed.
+Line 29: The input layer neurons are given a single input, but the output and hidden layer neurons are given multiple. These have to be added, and later finalised(take the sigmoid of the number, using the activation function in </span><p class="functionBlue">finalise</p><p class="codeword">()</p><span>).
+Line 33: This method isn't used in the class, but the </span><p class="codeword">Layer</p><span> class needs it to perform the learning(delta rule formula) on the neuron's weights.
+Line 37: The function simply makes the input fit between 0 and 1, by passing it through the Sigmoid activation function.
+Line 41: Sigmoid activation function, you can find the formula in Chapter 3. </span><p class="codeword">Math.</p><p class="functionBlue italic">exp</p><p class="codeword">(-x)</p><span> is used to express \(e^{-x}\), which is basically Euler's number to the power of x.
+Line 45: Here, weights are initialised using Gaussian distribution. The Random import class provides the </span><p class="functionBlue">nextGaussian</p><p class="codeword">()</p><span> method which generates Gaussian-distributed numbers.
+Line 51: Probably the most complicated function in the entire class, it is quite self-explanatory. The input and weight variables have been initialised, so we calculate the result array's values, then, we pass these values to each of the neuron's connected neurons in the next layer if there is a set of connections for the neuron. The if condition checks this because output neurons are not a separate class, but initialized differently(I provided two constructor methods) without the </span><p class="codeword">connectTo</p><span> array with connections(output is network's output, not connected to another layer of neurons).
+Line 63: The </span><p class="functionBlue">adjustWeight</p><p class="codeword">()</p><span> function is put here to reduce the amount of work the </span><p class="codeword">Layer</p><span> class needs to do. An array of adjustments are given after the </span><p class="codeword">Layer</p><span> class runs through the delta rule in the </span><p class="functionBlue">learn</p><p class="codeword">()</p><span> function. The values are added to the weight. (not subtracted)
+Line 69: The current class uses it to assign input values together to each of the neurons the neuron is connected to in the </span><p class="functionBlue">step</p><p class="codeword">()</p><span> method. Note that it gets the result at a single index in the result array.
+Line 73: The </span><p class="codeword">Layer</p><span> class needs the result of a neuron to compute changes for the neuron's weights using the delta learning rule in the </span><p class="functionBlue">learn</p><p class="codeword">()</p><span> function. Note that the entire array is returned, so that the for-loop in the </span><p class="codeword">Layer</p><span> class can use the values.
+Line 77: Simply clears the 'input' variable for a new epoch of learning. The 'index' variable is cleared in case of future adjustments that may require it.
+Line 82: Overrides the </span><p class="codeword">Object.</p><p class="functionBlue">toString</p><p class="codeword">()</p><span> method to return something more meaningful. Used for debugging and testing/implementing like in the 'test2.java' class.
+</span>
+</div>
+    <h5 id="test2-java" class="keyword">test2</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+01    public class test2 {
+02      public static void main(String[] args) {
+03        final double[][] target = {
+04          {1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+05          {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+06          {0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
+07          {0, 0, 0, 1, 0, 0, 0, 0, 0, 0},
+08          {0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+09          {0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+10          {0, 0, 0, 0, 0, 0, 1, 0, 0, 0},
+11          {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+12          {0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+13          {0, 0, 0, 0, 0, 0, 0, 0, 0, 1}
+14        };
+15
+16        final double[][] inputs = {
+17          {1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1},
+18          {0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0},
+19          {1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1},
+20          {1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1},
+21          {1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 1},
+22          {1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1},
+23          {1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+24          {1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1},
+25          {1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1},
+26          {1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1}
+27        };
+28
+29        Layer nextLayer = new Layer(10);
+30        Layer layer = new Layer(15, 10, nextLayer, 0.5);
+31
+32        for (int j = 0; j < 1000; j++) {
+33          for (int i = 0; i < inputs.length; i++) {
+34            layer.setInput(inputs[i]);
+35            layer.setTarget(target[i]);
+36            layer.learn();
+37          }
+38        }
+39
+40        for (double[] input : inputs) {
+41          System.out.println(getBestGuess(layer.test(input)));
+42        }
+43      }
+44
+45      public static int getBestGuess(double[] result) {
+46        double k = Integer.MIN_VALUE;
+47        double index = 0;
+48        int current = 0;
+49        for (double a : result) {
+50          if (k < a) {
+51            k = a;
+52            index = current;
+53          }
+54          current++;
+55        }
+56
+57        return (int) index;
+58      }
+59    }
+    </code>
+<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 1:
+    In this class, we will test our neural network.
+    Goal: Classify digits 0-9.
+    Requires: learning rate, number of neurons, target values, input values.
+Line 3: Here, we store the desired result, where all neurons should ideally output 0, while the correct neuron should output a 1.
+Line 16: Store our training dataset as a multidimensional array, where the numbers should form a 5x3(row * column) grid that looks like a digit respectively. Stored from 0-9 to make it easier to retrieve the output of the network as a result, not array in the </span><p class="functionBlue">getBestGuess</p><p class="codeword">()</p><span> method.
+Line 29: Initialise the layers from output layer to input layer, output layer doesn't require a layer to be connected with it. The hidden and input layers should be connected to one another.
+Line 32:
+    Epoch: 1000.
+    Objective: make the network learn the dataset with 10 sets of inputs. Roughly 1000 epochs are needed to make the desired output neuron output 0.9 or higher. The input is set using </span><p class="functionBlue">setInput</p><p class="codeword">()</p><span> and target using </span><p class="functionBlue">setTarget</p><p class="codeword">()</p><span>. The layer learns when the </span><p class="functionBlue">learn</p><p class="codeword">()</p><span> function is called.
+Line 40: View our result! Run through each of the input sets and see our network's classification result. Should look like:</span></div>
+<code style="white-space: pre; text-align: center;">
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+<p class="functionBlue">Process finished with exit code 0</p>
+</code>
+<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 45: Get the answer. E.g., 5, 3, 4... instead of an array of values between 0 and 1. This method is not stored in the </span><p class="codeword">Layer</p><span> class because it is more convenient for the programmer to define the output of the network given a set of values that each output neuron outputs.
+</span></div>
+    <p>Well, now we have officially completed our <em>first</em> challenge of making a digit
+        classifier! You may have failed to create the network on your own…, but I hope you now
+        understand where the issue was! Now, I wager that some of you may feel slightly
+        disappointed: what does this have to do with digit recognition in the <em>practical</em>
+        world? We rarely will <em>ever</em> see 5x3 <em>digits</em> again, so how does our code
+        do anything useful? Well, I provided a solution that is slightly configurable, meaning
+        you can change it slightly to <em>solve</em> a different problem, so therefore, you can
+        just tweak the code slightly, and you will be able to use it to train a model on
+        real-world handwritten digits! At this point, several questions pop up: how do we save
+        our model for use? How can we feed our network data that has a different number of
+        inputs(image size is different)? Where can we <em>get</em> data to train our network?
+        How can we visualize the weights in our network? I will try to answer these as well as
+        I can later in the book.</p>
+    <h3 id="questions">Common Questions</h3>
+    <h3 id="modelSaving">Saving Models</h3>
+    <p>One of the prominent reasons why I chose Java to write all the code in this book is because
+        Java provides a method for saving objects called <em>serialization</em> and one called
+        <em>deserialization</em> to extract objects from the saved files. Basically, it saves an
+        object into a file with extension name(usually) .<em>ser</em>, which can be exported to
+        other computers and locations for deployment. Below you can find the code to do just that,
+        in five lines:</p>
+    <code class="language-java" style="white-space: pre;">
+1    try (ObjectOutputStream oos =
+          new ObjectOutputStream(
+          new BufferedOutputStream(
+          new FileOutputStream("weights.ser")))) {
+2      oos.writeObject(layer);
+3    } catch (IOException ex) {
+4      ex.printStackTrace();
+5    }
+    </code>
+    <p>Apart from that, you will need to change the line of code in each class that defines
+        the class to:</p>
+    <code class="language-java" style="white-space: pre;">
+1    public class Layer implements Serializable {
+    </code>
+    <p>And:</p>
+    <code class="language-java" style="white-space: pre;">
+1    public class Neuron implements Serializable {
+    </code>
+    <p>To extract the object from the file, you use:</p>
+    <code class="language-java" style="white-space: pre;">
+1    ObjectInputStream ois =
+                       new ObjectInputStream(
+                       new BufferedInputStream(
+                       new FileInputStream("weights.ser")));
+2    Layer lay = (Layer) ois.readObject();
+    </code>
+    <p>For those, who are implementing this program perhaps in another language, or are
+        just curious how objects can be saved to files using other methods, you can simply
+        write each index in the array on a new line, or write each array in the multidimensional
+        array onto the same line, and read the file similarly. If you aren’t satisfied with
+        these methods… experiment! See what strategies or methods you find most convenient or
+        fastest.</p>
+    <h3 id="differentInputLengths">Feeding Networks Different Input Lengths</h3>
+    <p>Now comes a harder question: how do we feed our network inputs with different lengths?
+        As seen before in the previous example, there were strictly only to be 15 inputs to the
+        network, with 10 outputs. So, what if we wanted to ask a 15-10 network the classification
+        of an input set with length 20? This problem is very practical. For example, with our
+        previous example, we trained a network to classify digits of length 15, but in reality,
+        no pictures will be of length 15. Pictures can come in all sizes, if the user resizes
+        them, our network should still give a prediction for the input. So how do we solve this
+        problem? Turns out, people around the world figured a simple yet effective way around
+        the problem: resizing or cropping. Basically, you resize the image using various
+        algorithms or built-in classes or crop the image and center the digit to be recognized.
+        In Java, there is a class with deals with resizing operations and can be used like this:</p>
+    <code class="language-java" style="white-space: pre;">
+01    File input = new File(filepath);
+02    image = ImageIO.read(input);
+03    Image newImage = image.getScaledInstance(28, 28, Image.SCALE_SMOOTH);
+04    BufferedImage bimage =
+                    new BufferedImage(newImage.getWidth(null),
+                                      newImage.getHeight(null),
+                                      BufferedImage.TYPE_INT_RGB);
+05    Graphics2D bGr = bimage.createGraphics();
+06    bGr.drawImage(newImage, 0, 0, null);
+07    bGr.dispose();
+08    ImageIO.write(bimage, "png", new File("result.png"));
+09    double[] a = new double[INPUT];
+10    int counter = 0;
+11    for(int i = 0; i < 28; i++) {
+12        for(int j = 0; j < 28; j++) {
+13            Color c = new Color(bimage.getRGB(j, i));
+14            a[counter] = 255 - (c.getRed() * 0.30)
+                               - (c.getGreen() * 0.59)
+                               - (c.getBlue() * 0.11);
+15            a[counter] /= 255;
+16            a[counter] = Double.parseDouble(String.format("%.1f", a[counter]));
+17            counter++;
+18        }
+19    }
+    </code>
+    <br>
+    <p style="display: inline;">What is happening is, an image’s file path is given to the program. Then, the program
+        uses
+    <span class="codeword">ImageIO.</span><span class="functionBlue">getScaledInstance</span><span class="codeword">()</span>
+        and scales or resizes the image to the dimension 28 x 28. Then, the image is converted to a
+        grayscale value between 0 and 1 and stored into
+        <span class="keyword">double</span><span class="codeword">[] a</span>, for use later on in
+        the program. I actually took this from the code we will be creating to deploy our network
+        in the real world, and slightly modified it for display on its own.</p>
+    <h3 id="findingDatasets">Finding Datasets For Model Training</h3>
+    <p>As we have seen previously, we need data to be able to train a neural network, so where
+        can we get manually labelled(100% accurately labelled) digit recognition data? Well, if
+        you have tried to make models previously to recognize digits, you will have heard of the
+        MNIST dataset, which is a dataset with a curation of 70000 images, 60000 of which are
+        used to train the model, and 10000 of them are used to test the model’s accuracy. Each
+        input set consists of a 28 x 28 dimension array of numbers, or 784 numbers, along with a
+        785th, being the correct prediction of the example. You can access the website at
+        <a href="http://yann.lecun.com/exdb/mnist/" target="_blank">http://yann.lecun.com/exdb/mnist/</a>.
+        Here is how the page should look like:</p>
+    <img style="border: none; width: 100%;" src="Images/mnist.jpg">
+    <p class="caption">Figure T1-3: MNIST Dataset Website</p>
+    <p>You can directly download the dataset from their site, or you can go to
+        <a target="_blank" href="https://github.com/JC-ProgJava/Digit-Recognition/releases/download/Version0.1/data.zip">https://github.com/JC-ProgJava/Digit-Recognition/releases/download/Version0.1/data.zip</a>,
+        where I have uploaded the dataset as a series of 70000 files containing the numbers. Notice
+        that the dataset of 70000 files are not images but greyscale-converted numbers. You can look
+        online on websites like kaggle.com, to find the MNIST dataset as the images themselves,
+        but the number version saves a little time in the computing process. This will be the dataset
+        we use in the Challenge section.</p>
+    <p>You can also find datasets through
+        <a target="_blank" href="https://datasetsearch.research.google.com/">https://datasetsearch.research.google.com/</a>,
+        which Google provides as a search engine for datasets. Here is what it looks like:</p>
+    <img style="border: none; width: 100%;" src="Images/datasetSearch.jpg">
+    <p class="caption">Figure T1-4: Google Dataset Search Homepage</p>
+    <p>You can search anything on there, and usually several relevant search results will appear.</p>
+    <p>I won’t answer the last question yet, because I think it will be a little easier to
+        explain after we finish with the challenge task. For now, head on to the next section,
+        where we will be classifying digits of any input length and training with the MNIST
+        dataset!</p>
+    <h3 id="challenge">Challenge: A Real-World Application of Digit Recognition</h3>
+    <h3 id="challenge-description">Task Description</h3>
+    <h5 id="challenge-goal">Goal</h5>
+    <p class="indent">Step 1: Recognize digits 0-9 that are represented in a 28 x 28(row x column) grid.<br>
+       Step 2: Recognize digits 0-9 of any input length accurately.</p>
+    <h5 id="challenge-background">Background</h5>
+    <p class="indent">This task requires knowledge of activation functions, the delta learning rule and the
+        perceptron model. Also, knowledge of Java(or C-like) programming may help you get
+        through this part of the book more smoothly.</p>
+    <h5 id="challenge-descript">Description</h5>
+    <p>The MNIST dataset represents digits in 28x28 grids. Here is what each digit’s file
+        may look like:</p>
+    <div class="grid-small">
+        <img src="Images/Project 1 Images/28x28/0.jpg">
+        <img src="Images/Project 1 Images/28x28/1.jpg">
+        <img src="Images/Project 1 Images/28x28/2.jpg">
+        <img src="Images/Project 1 Images/28x28/3.jpg">
+        <img src="Images/Project 1 Images/28x28/4.jpg">
+        <img src="Images/Project 1 Images/28x28/5.jpg">
+        <img src="Images/Project 1 Images/28x28/6.jpg">
+        <img src="Images/Project 1 Images/28x28/7.jpg">
+        <img src="Images/Project 1 Images/28x28/8.jpg">
+        <img src="Images/Project 1 Images/28x28/9.jpg">
+    </div>
+    <p class="caption">Figure T1-5: Digits represented in 28x28 grids.</p>
+    <p>Here, the white squares represent 1s and black represent 0s. Since the MNIST dataset
+        consists of digits written by hundreds of people and <em>labelled manually</em> by people,
+        and unrecognizable digits are not being removed, it is <em>impossible</em> to recognize
+        all testing data accurately. The highest accuracy achieved by data scientists was
+        99.67%(incorrect classification of 23 out of 10000 images). If you see models that get
+        “100% accuracy on MNIST dataset”, the model usually <em>overfits</em>, which is simply
+        where the model starts making too detailed or sophisticated assumptions on how to
+        separate different objects. For example, a model trying to classify apples and oranges
+        is <em>overfitted</em> if it classifies oranges as “an object that is orange and
+        perfectly round” just because the training dataset consists of hundreds of examples
+        that look like this:</p>
+    <img style="width: 60%;" src="Images/round-orange.jpg">
+    <p class="caption">Figure T1-6: A perfectly round orange that is orange in color</p>
+    <p>The result to the network may have looked like this if the model overfitted:
+        \([\,1, 0\,]\), where the first index is the output for classifying oranges and
+        the other index classifies apples. The following may be an image that the network
+        can’t classify correctly if <em>overfitted</em>:</p>
+    <img src="Images/pile-orange.jpg">
+    <p class="caption">Figure T1-7: A pile of oval-like oranges that have a hint of green</p>
+    <p>The reason why it can’t classify the picture above is because:</p>
+    <ol>
+        <li>The oranges are not round.</li>
+        <li>There are multiple oranges.</li>
+        <li>The orange color is different.</li>
+        <li>The oranges are slightly green.</li>
+        <li>The lighting of the picture is different from the training images.</li>
+    </ol>
+    <p>Generally, you can tell the model <em>overfits</em>, if the following conditions are
+        mostly satisfied:</p>
+    <ul>
+        <li>The training accuracy(accuracy of learning the training dataset) is much higher
+            than the testing accuracy(accuracy of testing dataset, which the network has never
+            seen before)</li>
+        <li>The output of the network is too certain(seen above: \([\,1, 0\,]\)).</li>
+    </ul>
+    <p>More about <em>overfitting</em> and <em>underfitting</em> will be introduced in another chapter.</p>
+    <p>Therefore, we should be relatively happy with a model being able to recognize digits
+        with 90%-98% accuracy. In reality, this should achieve a lower accuracy because images
+        used to test aren’t oriented the same way, centered, or have the same thickness(pens
+        may be extra thick or thin). Finally, I should give you the values for some of the
+        constants in the network:</p>
+    <p><em>Learning rate</em> (\(\alpha\) or \(\eta\)): 0.5<br>
+       <em>Epoch</em>: 10<br>
+       <em>Input Neuron Number</em>: 784(28 * 28 = 784, one for each input value in 28x28
+        grid input)<br>
+       <em>Output Neuron Number</em>: 10(0-9, one for each digit)<br>
+       <em>Expected output accuracy</em>: 50% or above(should be around 80%-90%, but 50% should really
+        be the minimum by far, if you get around 10%, something is wrong with your training or
+        testing class).</p>
+    <h3 id="challenge-steps">Steps to Take</h3>
+    <ol>
+        <li>Download the MNIST dataset from this <a target="_blank" href="https://github.com/JC-ProgJava/Digit-Recognition/releases/download/Version0.1/data.zip">Github link</a>.</li><br>
+        <li>Unzip the zip file ‘data.zip’. I would not recommend you open it because it consists
+            of 70000 files with grayscale image values inside, which would probably crash your
+            computer.</li><br>
+        <li>Put this folder in your project directory or somewhere where your program
+            can reach.</li><br>
+        <li>Create a training class with any name, I will use
+            ‘<p class="codeword">application</p>’. In here, modify the
+            <p class="keyword">test2</p><p class="codeword">.java</p> class so that the
+            program trains a model on 28x28 digits. As an extension, you can track the number
+            of milliseconds or seconds the program takes to train the model, how can you
+            decrease the time required?</li><br>
+        <li>To train the model, all the data needs to be imported into an array(from file
+            00001.txt to 60000.txt, leave the other 10000 files for testing the model later on).
+            Do this, and then shuffle the array after each epoch of training(training for all
+            samples in the <em>entire</em> dataset). In each input file, there are 785 inputs,
+            with the last being the correct predicted answer. Fill an array with 0s and make
+            the index of the correct answer be 1. This should be used in the
+            <p class="functionBlue">setTarget</p><p class="codeword">()</p> function that sets
+            the target output value for the network.</li><br>
+        <li>Serialize the model and save it to a file with any name, I will use “<p class="codeword">app.ser</p>”.</li><br>
+        <li>Create a <em>testing</em> class, called “<p class="keyword">test3</p><p class="codeword">.java</p>”
+            (or anything else), where you take all files from 60001.txt to 70000.txt and test your
+            trained model. Output this result(should only take a few seconds before the program
+            terminates).</li><br>
+    </ol>
+    <h3 id="challenge-estimation">Estimating Computational Time</h3>
+    <p>In the steps I listed, I added an additional task/challenge to measure the time
+        it takes for the program to train the model. The reason why I do this is so you can
+        get a rough understanding on how long it takes a computer to train a model on 60000
+        images for any given number of epochs. The task required 10 epochs at a learning rate of
+        0.5, which took <span class="codeword">187015 milliseconds</span>(or roughly 3 minutes)
+        for my computer to train, which runs with four 2.4 GHz Intel Core i5 cores and got
+        an accuracy of 89.93%, slightly less than our goal of 90% or above. It took the program
+        roughly 80 seconds to store all the inputs in an array, so <span class="codeword">187015 - 80000</span>
+        should give the time taken to train 10 epochs. \(10e = 107015\), \(e \approx 10700\).
+        Each epoch took roughly 10.7 seconds(10700 milliseconds) to train. Therefore, if we tried
+        to train 1000 epochs, it would take \(10700 * 1000 + 80000 = 10,780,000\)(we get the
+        training time and then add on the time it takes to load the input sets into the array),
+        or around 3 hours. That is a <em>lot</em> of computational time, requiring a <em>lot</em>
+        of memory and power. I trained this on an IDE, which probably made the running time slightly
+        slower than optimal, but results should be similar to the ones given above if you have a
+        similar level of computational power. We could optimize our program slightly by serializing
+        the array of inputs for later runs/executions of the program, which should cut the
+        computational time down by around 77 seconds(serialization and deserialization processes
+        both take several seconds as well) on average.</p>
+    <h3 id="challenge-solution">Solution</h3>
+    <p>Okay! That was <em>quite</em> a racket. I will again show the entire code solution in
+        Java, which can be found with this book on Github. The entire project only takes
+        up 381 lines of code.</p>
+    <h5 id="challenge-layer-java" class="keyword">Layer</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+001    import java.io.Serializable;
+002
+003    public class Layer implements Serializable {
+004      private final int neuronNumber;
+005      private final Neuron[] neurons;
+006      private int nextNeuronNumber;
+007      private Layer nextLayer;
+008      private double[] input;
+009      private double[] result;
+010      private double[] target;
+011      private double learningRate;
+012
+013      Layer(int neuronNumber) {
+014        this.neuronNumber = neuronNumber;
+015        neurons = new Neuron[neuronNumber];
+016        result = new double[nextNeuronNumber];
+017        outputInit();
+018      }
+019
+020      Layer(int neuronNumber, int next, Layer nextLayer, double learningRate) {
+021        this.neuronNumber = neuronNumber;
+022        nextNeuronNumber = next;
+023        neurons = new Neuron[neuronNumber];
+024        this.learningRate = learningRate;
+025        result = new double[nextNeuronNumber];
+026        this.nextLayer = nextLayer;
+027        initialise();
+028      }
+029
+030      private void inputFired() {
+031        for (Neuron x : neurons) {
+032          x.finalise();
+033        }
+034      }
+035
+036      void setInput(double[] input) {
+037        this.input = input;
+038      }
+039
+040      void setTarget(double[] target) {
+041        this.target = target;
+042      }
+043
+044      public double getLearningRate() {
+045        return learningRate;
+046      }
+047
+048      public void setLearningRate(double learningRate) {
+049        this.learningRate = learningRate;
+050      }
+051
+052      private void outputInit() {
+053        for (int i = 0; i < neuronNumber; i++) {
+054          neurons[i] = new Neuron();
+055          neurons[i].initialise();
+056        }
+057      }
+058
+059      private void initialise() {
+060        for (int i = 0; i < neuronNumber; i++) {
+061          neurons[i] = new Neuron(nextNeuronNumber);
+062          neurons[i].initialise();
+063        }
+064
+065        if (nextLayer != null) {
+066          for (int j = 0; j < neuronNumber; j++) {
+067            for (int k = 0; k < nextNeuronNumber; k++) {
+068             neurons[j].connect(nextLayer.getNeurons()[k]);
+069            }
+070          }
+071        }
+072      }
+073
+074      void learn() {
+075        step();
+076        double[][] changeWeights = new double[neurons.length][nextNeuronNumber];
+077        for (int i = 0; i < nextNeuronNumber; i++) {
+078          for (int j = 0; j < neurons.length; j++) {
+079            changeWeights[j][i] = learningRate * input[j] *
+                                     (target[i] - result[i]) *
+                                     derivedSigmoid(neurons[j].getInput());
+080          }
+081        }
+082
+083        for (int index = 0; index < neurons.length; index++) {
+084         neurons[index].adjustWeight(changeWeights[index]);
+085        }
+086
+087        clear();
+088      }
+089
+090      private void step() {
+091        for (int i = 0; i < input.length; i++) {
+092          neurons[i].setInput(input[i]);
+093          neurons[i].step();
+094          for (int j = 0; j < result.length; j++) {
+095            result[j] += neurons[i].getResult()[j];
+096          }
+097        }
+098        result = sigmoid(result);
+099        nextLayer.inputFired();
+100      }
+101
+102      double[] test(double[] input) {
+103        for (int i = 0; i < input.length; i++) {
+104          neurons[i].setInput(input[i]);
+105          neurons[i].step();
+106          for (int j = 0; j < result.length; j++) {
+107            result[j] += neurons[i].getResult()[j];
+108          }
+109        }
+110        result = sigmoid(result);
+111        clear();
+112        return result;
+113      }
+114
+115      private void clear() {
+116        for (Neuron neuron : neurons) {
+117          neuron.clear();
+118        }
+119
+120        for (Neuron neuron : nextLayer.getNeurons()) {
+121          neuron.clear();
+122        }
+123      }
+124
+125      private double[] sigmoid(double[] result) {
+126        for (int i = 0; i < result.length; i++) {
+127          result[i] = sigmoid(result[i]);
+128        }
+129        return result;
+130      }
+131
+132      private double sigmoid(double result) {
+133        return 1 / (1 + Math.exp(-result));
+134      }
+135
+136      private double derivedSigmoid(double x) {
+137        return sigmoid(x) * (1 - sigmoid(x));
+138      }
+139
+140      Neuron[] getNeurons() {
+141        return neurons;
+142      }
+143    }
+    </code><br>
+
+    <h5 id="challenge-neuron-java" class="keyword">Neuron</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+01    import java.io.Serializable;
+02    import java.util.Arrays;
+03    import java.util.Random;
+04
+05    public class Neuron implements Serializable {
+06      Random rand = new Random();
+07      Neuron[] connectTo;
+08      double[] weight;
+09      double input;
+10      double[] result;
+11      int index = 0;
+12
+13      public Neuron() {
+14        weight = new double[]{1};
+15        result = new double[1];
+16      }
+17
+18      public Neuron(int connectCount) {
+19        connectTo = new Neuron[connectCount];
+20        weight = new double[connectCount];
+21        result = new double[connectCount];
+22        initialise();
+23      }
+24
+25      public void connect(Neuron neuron) {
+26        connectTo[index] = neuron;
+27        index++;
+28      }
+29
+30      public void setInput(double input) {
+31        this.input += input;
+32      }
+33
+34      public double getInput() {
+35        return input;
+36      }
+37
+38      public void finalise() {
+39        input = sigmoid(this.input);
+40      }
+41
+42      public double sigmoid(double input) {
+43        return 1 / (1 + Math.exp(-input));
+44      }
+45
+46      public void initialise() {
+47        for (int i = 0; i < weight.length; i++) {
+48          weight[i] = rand.nextGaussian();
+49        }
+50      }
+51
+52      public void step() {
+53        for (int i = 0; i < weight.length; i++) {
+54          result[i] = input * weight[i];
+55        }
+56
+57        if (connectTo != null) {
+58          for (int index = 0; index < connectTo.length; index++) {
+59           connectTo[index].setInput(this.getResult(index));
+60          }
+61        }
+62      }
+63
+64      public double[] getWeight() {
+65        return weight;
+66      }
+67
+68      public void adjustWeight(double[] adjustment) {
+69        for (int i = 0; i < weight.length; i++) {
+70          weight[i] += adjustment[i];
+71        }
+72      }
+73
+74      public double getResult(int index) {
+75        return this.result[index];
+76      }
+77
+78      public double[] getResult() {
+79        return this.result;
+80      }
+81
+82      public void clear() {
+83        input = 0;
+84        index = 0;
+85      }
+86
+87      @Override
+88     public String toString() {
+89        return Arrays.toString(result);
+90      }
+91    }
+    </code><br>
+
+    <h5 id="challenge-initarray-java" class="keyword">initArray</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+01    import java.io.*;
+02    import java.util.*;
+03
+04    public class initArray {
+05      public static void main(String[] args) throws IOException {
+06        long start = System.currentTimeMillis();
+07        ArrayList&lt;Integer&gt; arr = new ArrayList&lt;&gt;();
+08        double[][] inputValues = new double[60000][784];
+09        double[][] targetValues = new double[60000][10];
+10
+11        for(int i = 0; i < 60000; i++) {
+12          arr.add(i);
+13        }
+14        Collections.shuffle(arr);
+15
+16        for(int index = 0; index < 60000; index++) {
+17          File file = new File("data/" +
+                                 String.format("%05d", arr.get(index) + 1) +
+                                 ".txt");
+18
+19          FileInputStream fis = new FileInputStream(file);
+20          byte[] data = new byte[(int) file.length()];
+21          fis.read(data);
+22          fis.close();
+23
+24          Scanner in = new Scanner(file);
+25          double[] x = new double[784];
+26          for(int i = 0; i < 784; i++){
+27            x[i] = in.nextDouble() / 255;
+28          }
+29
+30          double[] target = new double[10];
+31          target[(int) in.nextDouble()] = 1;
+32
+33          inputValues[index] = x;
+34          targetValues[index] = target;
+35        }
+36
+37        try (ObjectOutputStream oos =
+               new ObjectOutputStream(
+               new BufferedOutputStream(
+               new FileOutputStream("input.ser")))) {
+38          oos.writeObject(inputValues);
+39        } catch (IOException ex) {
+40          ex.printStackTrace();
+41        }
+42
+43        try (ObjectOutputStream oos =
+               new ObjectOutputStream(
+               new BufferedOutputStream(
+               new FileOutputStream("target.ser")))) {
+44          oos.writeObject(targetValues);
+45        } catch (IOException ex) {
+46          ex.printStackTrace();
+47        }
+48        long stop = System.currentTimeMillis();
+49        System.out.println(stop - start + " milliseconds.");
+50      }
+51    }
+    </code>
+    <p>Explanation:</p>
+<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 1 & 2: Import necessary libraries.
+Line 4: Start of </span><p class="codeword">initArray</p><span> class.
+Line 6: Keep track of the current time in milliseconds, then subtract it with the ending time to find the amount of milliseconds elapsed.
+Line 7: Keep a list of all file name numbers and shuffle using the built-in class </span><p class="codeword">Collections.</p><p class="functionBlue">shuffle</p><p class="codeword">()</p><span>. This is used to randomize the order of training each sample so that the network doesn’t have a bias to the ending samples because they appeared last.
+Line 8 & 9: Initialize the two arrays that we will use to store the input values and target values for the sample. These arrays are later <em>serialized</em> using </span><p class="codeword">ObjectOutputStream</p><span>.
+Line 11: Add all file name numbers(0-60000) to the ArrayList.
+Line 14: Shuffle the </span><p class="codeword">ArrayList</p><span>.
+Line 16: Open the file at the current index in the </span><p class="codeword">ArrayList</p><span> and read all 784 inputs and the target. Note the values are converted to grayscale in the range 0-255, so we need to divide by 255 to get a value between 0 and 1.
+Line 30: The target array doesn’t just contain a single value, but an array of values with a single ‘1’ for the correct prediction’s index and ‘0’ for all other indexes.
+Line 37: Serialize the </span><p class="codeword">input</p><span> array and store it as a file.
+Line 43: Serialize the </span><p class="codeword">target</p><span> array and store it as a file.
+Line 48 & 49: Get the time elapsed and print to the console.
+</span></div>
+    <br>
+
+    <h5 id="challenge-application-java" class="keyword">application</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+01    import java.io.*;
+02    import java.util.*;
+03
+04    public class application {
+05      public static void main(String[] args) throws IOException, ClassNotFoundException {
+06        System.out.println("Gathering resources...");
+07        long start = System.currentTimeMillis();
+08        Layer nextLayer = new Layer(10);
+09        Layer layer = new Layer(784, 10, nextLayer, 0.5);
+10        Random rand = new Random();
+11
+12        ArrayList&lt;String&gt; randomIndex = new ArrayList<>();
+13        for(int index = 0; index < 60000; index++) {
+14          randomIndex.add(String.valueOf(rand.nextInt(60000) + 1));
+15        }
+16
+17        ObjectInputStream ois =
+                            new ObjectInputStream(
+                            new BufferedInputStream(
+                            new FileInputStream("input.ser")));
+18        ObjectInputStream oiss =
+                            new ObjectInputStream(
+                            new BufferedInputStream(
+                            new FileInputStream("target.ser")));
+19        double[][] inputs = (double[][]) ois.readObject();
+20        double[][] targets = (double[][]) oiss.readObject();
+21
+22        long stop = System.currentTimeMillis();
+23        System.out.println(stop - start + " milliseconds.");
+24
+25        System.out.println("Training...");
+26        start = System.currentTimeMillis();
+27
+28        for (int j = 0; j < 5; j++) {
+29          System.out.println("Epoch: " + j);
+30          for (int i = 0; i < inputs.length; i++) {
+31            layer.setInput(inputs[Integer.parseInt(randomIndex.get(i)) - 1]);
+32            layer.setTarget(targets[Integer.parseInt(randomIndex.get(i)) - 1]);
+33            layer.learn();
+34          }
+35
+36          Collections.shuffle(randomIndex);
+37        }
+38
+39        try (ObjectOutputStream oos =
+               new ObjectOutputStream(
+               new BufferedOutputStream(
+               new FileOutputStream("app.ser")))) {
+40          oos.writeObject(layer);
+41        } catch (IOException ex) {
+42          ex.printStackTrace();
+43        }
+44        stop = System.currentTimeMillis();
+45
+46        System.out.println(stop - start + " milliseconds.");
+47        System.out.println("Done!");
+48      }
+49    }
+    </code>
+    <p>Explanation:</p>
+<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 1 & 2: Import necessary libraries.
+Line 7: Start timing the amount of time it takes to get resources.
+Line 8 & 9: create two layer objects for the learning stage.
+Line 13: Create a list of random indexes to choose a set of inputs and targets from.
+Line 17-20: Read the input and target arrays from their respective files which were generated after executing </span><p class="functionBlue">initArray</p><p class="codeword">.java</p><span>.
+Line 28: Start the learning stage by setting the input and target for the network and use the </span><p class="functionBlue">learn</p><p class="codeword">()</p><span> function in the </span><p class="codeword">Layer</p><span> class to adjust weights in the network.
+Line 36: Shuffle the list of random indexes for the next epoch.
+Line 39: Write our new neural network to a file named </span><p class="codeword">app.ser</p><span>.
+Line 46: Print the time (in milliseconds) that elapsed.
+</span></div>
+
+    <br>
+
+    <h5 id="challenge-test3-java" class="keyword">test3</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+01    import java.io.*;
+02    import java.util.ArrayList;
+03    import java.util.Scanner;
+04
+05    public class test3 {
+06      public static double actual = 0;
+07
+08      public static void main(String[] args) throws IOException, ClassNotFoundException {
+09        ArrayList&lt;String&gt; filenames = new ArrayList<>();
+10        for(int x = 60001; x <= 70000; x++){
+11          filenames.add("data/" + String.format("%05d", x) + ".txt");
+12        }
+13
+14        ObjectInputStream oiss =
+                            new ObjectInputStream(
+                            new BufferedInputStream(
+                            new FileInputStream("app.ser")));
+15        Layer lays = (Layer) oiss.readObject();
+16        int corrects = 0;
+17        for (String z : filenames) {
+18          double[] a = scan(z);
+19          int x = getBestGuess(lays.test(a));
+20          corrects += x == actual ? 1 : 0;
+21        }
+22        System.out.println("Testing: " + corrects +
+                             " / " + filenames.size() +
+                             " correct.");
+23      }
+24
+25      public static double[] scan(String filename) throws FileNotFoundException {
+26        Scanner in = new Scanner(new File(filename));
+27        double[] a = new double[784];
+28        for(int i = 0; i < 784; i++){
+29          a[i] = in.nextDouble() / 255;
+30        }
+31        actual = in.nextDouble();
+32        return a;
+33      }
+34
+35      public static int getBestGuess(double[] result) {
+36        double k = Integer.MIN_VALUE;
+37        double index = 0;
+38        int current = 0;
+39        for (double a : result) {
+40          if (k < a) {
+41            k = a;
+42            index = current;
+43          }
+44          current++;
+45        }
+46
+47        return (int) index;
+48      }
+49    }
+    </code>
+    <p>Explanation:</p>
+<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 1-3: Import necessary libraries.
+Line 10: Prepare a list of file paths from 60001.txt to 70000.txt, these will be used to test the network accuracy, not train the network.
+Line 14: Read the layer object from the file we created in </span><p class="keyword">application</p><p class="codeword">.java</p><span>.
+Line 17-21: Read the file at the current index and step it through the network. See if the result is the same as the answer given in the file.
+Line 22: Print out the accuracy of the network by printing the amount of answers the network was correct on out of 10000 (there were 10000 files).
+Line 25-33: This is a method used to read all number values in the file path given, returning the result as an array. Note that I assigned the correct value to a global variable named </span><p class="globalVar">actual</p><span>.
+Line 35-48: Get the most probable answer from the network output. Since we organised our predictions from 0-9, we can take the index at which the prediction is closest to 1 and return that as the network’s prediction output.
+</span></div>
+    <br>
+    <h3 id="visualizing">Visualizing Weights</h3>
+    <p>Now that we have been able to get through the solution and explanations of the code
+        going with our solution, I can now answer the last question that I proposed before
+        the Challenge Task. How can we visualize weights? Simply, we can just map out a
+        28x28 image with the weights of each neuron to each output neuron. Here is what people
+        have been getting by doing this:</p>
+    <img src="Images/visualize weights ml4a.png">
+    <p class="caption">T1-8 - A visualization of weights from the Machine Learning for Artists website.</p>
+    <p>Here, whiter squares represent more important weights (the biggest weights), and the
+        darker squares represent less important weights. If you look closely, you may notice
+        that they look like the average of each digit from 0 to 9! This is not a mistake because
+        you fitted your network given a set of data, so the network took an average or <em>best fit</em>
+        for each weight in the network so that it could classify as many examples as possible.
+        You may want to see how our network output looks compared to the example above! Here
+        is a program that does just that!</p>
+
+    <h5 id="challenge-visualize-java" class="keyword">visualize</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+01    import javax.imageio.ImageIO;
+02    import java.awt.*;
+03    import java.awt.image.BufferedImage;
+04    import java.io.*;
+05
+06    public class visualize {
+07     public static void main(String[] args)
+   throws IOException, ClassNotFoundException {
+08       int row = 28;
+09       int column = 28;
+10       int layNum = row * column;
+11       int outNum = 10;
+12
+13       ObjectInputStream oiss =
+           new ObjectInputStream(
+           new BufferedInputStream(
+           new FileInputStream("app.ser")));
+14       Layer layer = (Layer) oiss.readObject();
+15
+16       Neuron[] neurons = layer.getNeurons();
+17       double[][] weights = new double[outNum][layNum];
+18       double[][] transposeWeights =
+   new double[layNum][outNum];
+19
+20       for(int index = 0; index < neurons.length; index++) {
+21         transposeWeights[index] =
+neurons[index].getWeight();
+22       }
+23
+24       for(int i = 0; i < transposeWeights.length; i++) {
+25         for(int j = 0;
+        j < transposeWeights[i].length; j++) {
+26           weights[j][i] = transposeWeights[i][j];
+27         }
+28       }
+29
+30       int index = 0;
+31       for(double[] z : weights) {
+32         File file = new File("images/" + index + ".png");
+33         BufferedImage bufferedImage =
+   new BufferedImage(column, row,
+       BufferedImage.TYPE_INT_RGB);
+34         Graphics2D g2d = bufferedImage.createGraphics();
+35         double max = getMax(z);
+36         double min = getMin(z);
+37         double diff = max - min;
+38         int ind = 0;
+39         for (int x = 0; x < column; x++) {
+40           for (int y = 0; y < row; y++) {
+41             int col = (int) (255 - ((z[ind] - min)
+                                    / diff * 255));
+42             g2d.setColor(new Color(col, col, col));
+43             g2d.fillRect(x, y, 1, 1);
+44             ind++;
+45           }
+46         }
+47         g2d.dispose();
+48         ImageIO.write(bufferedImage, "png", file);
+49         index++;
+50       }
+51     }
+52
+53     public static double getMax(double[] x) {
+54       double y = Double.MIN_VALUE;
+55       for(double z : x) {
+56         if(z > y) {
+57           y = z;
+58         }
+59       }
+60       return y;
+61     }
+62
+63     public static double getMin(double[] x) {
+64       double y = Double.MAX_VALUE;
+65       for(double z : x) {
+66         if(z < y) {
+67           y = z;
+68         }
+69       }
+70       return y;
+71     }
+72    }
+    </code>
+    <p>Explanation:</p>
+    <div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 1: Import necessary libraries.
+Line 8-11: Define constants used later on in the program so that it is easily changeable.
+Line 13: Read the </span><p class="codeword">Layer</p><span> class so that weights can be obtained.
+Line 20-28: First collect all weights as a multidimensional array, then transpose the array so that it is more usable and easier to loop through later on.
+Line 31-50: Write each image by finding the range of the weights and judging the weight’s importance relatively, and then filling a pixel with the same rgb values to get a grayscale image.
+Line 53-61: Get the maximum weight value from an array.
+Line 63-71: Get the minimum weight value from an array.
+</span></div>
+    <p>After running the above program, here’s what I got on a model with roughly 89% accuracy:</p>
+    <div class="grid-small">
+        <img src="Images/Project 1 Images/visualize/0.png">
+        <img src="Images/Project 1 Images/visualize/1.png">
+        <img src="Images/Project 1 Images/visualize/2.png">
+        <img src="Images/Project 1 Images/visualize/3.png">
+        <img src="Images/Project 1 Images/visualize/4.png">
+        <img src="Images/Project 1 Images/visualize/5.png">
+        <img src="Images/Project 1 Images/visualize/6.png">
+        <img src="Images/Project 1 Images/visualize/7.png">
+        <img src="Images/Project 1 Images/visualize/8.png">
+        <img src="Images/Project 1 Images/visualize/9.png">
+    </div>
+    <p class="caption">T1-9 - A visualization of weights from our trained network</p>
+    <p>These don’t quite look like the ones we saw previously, but you still can see some
+        patterns in them. For now, head on to the next chapter!</p>
+    <br>
+    <button onclick="location.href = 'networksAndLearning.html';">Previous Chapter</button>
+    <!--<button onclick="location.href = 'FILENOTKNOWN.html';">Next Chapter</button>-->
+</div>
+</body>
+</html>
