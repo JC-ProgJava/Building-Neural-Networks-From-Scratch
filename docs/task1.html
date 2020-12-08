@@ -1353,32 +1353,25 @@ Line 35-48: Get the most probable answer from the network output. Since we organ
 04    import java.io.*;
 05
 06    public class visualize {
-07     public static void main(String[] args)
-   throws IOException, ClassNotFoundException {
+07     public static void main(String[] args) throws IOException, ClassNotFoundException {
 08       int row = 28;
 09       int column = 28;
 10       int layNum = row * column;
 11       int outNum = 10;
 12
-13       ObjectInputStream oiss =
-           new ObjectInputStream(
-           new BufferedInputStream(
-           new FileInputStream("app.ser")));
+13       ObjectInputStream oiss = new ObjectInputStream(new BufferedInputStream(new FileInputStream("app.ser")));
 14       Layer layer = (Layer) oiss.readObject();
 15
 16       Neuron[] neurons = layer.getNeurons();
 17       double[][] weights = new double[outNum][layNum];
-18       double[][] transposeWeights =
-   new double[layNum][outNum];
+18       double[][] transposeWeights = new double[layNum][outNum];
 19
 20       for(int index = 0; index < neurons.length; index++) {
-21         transposeWeights[index] =
-neurons[index].getWeight();
+21         transposeWeights[index] = neurons[index].getWeight();
 22       }
 23
 24       for(int i = 0; i < transposeWeights.length; i++) {
-25         for(int j = 0;
-        j < transposeWeights[i].length; j++) {
+25         for(int j = 0; j < transposeWeights[i].length; j++) {
 26           weights[j][i] = transposeWeights[i][j];
 27         }
 28       }
@@ -1386,9 +1379,7 @@ neurons[index].getWeight();
 30       int index = 0;
 31       for(double[] z : weights) {
 32         File file = new File("images/" + index + ".png");
-33         BufferedImage bufferedImage =
-   new BufferedImage(column, row,
-       BufferedImage.TYPE_INT_RGB);
+33         BufferedImage bufferedImage = new BufferedImage(column, row, BufferedImage.TYPE_INT_RGB);
 34         Graphics2D g2d = bufferedImage.createGraphics();
 35         double max = getMax(z);
 36         double min = getMin(z);
@@ -1396,8 +1387,7 @@ neurons[index].getWeight();
 38         int ind = 0;
 39         for (int x = 0; x < column; x++) {
 40           for (int y = 0; y < row; y++) {
-41             int col = (int) (255 - ((z[ind] - min)
-                                    / diff * 255));
+41             int col = (int) (255 - ((z[ind] - min) / diff * 255));
 42             g2d.setColor(new Color(col, col, col));
 43             g2d.fillRect(x, y, 1, 1);
 44             ind++;

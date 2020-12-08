@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Building Neural Networks From Scratch</title>
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&Montserrat:wght@300&display=swap');
+
         @media only screen and (max-width: 550px) {
             p, ol, ul, li {
                 font-size: 24px;
@@ -33,10 +35,16 @@
             }
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        .imageDiv {
+            background-image: url("cover/image.png");
+            padding-top: 80px;
+            padding-bottom: 80px;
+            width: 100%;
+            margin: 0;
+        }
 
         body {
-            background-image: url("cover/image.png");
+            margin: 0;
         }
 
         h1 {
@@ -44,7 +52,7 @@
             text-align: center;
         }
 
-        h3, p {
+        h3, p, h2 {
             font-family: "Amiri";
         }
 
@@ -69,6 +77,7 @@
 
         a {
             transition: color 800ms;
+            color: black;
         }
 
         a:visited {
@@ -93,31 +102,97 @@
             font-size: 15px;
             text-align: center;
         }
+
+        .writtenContent h2 {
+            margin-left: 80px;
+            margin-top: 40px;
+        }
+
+        .writtenContent p {
+            margin-left: 120px;
+        }
+
+        .review {
+            width: 100%;
+            height: 400px;
+            display: block;
+        }
+
+        .review .response {
+            color: black;
+        }
+
+        .review:nth-child(1) {
+            background-color: #fff5c2;
+            color: #ffbb05;
+        }
+
+        .review:nth-child(2) {
+            background-color: #c2dcff;
+            color: #0c5dc9;
+        }
+
+        .review:nth-child(3) {
+            background-color: #d0edb2;
+            color: #61a120;
+        }
+
+        .text-content {
+            padding: 20px 40px 20px 40px;
+            text-align: center;
+            background-color: white;
+            border-radius: 40px;
+            width: 85%;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: "Montserrat" !important;
+            height: 75%;
+        }
     </style>
 </head>
 <body>
-    <div id="visible">
-        <h1>Building Neural Networks from Scratch</h1>
-        <div id="continue">
-            <button id="button" onclick="location.href = 'content.html';">Start Reading!</button>
+    <div class="imageDiv">
+        <div id="visible">
+            <h1>Building Neural Networks from Scratch</h1>
+            <div id="continue">
+                <button id="button" onclick="location.href = 'content.html';">Start Reading!</button>
+            </div>
+            <p>In this mini-book, you will(hopefully) learn about different neural network structures. By the end of the book,
+                I hope you also will have a solid conceptual understanding of how neural networks function.</p><aside><p>NOTE:
+                This book is not written by a data scientist, please do contact me if you find mistakes that should be fixed,
+                thanks! I also welcome <a href="https://forms.gle/U9yQyfQcAQZ8mDRF9" target="_blank">suggestions and tips</a>
+                that could be added to different sections of the book. See the contact
+                for more information!</p></aside><p>I will briefly go through some necessary formulas and equations, but will mainly
+                stick to broad definitions that are comprehendible to even middle school students(I’ll try!). Some topics are well
+                beyond those taught in middle school, so you may want to look at more thorough and step-by-step walkthroughs on the
+                topics on platforms like <a href="https://khanacademy.org/" target="_blank">Khan Academy</a>.
+                As you go through this book, you will also encounter several different projects and real-world problems that I will
+                walk you through and solve. I highly recommend you take a try at solving them beforehand! Solutions that I give may
+                not be the best and most state-of-the-art, so you can also try and tweak it a bit to make it better! I will try to
+                add some optimizations to the code to make it faster and more efficient and give you a summary of what state-of-the-art
+                methods data scientists now use. All code in this book is either pseudocode or written in Java, so you should be able to
+                roughly interpret it if you have learned any C-like programming languages! You don’t need to learn one right away to
+                continue reading either… I provide detailed explanations of each line of code. You can also find it all on
+                <a href="https://github.com/JC-ProgJava/Building-Neural-Networks-From-Scratch" target="_blank">GitHub</a> (with this book).</p>
         </div>
-        <p>In this mini-book, you will(hopefully) learn about different neural network structures. By the end of the book,
-            I hope you also will have a solid conceptual understanding of how neural networks function.</p><aside><p>NOTE:
-            This book is not written by a data scientist, please do contact me if you find mistakes that should be fixed,
-            thanks! I also welcome <a href="https://docs.google.com/forms/d/e/1FAIpQLSc-JrIBxMqlcOyLN6rgmhH5AVhNEj7LlJPhQTQk9zrbYG4Uhg/viewform" target="_blank">suggestions and tips</a>
-            that could be added to different sections of the book. See the contact
-            for more information!</p></aside><p>I will briefly go through some necessary formulas and equations, but will mainly
-            stick to broad definitions that are comprehendible to even middle school students(I’ll try!). Some topics are well
-            beyond those taught in middle school, so you may want to look at more thorough and step-by-step walkthroughs on the
-            topics on platforms like <a href="https://khanacademy.org/" target="_blank">Khan Academy</a>.
-            As you go through this book, you will also encounter several different projects and real-world problems that I will
-            walk you through and solve. I highly recommend you take a try at solving them beforehand! Solutions that I give may
-            not be the best and most state-of-the-art, so you can also try and tweak it a bit to make it better! I will try to
-            add some optimizations to the code to make it faster and more efficient and give you a summary of what state-of-the-art
-            methods data scientists now use. All code in this book is either pseudocode or written in Java, so you should be able to
-            roughly interpret it if you have learned any C-like programming languages! You don’t need to learn one right away to
-            continue reading either… I provide detailed explanations of each line of code. You can also find it all on
-            <a href="https://github.com/JC-ProgJava/Building-Neural-Networks-From-Scratch" target="_blank">GitHub</a> (with this book).</p>
     </div>
+    <div class="writtenContent">
+        <h2>Tips & Thanks</h2>
+        <p>Currently none, you can have your feedback and review written here if you fill this <a href="https://forms.gle/c9oB2PgWgAEwkKrEA" target="_blank">form</a>!</p>
+        <br>
+    </div>
+    <!--
+    <div>
+        <div class="review">
+            <br>
+            <div class="text-content">
+                <h3>JC-ProgJava</h3>
+                <p>This is a book on Neural Networks, I hope you enjoyed it!</p>
+            </div>
+        </div>
+        <div class="review"></div>
+        <div class="review"></div>
+    </div>
+    -->
 </body>
 </html>
