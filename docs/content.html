@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contents</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        @media only screen and (max-width: 550px) {
+        @media only screen and (max-width: 800px) {
             #stat {
                 display: block;
                 width: 85% !important;
@@ -21,7 +22,7 @@
             }
 
             ol, ul, li {
-                margin-left: 20px !important;
+                margin-left: 10px !important;
                 font-family: "Amiri";
                 line-height: 1.8;
             }
@@ -41,7 +42,7 @@
             z-index: 1000;
         }
 
-        nav h1 {
+        nav a {
             text-align: center;
             font-family: "Amiri";
         }
@@ -64,13 +65,23 @@
         }
 
         ol, ul, li {
+            overflow-wrap: anywhere;
             margin-left: 40px;
             font-family: "Amiri";
             line-height: 2.5;
         }
 
+        li {
+            padding: 18px;
+        }
+
         ol ul li {
             font-weight: 500;
+            padding: 0px;
+        }
+
+        ol ul {
+            padding: 0px;
         }
 
         ol li {
@@ -80,7 +91,7 @@
         #stat {
             font-family: "Amiri";
             background: rgb(2,0,36);
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(151,151,224,1) 0%, rgba(0,212,255,1) 100%);
+            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(231,236,139,1) 0%, rgba(255,166,0,1) 100%);
             border-radius: 20px;
             padding: 10px 20px 10px 20px;
             width: 150px;
@@ -90,7 +101,7 @@
         }
 
         #stat h4 {
-            color: rgb(51, 51, 100);
+            color: black;
         }
 
         #stat p {
@@ -104,8 +115,7 @@
         .collapsible {
           color: #444;
           cursor: pointer;
-          padding: 18px;
-          width: 100%;
+          width: 90%;
           border: none;
           text-align: left;
           outline: none;
@@ -134,7 +144,7 @@
     </nav>
 
     <div id="stat">
-        <h4>Read count</h4>
+        <h4>View count</h4>
         <p id="count">-----</p>
     </div>
     <ol>
@@ -152,7 +162,7 @@
             <a href="cover.html">Cover</a>
         </li>
         <li class="collapsible">
-            <a href="preface.html">Preface</a>
+            <a href="preface.html">Preface ✨ Updated! ✨</a>
         </li>
         <ul class="content">
             <li>
@@ -341,11 +351,36 @@
                     </li>
                 </ul>
             </ul>
+            <li>
+                <a href="task1.html#summary">Chapter Summary</a>
+            </li>
         </ul>
 
         <li class="collapsible">
-            <a>Overfitting and Underfitting - Under progress! 🙂</a>
+            <a href="fitting.html">Overfitting and Underfitting - ✨ New ✨</a>
         </li>
+        <ul class="content">
+            <li>
+                <a href="fitting.html#overfitting">Overfitting</a>
+            </li>
+            <li>
+                <a href="fitting.html#lsm">Least Squares Method</a>
+            </li>
+            <ul>
+                <li>
+                    <a href="fitting.html#lsm-py">lsm.py</a>
+                </li>
+                <li>
+                    <a href="fitting.html#lsm-java">lsm.java</a>
+                </li>
+            </ul>
+            <li>
+                <a href="fitting.html#underfitting">Underfitting</a>
+            </li>
+            <li>
+                <a href="fitting.html#summary">Chapter Summary</a>
+            </li>
+        </ul>
 
         <li class="collapsible">
             <a>Validation Datasets - Under progress! 🙂</a>
