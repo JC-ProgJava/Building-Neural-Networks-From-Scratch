@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recognizing Digits</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <link rel="stylesheet" type="text/css" href="prism.css">
@@ -452,7 +453,7 @@ Line 130: Return the neurons in the current layer to the caller. Used for the la
 55
 56        if (connectTo != null) {
 57          for (int index = 0; index < connectTo.length; index++) {
-58          	connectTo[index].setInput(this.getResult(index));
+58            connectTo[index].setInput(this.getResult(index));
 59          }
 60        }
 61      }
@@ -584,7 +585,7 @@ Line 32:
     Epoch: 1000.
     Objective: make the network learn the dataset with 10 sets of inputs. Roughly 1000 epochs are needed to make the desired output neuron output 0.9 or higher. The input is set using </span><p class="functionBlue">setInput</p><p class="codeword">()</p><span> and target using </span><p class="functionBlue">setTarget</p><p class="codeword">()</p><span>. The layer learns when the </span><p class="functionBlue">learn</p><p class="codeword">()</p><span> function is called.
 Line 40: View our result! Run through each of the input sets and see our network's classification result. Should look like:</span></div>
-<code style="white-space: pre; text-align: center;">
+<code style="margin: auto; width: 50%; white-space: pre; text-align: center;">
 0
 1
 2
@@ -595,7 +596,7 @@ Line 40: View our result! Run through each of the input sets and see our network
 7
 8
 9
-<p class="functionBlue">Process finished with exit code 0</p>
+<p class="functionBlue">Process finished with exit code 0</p><br>
 </code>
 <div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 45: Get the answer. E.g., 5, 3, 4... instead of an array of values between 0 and 1. This method is not stored in the </span><p class="codeword">Layer</p><span> class because it is more convenient for the programmer to define the output of the network given a set of values that each output neuron outputs.
@@ -1426,7 +1427,7 @@ Line 1: Import necessary libraries.
 Line 8-11: Define constants used later on in the program so that it is easily changeable.
 Line 13: Read the </span><p class="codeword">Layer</p><span> class so that weights can be obtained.
 Line 20-28: First collect all weights as a multidimensional array, then transpose the array so that it is more usable and easier to loop through later on.
-Line 31-50: Write each image by finding the range of the weights and judging the weight’s importance relatively, and then filling a pixel with the same rgb values to get a grayscale image.
+Line 31-50: Write each image by finding the range of the weights and judging the weight’s importance relatively, and then filling a pixel with the same RGB values to get a grayscale image.
 Line 53-61: Get the maximum weight value from an array.
 Line 63-71: Get the minimum weight value from an array.
 </span></div>
@@ -1446,9 +1447,42 @@ Line 63-71: Get the minimum weight value from an array.
     <p class="caption">T1-9 - A visualization of weights from our trained network</p>
     <p>These don’t quite look like the ones we saw previously, but you still can see some
         patterns in them. For now, head on to the next chapter!</p>
+
+    <h3 id="summary">Chapter Summary</h3>
+    <ol>
+        <li>To start training a neural network, we need a <em>learning rate</em>,
+            <em>input neuron number</em>, <em>output neuron number</em>, <em>target array</em>,
+            and <em>epoch number</em>.</li><br>
+        <li>Networks that don’t use a <em>bias</em> or <em>threshold</em>, will instead
+            need to use an <em>activation function</em>.</li><br>
+        <li>Making adaptable networks is an ideal practice.</li><br>
+        <li>Java includes methods to <em>serialize</em> and <em>deserialize</em> objects,
+            which can be used to save models. If you are using another programming
+            language, you may have to manually create a file including all weight (and
+            bias if necessary) values.</li><br>
+        <li>Images can be resized before being given to a network in order to fit all input
+            values into the number of input neurons in the network.</li><br>
+        <li>The MNIST dataset is a collection of 70,000 handwritten digits that are labeled
+            manually to ensure accuracy.
+            You can find it at <a target="_blank" href="http://yann.lecun.com/exdb/mnist/">http://yann.lecun.com/exdb/mnist/</a>.
+            Here is the one I used in the Challenge section: <a target="_blank" href="https://github.com/JC-ProgJava/Digit-Recognition/releases/download/Version0">https://github.com/JC-ProgJava/Digit-Recognition/releases/download/Version0</a>.</li><br>
+        <li>The Google Dataset Search tool is also another handy tool that can be used to
+            search for datasets. Link: <a href="https://datasetsearch.research.google.com/" target="_blank">https://datasetsearch.research.google.com/</a>.</li><br>
+        <li>100% accuracy on datasets is impossible without <em>overfitting</em> a network.
+            A model overfits when:</li>
+        <ul>
+            <li>The training accuracy(accuracy of learning the training dataset) is much
+                higher than the testing accuracy(accuracy of testing dataset, which the
+                network has never seen before)</li>
+            <li>The output of the network is too certain(seen above: \([1, 0]\)).</li>
+        </ul><br>
+        <li>You can visualize weights by color-coding them from having the smallest
+            impact to having the biggest.</li>
+    </ol>
+
     <br>
     <button onclick="location.href = 'networksAndLearning.html';">Previous Chapter</button>
-    <!--<button onclick="location.href = 'FILENOTKNOWN.html';">Next Chapter</button>-->
+    <button onclick="location.href = 'fitting.html';">Next Chapter</button>
 </div>
 </body>
 </html>

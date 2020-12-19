@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overfitting and Underfitting</title>
+    <link rel="stylesheet" type="text/css" href="prism.css">
+    <script src="prism.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="book.css" type="text/css">
+    <style>
+        table, td, th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            font-weight: normal;
+            text-align: center;
+            margin: auto;
+            line-height: 1.8;
+        }
+
+        td, th {
+            padding: 10px 20px 10px 20px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="index.html">
+        <h1>Building Neural Networks from Scratch</h1>
+    </a>
+</nav>
+<div id="visible">
+    <h2>Chapter 5 - Overfitting and Underfitting</h2>
+    <h4 class="quote">“Those who don’t believe in magic will never find it.”<br>— The Minpins by Roald Dahl</h4>
+    <p>In the previous chapter, I mentioned briefly the issue of <em>overfitting</em> and
+        <em>underfitting</em>, which I want to go over quickly in this chapter.</p>
+    <h3 id="overfitting">Overfitting</h3>
+    <p>First of all, what is <em>overfitting</em>? In its simplest terms, <em>overfitting</em>
+        refers to a model that has been <em>overly fitted</em>. This sounds kind of pointless,
+        somewhat like saying an <em>overreaction</em> is an <em>over</em>[exaggerated]
+        <em>reaction</em>, so let me further explain what I mean. <em>Fitting</em> a model can
+        be thought of as finding ideal values for different variables in the network, like
+        the <em>weight</em> and <em>bias</em> through a learning process because variables
+        are <em>fitted</em> with values that help them <em>generalize</em> a given set of
+        training data as well as possible to achieve the highest accuracy on a testing dataset.
+        This is somewhat analogous to fitting a new shoe: you try out a few different sizes and
+        see which one you like best/find most comfortable. Therefore, <em>overly fitting</em>
+        a model makes the model have <em>too ideal</em> values. What this means is that the
+        model is starting to generate a “bias” on the training dataset, making it classify
+        the training dataset with <em>unexpectedly high</em> accuracy. Referring back to the
+        previous analogy, this is like making a shoe that will only fit <em>one</em>
+        person in the <em>whole world</em>. This is bad because it’s not a good marketing
+        decision… So if we go right back to my definition, an <em>overly fitted</em>
+        model will be too specific when classifying the testing dataset, which causes the
+        model to have an <em>unexpectedly low</em> model accuracy. To see why, I used an
+        example in the previous chapter which I want to make as a generalized definition
+        below:</p>
+    <div class="definition">
+        <p class="definition title"><em><strong>Overfitting</strong></em></p>
+        <em>A model can overfit, which is simply where the model starts making too
+            detailed or sophisticated assumptions on how to separate different objects.</em>
+        <p>For example, a model trying to classify apples and oranges is
+            <em>overfitted</em> if it classifies oranges as “an object that is orange and
+            perfectly round” just because the training dataset consists of hundreds of examples
+            of perfectly-round oranges.</p>
+    </div>
+    <p>We can tell when a model <em>overfits</em> if a few of the following are true:</p>
+    <ul>
+        <li>The training accuracy(accuracy of learning the training dataset) is much higher
+            than the testing accuracy(accuracy on testing dataset, which the network has never
+            seen before).</li>
+        <li>The output of the network is too certain when classifying training examples
+            (e.g., \([1, 0]\)).</li>
+    </ul>
+    <p>For example, let’s say we are given a set of points on a graph, and we are to use a
+        neural network to predict a value \(y\) for a new input value \(x\). You may instantly
+        think of the equation \(f(x) = y\) when I assign the values to their respective
+        variables, which is good! Neural networks are somewhat like a function given an input,
+        that gives you an output in this sense! But, they shouldn’t exactly predict values like
+        functions, if they did, the network must be overfitted.</p>
+    <p>This must sound vague, so let’s go ahead with an example. Let’s say we wanted to predict
+        values for a given dataset-table below:</p>
+    <table id="data">
+        <tr>
+            <th>\(x\) Values</th>
+            <th>\(y\) Values</th>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>4.5</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>7.6</td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>6</td>
+        </tr>
+    </table>
+    <p class="caption">Figure 5-1: A dataset consisting of various inputs and outputs.</p>
+    <p>You may also like to see a visualization of it:</p>
+    <img style="width: 60%;" src="Images/overfitEx1.jpg">
+    <p class="caption">Figure 5-2: A visualization of the dataset given above.</p>
+    <p>Here, we see that the values we are trying to approximate show a weak positive
+        correlation between the input and output. Therefore, we can conclude the function
+        <em>can</em> be approximated. Without the use of neural networks, datasets like the
+        above are usually approximated using a <em>line of best fit</em>.
+        <a target="_blank" href="https://en.wikipedia.org/wiki/Line_fitting">Wikipedia</a>
+        has a whole <em>list</em> of various algorithms to fit lines, so let’s go over one
+        of them and see if we compare and contrast the algorithm with a neural network’s
+        learning algorithm.</p>
+    <h3 id="lsm">Least Squares Method</h3>
+    <p>The least squares method is defined as below:</p>
+    <p class="indent">Given \((x_{1},\ y_{1}),\ (x_{2},\ y_{2}),\ ...,\ (x_{i},\ y_{i})\), find:</p>
+    <ol class="indent">
+        <li>Let \(\begin{align}\smash{X = \sum_{n\ =\ 1}^{i}{x_{n}}}\end{align}\), and
+            \(\begin{align}\smash{Y = \sum_{n\ =\ 1}^{i}{y_{n}}}\end{align}\).</li><br>
+        <li>Let \(\bar{x} = X\div i\), and \(\bar{y} = Y\div i\).</li><br>
+        <li>Find \(\begin{align}\smash{\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})(y_{n} - \bar{y})}}\end{align}\),
+            and divide it by \(\begin{align}\smash{\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})^2}}\end{align}\).</li><br>
+        <li>Find y-intercept by evaluating \(\bar{y}-k\bar{x}\), where \(k\) is the value
+            computed in step 3.</li><br>
+        <li>The line of best fit should be: \(y = kx + (\bar{y} - k\bar{x})\), or \(y = kx + c\), where \(c = \bar{y} - k\bar{x}\).</li>
+    </ol>
+    <p>Given this five-step algorithm to computing a line of best fit, we can try it on
+        our dataset above and see what it outputs!</p>
+    <ol>
+        <li>\(X=2+3+5+6+7+8+9+10\), \(Y=2+4+3+4.5+6+5+7.6+6\)<br>
+            \(X=50\) <br>
+            \(Y=38.1\)</li><br>
+        <li>\(\bar{x}=X\div {8}\), \(\bar{y}=Y\div {8}\) <br>
+            \(\bar{x}=50\div{8}\), \(\bar{y}=38.1\div{8}\) <br>
+            \(\bar{x}=6.25\) <br>
+            \(\bar{y}=4.7625\)</li> <br>
+        <li>\(\begin{align}\smash{\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})(y_{n}-\bar{y})=(2-6.25)(2-4.7625)\,+\,...\,=30.275}}\end{align}\) <br><br>
+            \(\begin{align}\smash{\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})^{2}=(2-6.25)^{2}\,+\,...\,=55.5}}\end{align}\)</li><br>
+        <li>\(\bar{y}-k\bar{x}=4.7625 - 0.545495495 \times 6.25 \approx 1.353\)</li><br>
+        <li>\(y \approx 0.545x+1.353\)</li>
+    </ol>
+    <p>Graphing this equation, we get:</p>
+    <img style="width: 60%;" src="Images/overfitExApprox.jpg">
+    <p class="caption">Figure 5-3: Approximation of example dataset using the least squares method.</p>
+    <p>You might feel that this algorithm is quite complex, but after we split it into 5 steps,
+        you’ll find it a lot easier to understand! Some readers thought that I
+        <em>manually</em> calculated these values with an old-fashioned calculator, but do
+        realize that this can be automated using programming languages! Below, I provide an
+        example to do this in Python and Java, along with some explanations.</p>
+    <h5 id="lsm-py" class="keyword">lsm</h5><h5 class="codeword">.py</h5>
+    <br><br>
+    <code class="language-python" style="white-space: pre;">
+01    x = [2.0, 3.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
+02    y = [2.0, 4.0, 3.0, 4.5, 6.0, 5.0, 7.6, 6.0]
+03
+04    xAverage = 0
+05    yAverage = 0
+06
+07    sum1 = 0
+08    sum2 = 0
+09
+10    for i in x:
+11        xAverage += i
+12    for i in y:
+13        yAverage += i
+14
+15    xAverage /= len(x)
+16    yAverage /= len(y)
+17
+18    for i in range(len(x)):
+19        sum1 += (x[i] - xAverage) * (y[i] - yAverage)
+20        sum2 += (x[i] - xAverage) * (x[i] - xAverage)
+21
+22    slope = sum1 / sum2
+23    inter = yAverage - slope * xAverage
+24
+25    print(sum1)
+26    print(sum2)
+27    print(slope)
+28    print(inter)
+29    print(xAverage)
+30    print(yAverage)
+    </code>
+    <p>Output:</p>
+    <code class="indent" style="white-space: pre;"><br>30.275
+55.5
+0.5454954954954955
+1.3531531531531535
+6.25
+4.7625
+
+<p class="functionBlue">Process finished with exit code 0</p>
+    </code>
+    <p>Explanation:</p>
+<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+Line 1-2: Note that I put '.0' behind every whole number in the arrays to make sure the Python interpreter understands that I want floating-point precision (the </span><p class="codeword">x</p><span> array are all whole numbers).
+Line 4-5: Initialize the variables that store the average of all input and output values as two different arrays. These values are to be used later on in the program.
+Line 7-8: Store values for the summation equations in Step 3 of the algorithm.
+Line 10-13: Accomplish Step 1 in the algorithm: add all input and output values into two separate arrays.
+Line 15-16: Do Step 2 of the algorithm: find the average of the input and output values by dividing the summation of all values in the two arrays by the number of items in the array.
+Line 18-22: Do Step 3 of the algorithm and find the slope of the <em>line of best fit</em> by dividing the values from the two summations.
+Line 23: Find the y-intercept by enforcing Step 4 of the algorithm.
+Line 25-30: Print out the values that we are interested in.
+</span></div>
+    <p>The Java example follows the same thought and step process, so I won’t go over another
+        almost-duplicate explanation this time.</p>
+    <h5 id="lsm-java" class="keyword">lsm</h5><h5 class="codeword">.java</h5>
+    <br><br>
+    <code class="language-java" style="white-space: pre;">
+01    public class lsm {
+02      public static void main(String[] args) {
+03        double[] x = {
+04                2.0, 3.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0
+05       };
+06
+07        double[] y = {
+08                2.0, 4.0, 3.0, 4.5, 6.0, 5.0, 7.6, 6.0
+09       };
+10
+11        double xAverage = 0;
+12        double yAverage = 0;
+13        double sum1 = 0;
+14        double sum2 = 0;
+15
+16        for (double val : x) {
+17          xAverage += val;
+18        }
+19
+20        for (double val : y) {
+21          yAverage += val;
+22        }
+23
+24        xAverage /= x.length;
+25        yAverage /= y.length;
+26
+27        for (int i = 0; i < x.length; i++) {
+28          sum1 += (x[i] - xAverage) * (y[i] - yAverage);
+29          sum2 += (x[i] - xAverage) * (x[i] - xAverage);
+30        }
+31
+32        double slope = sum1 / sum2;
+33        double inter = yAverage - slope * xAverage;
+34
+35        System.out.println(sum1);
+36        System.out.println(sum2);
+37        System.out.println(slope);
+38        System.out.println(inter);
+39        System.out.println(xAverage);
+40        System.out.println(yAverage);
+41      }
+42    }
+    </code>
+    <p>So now that we have found another way to approximate output pairs in this example,
+        how is it related to a neural network? Firstly, a neural network with a single layer
+        has the ability to approximate or classify in linear form, which means that training
+        a network helps the network create a <em>line of best fit</em>. Therefore, you can
+        analogically imply that <em>multiple</em> layers of a network would approximate
+        functions in higher <em>dimensions</em>, or with a higher degree/index. This means
+        that a multi-layer neural network is able to create more sophisticated approximations,
+        and are therefore almost always better than single-layer networks. We <em>want</em>
+        our network to create a <em>line of best fit</em>, because this is the most ideal way
+        to approximate a set of data without having <em>bias</em>. Sometimes, you may hear
+        news that tells you of biases in artificial intelligence and network models.
+        This is caused by a <em>lack of general data</em>, which is where there isn’t enough
+        data across all categories the network was intended to classify. For example, this is
+        like training a network with images of cats and expecting it to recognize a dog with a
+        high degree of accuracy. You’ve <em>never shown</em> the network a picture of a dog:
+        it doesn’t <em>know</em> what a dog looks like, so it can’t classify them, which makes
+        networks produce a “guessed” result, or provides one that is uncertain(perhaps
+        \([0.57,\ 0.43]\) instead of \([0.97,\ 0.03]\)). Other times, “biased” networks are
+        created when data is improperly shuffled or the error rate of the network just peaked
+        on the last epoch of training. When data is improperly shuffled, the network isn’t
+        given an adequate amount of examples of some of the things it is meant to classify or
+        approximate. For example, this is like giving a short section of a function to the
+        network that doesn’t entirely <em>define</em> the function. Or, giving more examples
+        of cats than dogs in the training dataset, which makes it harder for the network to
+        classify dogs. To prevent or avoid these problems, people give a more general training
+        dataset: instead of presenting a small part of a function to the network, cover
+        <em>most</em> of the function, and leave gaps in between data points; instead of giving
+        6000 images of cats and 4000 images of dogs in the training set, give 5000 images of each
+        and shuffle their order. If we wanted our network to make a <em>line of best fit</em>,
+        then overfitting would make the <em>line of best fit</em> “<em>fit too much</em>” on the
+        training data.</p>
+    <p>For example, this is what would happen when a multi-layer network <em>overfits</em>
+        when training to approximate the below dataset:</p>
+    <img src="Images/overfit-function.jpg">
+    <p class="caption">Figure 5-4: Graphical representation of overfitted approximations from networks.</p>
+    <p>First of all, why is this considered as overfitting? All data points are connected to
+        each other, which means that the network is starting to “assign” values for each data
+        point. This means that if you were to ask for an output value when \(x = 12\),
+        you’ll almost certainly obtain a different (random) number every time. It is because
+        of this, that <em>overfitted</em> neural networks have a low testing and high training
+        accuracy. Instead, we want our network to approximate somewhat like this:</p>
+    <img src="Images/good-network-approx.jpg">
+    <p class="caption">Figure 5-5: A better approximation of a function by a neural network.</p>
+    <p>If you wonder how I created these graphs, visit the website
+        <a target="_blank" href="https://www.desmos.com/calculator">Desmos</a>. There, you can
+        actually play around with parameters and see how they affect the graphical representation.</p>
+    <p>Above, you can see that the line doesn’t perfectly match the data points on the graph,
+        but instead loop through them. This is the result that we want to achieve with our
+        neural network: we don’t want our network to be too specific or too abstract. For a
+        neural network achieving the above result, the testing accuracy should be relatively
+        higher because the network has <em>suggestions</em> on what the function will look
+        like to the left and right of the range of the training dataset.</p>
+    <p>Now, you might as well wonder: why do networks sometimes <em>overfit</em>? What is
+        the cause of <em>overfitting</em>? The answer is actually quite simple: in Chapter 4
+        (Neural Networks and Learning), we talked about the various parameters like the
+        <em>learning rate</em> and in the first Task, and introduced <em>epochs</em>.
+        Networks are usually <em>overfitted</em> if they have been training over an
+        <em>excessive</em> amount of <em>epochs</em> under a <em>very</em> small learning rate.
+        Why is this? In Chapter 4, I mentioned that finding an ideal learning rate should get you
+        more efficiently to the <em>minimal loss</em> or <em>error</em>. If we plot the error of
+        the network over the training and testing dataset, we should find the training accuracy of
+        the network is higher than the testing accuracy. Overfitting, on the other hand, would be
+        like achieving the <em>global minimum loss</em> on the training dataset. This is not good,
+        because the network starts being <em>biased</em> towards the examples in the training
+        dataset, somewhat like <em>familiarizing</em> the network with training examples and telling
+        it that all examples are the same as the ones given. Instead, we want to achieve an
+        <em>error rate</em> close to but not <em>at</em> the <em>global minimum loss</em>.
+        But quite often, that <em>global minimum</em> for the <em>loss</em> or <em>error</em> of
+        a network cannot be achieved, which is why not every network <em>overfits</em>. Next,
+        an <em>excessive amount</em> of <em>epochs</em> affects the accuracy a network <em>obtains</em>.
+        For example, in Task 1, if you tried various other epoch numbers for the challenge, you’ll
+        realize that you can actually get a higher accuracy by increasing the number of epochs and
+        also decreasing the learning rate, until you get to the point where the difference is
+        noticeable. This increase in accuracy is because the network starts taking more
+        <em>careful small</em> steps, towards a <em>minimum loss</em>, so it is less likely to
+        accidentally reach a <em>higher loss</em>. You’ll notice that the smaller your
+        <em>learning rate</em> is, and the bigger your <em>epoch number</em> is, the closer
+        you get to that global minimum for your training dataset, which <em>increases</em>
+        the likelihood of overfitting.</p>
+    <h3 id="underfitting">Underfitting</h3>
+    <p>So what is <em>underfitting</em>? It is somewhat the <em>opposite</em> of
+        <em>overfitting</em>! Here, I’ll give a definition like I did for <em>overfitting</em>.</p>
+    <div class="definition">
+        <p class="definition title"><em><strong>Underfitting</strong></em></p>
+        <em>A model can underfit, which is simply where the model makes too general or
+            abstract assumptions on how to separate different categories or approximate
+            functions.</em>
+        <p>For example, a model trying to classify apples and oranges is <em>underfitted</em>
+            if it gives incorrect general assumptions, like saying oranges are “usually green”.</p>
+    </div>
+    <p>Well… I’m sure that example confused you quite a lot! So, let’s think about it: first
+        of all, why would a model <em>make too general or abstract assumptions to classify or regress</em>?
+        Second, what does this imply? To answer these questions, let’s turn to our definition of
+        overfitting and define underfitting alongside it. Here, I provide a comparison between the
+        two, and further define underfitting:</p>
+    <table>
+        <tr>
+            <th>Overfitting</th>
+            <th>Underfitting</th>
+        </tr>
+        <tr>
+            <td>Model makes too specific assumptions to regress or classify.</td>
+            <td>Model makes too abstract and often incorrect assumptions to regress or classify.</td>
+        </tr>
+        <tr>
+            <td>Training accuracy is much higher than testing accuracy.</td>
+            <td>Neither training accuracy or testing accuracy is high.</td>
+        </tr>
+        <tr>
+        <tr>
+            <td>Because of a very low learning rate and a large number of epochs.</td>
+            <td>Because of an inadequate amount of epochs and perhaps a high learning rate value.</td>
+        </tr>
+        <tr>
+            <td>Occurs more than underfitting.</td>
+            <td>Occurs less than overfitting.</td>
+        </tr>
+    </table>
+    <p>So what does this imply? First of all, this implies that underfitting is somewhat like
+        a model learning too less from the training dataset and overfitting is somewhat like a
+        model learning “too much” from the training dataset. Since underfitting is caused by a
+        high learning rate and/or inadequate amount of epochs, then this implies that the
+        model’s <em>weights</em> and <em>biases</em> are closer to their initialized and
+        random value than to their ideal values. Usually, models can <em>overfit</em>,
+        which often results in slightly lower accuracy. But sometimes, models can
+        <em>underfit</em>, which can result in even lower accuracy levels. But, why does
+        <em>underfitting</em> not occur as much as <em>overfitting</em>? Models <em>overfit</em>
+        more than <em>underfit</em> because operators who train models understand that the
+        learning rate of a model has to be smaller (usually) than 0.5 or 1, and epoch numbers
+        need to be greater than 5 at least. This means, there are certain benchmarks out there
+        that work well to prevent underfitting in all types of network models. But, there aren’t
+        a lot of guidelines on how to choose a learning rate that is not too small and an epoch
+        number that is not too big. There aren’t a lot of these guidelines (for avoiding
+        overfitting) because results aren’t consistent between different model use cases, so
+        people end up not venturing into the unknown.</p>
+    <p>This tradeoff between accuracy and generalization ability has a sophisticated name
+        stuck to it: <em>bias-variance tradeoff</em>, and is one of the many problems
+        practitioners of data science and artificial intelligence are facing in the real
+        world.</p>
+    <p>That’s just about all I wanted to say! Take a look at the Chapter Summary and head
+        on to the next chapter!</p>
+    <h3 id="summary">Chapter Summary</h3>
+    <ol>
+        <li>A model can overfit, which is simply where the model starts making too detailed
+            or sophisticated assumptions on how to regress or classify.</li><br>
+        <li>We can tell when a model overfits if a few of the following are true:</li>
+        <ul>
+            <li>The training accuracy(accuracy of learning the training dataset) is much
+                higher than the testing accuracy(accuracy on testing dataset, which the
+                network has never seen before).</li>
+            <li>The output of the network is too certain when classifying training examples
+                (e.g., \([1,\ 0]\)).</li>
+        </ul><br>
+        <li>The Least Squares Method is one of many linear regression algorithms used to
+            determine a line of best fit. Defined below:</li>
+        <p>Given \((x_{1},\ y_{1}),\ (x_{2},\ y_{2}),\ ...,\ (x_{i},\ y_{i})\), find:</p>
+        <ol class="indent">
+            <li>Let \(\begin{align}\smash{X = \sum_{n\ =\ 1}^{i}{x_{n}}}\end{align}\), and
+                \(\begin{align}\smash{Y = \sum_{n\ =\ 1}^{i}{y_{n}}}\end{align}\).</li><br>
+            <li>Let \(\bar{x} = X\div i\), and \(\bar{y} = Y\div i\).</li><br>
+            <li>Find \(\begin{align}\smash{\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})(y_{n} - \bar{y})}}\end{align}\),
+                and divide it by \(\begin{align}\smash{\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})^2}}\end{align}\).</li><br>
+            <li>Find y-intercept by evaluating \(\bar{y}-k\bar{x}\), where \(k\) is the value
+                computed in step 3.</li><br>
+            <li>The line of best fit should be: \(y = kx + (\bar{y} - k\bar{x})\), or \(y = kx + c\), where \(c = \bar{y} - k\bar{x}\).</li>
+        </ol>
+        <br>
+        <li>Single layer neural networks have the ability to perform <em>linear regression</em>.</li><br>
+        <li>Multiple-layered networks can approximate functions in higher <em>dimensions</em>,
+            or degree/index, therefore creating more sophisticated and accurate approximations.</li><br>
+        <li><em>Bias</em> in networks is caused by a <em>lack of data</em> generalising the use
+            case for the model, an improper shuffling of data, or just by chance when the network
+            stopped training (error rate peaks on last epoch).</li><br>
+        <li>Overfitting is caused by an <em>excessive</em> amount of training <em>epochs</em>
+            and a (too) <em>small learning rate</em>.</li><br>
+        <li>A model can <em>underfit</em>, which is simply where the model makes too general
+            or abstract assumptions on how to regress or classify a given dataset.</li><br>
+        <li><em>Underfitting</em> is caused by an inadequate amount of epochs and a high
+            learning rate.</li><br>
+        <li>The tradeoff between accuracy and generalization ability is known as
+            <em>bias-variance tradeoff</em>, and is a problem that the artificial intelligence
+            community is trying to solve.</li>
+    </ol>
+    <br>
+    <button onclick="location.href = 'task1.html';">Previous Chapter</button>
+    <!--<button onclick="location.href = 'task1.html';">Next Chapter</button>-->
+</div>
+</body>
+</html>

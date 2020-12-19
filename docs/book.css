@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 800px) {
     body {
         overflow-x: hidden;
     }
@@ -76,12 +76,29 @@ button {
 }
 
 aside {
+    line-height: 1.8;
     margin-left: 20px;
     margin-right: 20px;
     padding: 20px 20px 30px 30px;
-    background-color: rgb(240,240,240);
+    background-color: rgb(245, 245, 245);
+    border-radius: 10px;
+}
+
+.definition {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px 20px 30px 30px;
+    background-color: rgb(250, 250, 250);
     border-radius: 10px;
     line-height: 1.8;
+}
+
+.definition .title {
+    text-align: center;
+    font-size: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px 0px 0px 0px;
 }
 
 .quote {
@@ -206,9 +223,10 @@ p {
 
 code {
     font-family: "Source Code Pro";
-    padding: 0px 20px 0px 40px !important;
+    padding: 10px 20px 10px 40px !important;
     display: block;
     border-radius: 30px !important;
+    background: rgb(244, 242, 240);
     overflow-x: scroll;
 }
 
