@@ -1,12 +1,119 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+@font-face {
+  font-family: "Amiri";
+  src: url("fonts/Amiri/Amiri-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Amiri";
+  src: url("fonts/Amiri/Amiri-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Amiri";
+  src: url("fonts/Amiri/Amiri-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Amiri";
+  src: url("fonts/Amiri/Amiri-BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Source Code Pro";
+  src: url("fonts/SourceCodePro/SourceCodePro-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Source Code Pro";
+  src: url("fonts/SourceCodePro/SourceCodePro-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Source Code Pro";
+  src: url("fonts/SourceCodePro/SourceCodePro-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Source Code Pro";
+  src: url("fonts/SourceCodePro/SourceCodePro-BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@media only screen and (min-width: 800px) {
+    p {
+        font-size: 20px;
+    }
+
+    .katex {
+        font-size: 1em;
+    }
+
+    .definition {
+        margin-left: 20px;
+        margin-right: 20px;
+        padding: 20px 20px 30px 30px;
+        background-color: rgb(250, 250, 250);
+        border-radius: 10px;
+        line-height: 1.8;
+        font-size: 20px;
+    }
+
+    .definition .title {
+        text-align: center;
+        font-size: 24px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0px 0px 0px 0px;
+    }
+
+    ul, ol {
+        font-size: 20px;
+    }
+}
 
 @media only screen and (max-width: 800px) {
     body {
         overflow-x: hidden;
     }
 
-    p, ol, ul, li, span {
+    p {
+        font-size: 24px;
+    }
+
+    .definition {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding: 20px 20px 30px 30px;
+        background-color: rgb(250, 250, 250);
+        border-radius: 10px;
+        line-height: 1.8;
+        font-size: 24px;
+    }
+
+    .definition .title {
+        text-align: center;
+        font-size: 24px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0px 0px 0px 0px;
+    }
+
+    ol, ul, li, div span {
         font-size: 24px;
     }
 
@@ -15,7 +122,7 @@
     }
 
     h3 {
-        font-size: 25px;
+        font-size: 30px;
     }
 
     .indent {
@@ -40,6 +147,14 @@
     img {
         width: 90% !important;
     }
+
+    .katex {
+        font-size: 0.7em !important;
+    }
+}
+
+div span {
+    font-size: 20px;
 }
 
 nav {
@@ -84,28 +199,11 @@ aside {
     border-radius: 10px;
 }
 
-.definition {
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 20px 20px 30px 30px;
-    background-color: rgb(250, 250, 250);
-    border-radius: 10px;
-    line-height: 1.8;
-}
-
-.definition .title {
-    text-align: center;
-    font-size: 24px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0px 0px 0px 0px;
-}
-
 .quote {
     margin-left: 95px;
     margin-right: 95px;
     color: rgb(80, 80, 80);
-    font-size: 23px;
+    font-size: 27px;
     font-style: italic;
     font-weight: 400;
 }
@@ -144,11 +242,13 @@ a:visited {
 h1 {
     font-family: "Amiri";
     font-weight: 600;
+    font-size: 30px;
 }
 
 h2 {
     font-family: "Amiri";
     font-weight: 600;
+    font-size: 28px;
 }
 
 .center {
@@ -162,6 +262,7 @@ ul, ol {
 h3 {
     font-family: "Amiri";
     font-weight: 600;
+    font-size: 25px;
 }
 
 h4 {
@@ -174,6 +275,8 @@ h5 {
     font-style: normal;
     font-weight: 300;
     font-size: 25px;
+    margin-block-start: 0.8em;
+    margin-block-end: 0.8em;
 }
 
 p {
@@ -215,6 +318,11 @@ p {
     display: inline;
 }
 
+div.explanation:first-line {
+    margin-top: -1em;
+    line-height: 0px;
+}
+
 .error {
     font-family: "Source Code Pro";
     color: #F50000;
@@ -228,6 +336,7 @@ code {
     border-radius: 30px !important;
     background: rgb(244, 242, 240);
     overflow-x: scroll;
+    font-size: 20px !important;
 }
 
 .globalVar {

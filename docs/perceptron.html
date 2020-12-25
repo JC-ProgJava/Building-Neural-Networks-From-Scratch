@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Perceptron</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Math -->
+    <link rel="stylesheet" href="katex/katex.min.css">
+    <script defer src="katex/katex.min.js"></script>
+    <script defer src="katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+            });
+        });
+    </script>
+
     <link rel="stylesheet" href="book.css" type="text/css">
 </head>
 <body>
@@ -28,8 +38,8 @@
             all of the products be summed together and another constant called the <em>bias</em> was added, for
             which the perceptron would output 1 if the sum was greater than or equal to the threshold,
             and 0 if it was smaller.</p>
-        <p>In mathematical terms, \(\begin{align}t = \smash{\sum^{n}_{k = 1}{w_{k} i_{k}}}\end{align}\),</p>
-        <p>output \(\{^{\ 1,\ b\ +\ t\ >\ \Theta}_{\ 0,\ b\ +\ t\ ≤\ \Theta}\).
+        <p>In mathematical terms, \(t = \displaystyle\sum^{n}_{k\ =\ 1}{w_{k} i_{k}}\),</p>
+        <p>output \(\left\{\begin{array}{l} 1,\ b + t > \Theta \\ 0,\ b + t ≤ \Theta \end{array} \right.\).
             In other words, a perceptron is a unit consisting of something called a <em>weight</em>, which was multiplied
             by the <em>input</em> (sometimes called the <em>activation</em>), and if the product of the two was bigger than a
             number called the threshold, the perceptron would output a 1, or 0 if not.</p>
@@ -76,11 +86,11 @@
             <li>The <em>input</em> to the perceptron is multiplied by the <em>weight</em> and a <em>bias</em> is added. If the result is bigger than another
                 value the <em>threshold</em>, then the perceptron outputs a 1, otherwise, it outputs 0.</li><br>
             <li>The perceptron model was invented by Frank Rosenblatt in 1958.</li><br>
-            <li><p>A perceptron in mathematical terms is: \(\begin{align}t = \smash{\sum^{n}_{k = 1}{w_{k} i_{k}}}\end{align}\),</p>
+            <li><p>A perceptron in mathematical terms is: \(t = \displaystyle\sum^{n}_{k\ =\ 1}{w_{k} i_{k}}\),</p>
                 <p>where the output of the perceptron
-                is \(\{^{\ 1,\ b\ +\ t\ >\ \Theta}_{\ 0,\ b\ +\ t\ ≤\ \Theta}\), where \(w_k\) and \(i_k\) are the weights and inputs at index \(k\) respectively.
+                is \(\left\{\begin{array}{l} 1,\ b + t > \Theta \\ 0,\ b + t ≤ \Theta \end{array} \right.\), where \(w_k\) and \(i_k\) are the weights and inputs at index \(k\) respectively.
                 \(n\) is the total number of weights connected to the perceptron and \(\Theta\) is the threshold value. The output is also alternatively expressed as:
-                \(\{^{\ 1,\ b\ +\ t\ ≥\ \Theta}_{\ 0,\ b\ +\ t\ <\ \Theta}\), which rarely makes a difference to the overall output of the perceptron and the accuracy
+                \(\left\{\begin{array}{l} 1,\ b + t ≥ \Theta \\ 0,\ b + t < \Theta \end{array} \right.\), which rarely makes a difference to the overall output of the perceptron and the accuracy
                 of the neural network.</p></li><br>
             <li>Machine learning is a set of algorithms that finds ideal values for the <em>weights</em>, <em>biases</em>, and <em>threshold</em>.</li><br>
             <li>A threshold is like a line that separates two different sets of labeled inputs.</li><br>

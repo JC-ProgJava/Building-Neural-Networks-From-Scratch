@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contents</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         @media only screen and (max-width: 800px) {
             #stat {
@@ -28,8 +27,61 @@
             }
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+        @font-face {
+          font-family: "Amiri";
+          src: url("fonts/Amiri/Amiri-Regular.ttf") format("truetype");
+          font-weight: normal;
+          font-style: normal;
+        }
+
+        @font-face {
+          font-family: "Amiri";
+          src: url("fonts/Amiri/Amiri-Italic.ttf") format("truetype");
+          font-weight: normal;
+          font-style: italic;
+        }
+
+        @font-face {
+          font-family: "Amiri";
+          src: url("fonts/Amiri/Amiri-Bold.ttf") format("truetype");
+          font-weight: bold;
+          font-style: normal;
+        }
+
+        @font-face {
+          font-family: "Amiri";
+          src: url("fonts/Amiri/Amiri-BoldItalic.ttf") format("truetype");
+          font-weight: bold;
+          font-style: italic;
+        }
+
+        @font-face {
+          font-family: "Source Code Pro";
+          src: url("fonts/SourceCodePro/SourceCodePro-Regular.ttf") format("truetype");
+          font-weight: normal;
+          font-style: normal;
+        }
+
+        @font-face {
+          font-family: "Source Code Pro";
+          src: url("fonts/SourceCodePro/SourceCodePro-Italic.ttf") format("truetype");
+          font-weight: normal;
+          font-style: italic;
+        }
+
+        @font-face {
+          font-family: "Source Code Pro";
+          src: url("fonts/SourceCodePro/SourceCodePro-Bold.ttf") format("truetype");
+          font-weight: bold;
+          font-style: normal;
+        }
+
+        @font-face {
+          font-family: "Source Code Pro";
+          src: url("fonts/SourceCodePro/SourceCodePro-BoldItalic.ttf") format("truetype");
+          font-weight: bold;
+          font-style: italic;
+        }
 
         nav {
             position: sticky;
@@ -69,6 +121,7 @@
             margin-left: 40px;
             font-family: "Amiri";
             line-height: 2.5;
+            font-size: 20px;
         }
 
         li {
@@ -102,6 +155,7 @@
 
         #stat h4 {
             color: black;
+            font-size: 20px;
         }
 
         #stat p {
@@ -109,6 +163,12 @@
             border-radius: 20px;
             padding: 5px 5px 5px 5px;
             font-family: "Source Code Pro";
+        }
+
+        h1 {
+            font-family: "Amiri";
+            font-weight: 600;
+            font-size: 30px;
         }
 
         /* https://www.w3schools.com/howto/howto_js_collapsible.asp */
@@ -427,7 +487,7 @@
 <script>
     const countEl = document.getElementById('count');
 
-    updateVisitCount();
+    //updateVisitCount();
 
     function updateVisitCount() {
         fetch('https://api.countapi.xyz/hit/buildingnnsfromscratch.com/key')

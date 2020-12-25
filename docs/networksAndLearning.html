@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Neural Networks and Learning</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Math -->
+    <link rel="stylesheet" href="katex/katex.min.css">
+    <script defer src="katex/katex.min.js"></script>
+    <script defer src="katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+            });
+        });
+    </script>
+
     <link rel="stylesheet" href="book.css" type="text/css">
     <style>
         .equations {
@@ -73,8 +83,8 @@
     <div style="overflow-x: scroll;">
         <img src="Images/graph1.png">
         <p class="caption">Figure 4.2 - Multivariable Graph Result for the equation:</p>
-        <p class="equations">\(\begin{align}\smash{z = 0.5 + {{cos(sin(|y^{2}\ -\ x^{2}|))^{2}\ -\ 0.5}\over{[1\ +\ 0.001(y^{2}\ +\ x^{2})]^{2}}}
-            + 0.2 \times cos(xy)^{2}}\end{align}\)</p>
+        <p class="equations">\(\displaystyle{z = 0.5 + {{\cos(\sin(|y^{2}\ -\ x^{2}|))^{2}\ -\ 0.5}\over{[1\ +\ 0.001(y^{2}\ +\ x^{2})]^{2}}}}
+            + 0.2 \times \cos(xy)^{2}\)</p>
     </div>
 
     <p>Any other “peaks” or “valleys” that are not the highest and lowest respectively are called local maximums and minimums respectively.

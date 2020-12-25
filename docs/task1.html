@@ -4,10 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recognizing Digits</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <link rel="stylesheet" type="text/css" href="prism.css">
-    <script src="prism.js"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" type="text/css" href="prism/prism.css">
+    <script src="prism/prism.js"></script>
+
+    <!-- Math -->
+    <link rel="stylesheet" href="katex/katex.min.css">
+    <script defer src="katex/katex.min.js"></script>
+    <script defer src="katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+            });
+        });
+    </script>
+
     <link rel="stylesheet" href="book.css" type="text/css">
     <style>
         @media only screen and (max-width: 550px) {
@@ -367,7 +377,7 @@
 133    }
     </code>
     <p>Whoa! Let’s first start with an explanation of what is happening before we continue.</p>
-<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+<div class="indent explanation" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1: This will be our layer class, which does all the work for machine learning.
 Line 2: Store the number of neurons in this layer. Used during for-loops.
 Line 3: Store the number of neurons in the next layer.
@@ -393,6 +403,7 @@ Line 122: Method overriding, used in the </span><p class="functionBlue">sigmoid<
 Line 126: This method returns the value of the derived sigmoid function calculated on an input.
 Line 130: Return the neurons in the current layer to the caller. Used for the layer to access the next layer's neurons.
 </span></div>
+    <br><br>
     <h5 id="neuron-java" class="keyword">Neuron</h5><h5 class="codeword">.java</h5>
     <br><br>
     <code class="language-java" style="white-space: pre;">
@@ -484,7 +495,7 @@ Line 130: Return the neurons in the current layer to the caller. Used for the la
 86    }
     </code>
     <p>Explanation:</p>
-<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+<div class="indent explanation" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1: Java Utilities Array import: used 1 time in </span><p class="annotation">@Override</p><p class="functionBlue"> toString</p><p class="codeword">()</p><span> method below </span><p class="functionBlue">clear</p><p class="codeword">()</p><span>.
 Line 2: Gaussian distribution for weights is done in </span><p class="functionBlue">initialise</p><p class="codeword">()</p><span>, requires the Random package.
 Line 4: This will be our </span><p class="codeword">Neuron</p><span> class, based on the perceptron. Note that I have not included the bias component or threshold component. They are not necessary for the network to classify digits extremely accurately.
@@ -573,7 +584,7 @@ Line 82: Overrides the </span><p class="codeword">Object.</p><p class="functionB
 58      }
 59    }
     </code>
-<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+<div class="indent explanation" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1:
     In this class, we will test our neural network.
     Goal: Classify digits 0-9.
@@ -585,6 +596,7 @@ Line 32:
     Epoch: 1000.
     Objective: make the network learn the dataset with 10 sets of inputs. Roughly 1000 epochs are needed to make the desired output neuron output 0.9 or higher. The input is set using </span><p class="functionBlue">setInput</p><p class="codeword">()</p><span> and target using </span><p class="functionBlue">setTarget</p><p class="codeword">()</p><span>. The layer learns when the </span><p class="functionBlue">learn</p><p class="codeword">()</p><span> function is called.
 Line 40: View our result! Run through each of the input sets and see our network's classification result. Should look like:</span></div>
+<br>
 <code style="margin: auto; width: 50%; white-space: pre; text-align: center;">
 0
 1
@@ -598,7 +610,8 @@ Line 40: View our result! Run through each of the input sets and see our network
 9
 <p class="functionBlue">Process finished with exit code 0</p><br>
 </code>
-<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+<br><br>
+<div class="indent explanation" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 45: Get the answer. E.g., 5, 3, 4... instead of an array of values between 0 and 1. This method is not stored in the </span><p class="codeword">Layer</p><span> class because it is more convenient for the programmer to define the output of the network given a set of values that each output neuron outputs.
 </span></div>
     <p>Well, now we have officially completed our <em>first</em> challenge of making a digit
@@ -1167,7 +1180,7 @@ Line 45: Get the answer. E.g., 5, 3, 4... instead of an array of values between 
 51    }
     </code>
     <p>Explanation:</p>
-<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+<div class="indent explanation" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1 & 2: Import necessary libraries.
 Line 4: Start of </span><p class="codeword">initArray</p><span> class.
 Line 6: Keep track of the current time in milliseconds, then subtract it with the ending time to find the amount of milliseconds elapsed.
@@ -1246,7 +1259,7 @@ Line 48 & 49: Get the time elapsed and print to the console.
 49    }
     </code>
     <p>Explanation:</p>
-<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+<div class="indent explanation" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1 & 2: Import necessary libraries.
 Line 7: Start timing the amount of time it takes to get resources.
 Line 8 & 9: create two layer objects for the learning stage.
@@ -1319,7 +1332,7 @@ Line 46: Print the time (in milliseconds) that elapsed.
 49    }
     </code>
     <p>Explanation:</p>
-<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+<div class="indent explanation" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1-3: Import necessary libraries.
 Line 10: Prepare a list of file paths from 60001.txt to 70000.txt, these will be used to test the network accuracy, not train the network.
 Line 14: Read the layer object from the file we created in </span><p class="keyword">application</p><p class="codeword">.java</p><span>.
@@ -1422,7 +1435,7 @@ Line 35-48: Get the most probable answer from the network output. Since we organ
 72    }
     </code>
     <p>Explanation:</p>
-    <div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+    <div class="indent explanation" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1: Import necessary libraries.
 Line 8-11: Define constants used later on in the program so that it is easily changeable.
 Line 13: Read the </span><p class="codeword">Layer</p><span> class so that weights can be obtained.

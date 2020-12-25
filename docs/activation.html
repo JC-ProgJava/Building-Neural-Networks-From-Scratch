@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activation Functions & Derivatives</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Math -->
+    <link rel="stylesheet" href="katex/katex.min.css">
+    <script defer src="katex/katex.min.js"></script>
+    <script defer src="katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+            });
+        });
+    </script>
+
     <link rel="stylesheet" href="book.css" type="text/css">
     <style>
         .graph {
@@ -56,7 +66,7 @@
         <h3 id="sigmoid">Sigmoid Activation Function</h3>
         <img class="graph" src="Images/sigmoid.jpg">
         <p class="caption">Figure 3.2 - Graph of Sigmoid Activation Function</p>
-        <p>The sigmoid activation function takes the form: \(\sigma(x) = {{1}\over{1 + e^{-\ x}}}\). The range of the function is between
+        <p>The sigmoid activation function takes the form: \(\displaystyle\sigma(x) = {{1}\over{1\ +\ e^{-x}}}\). The range of the function is between
             0 and 1, reaching 0.9 and 0.1 at approximately 2.125 and -2.125 respectively. The sigmoid function is nonlinear and its
             derivative takes the form: \(\sigma'(x) = \sigma(x)(1 - \sigma(x))\), which is important when using various other learning
             algorithms that we will talk about like backpropagation. The Sigmoid Function is commonly used to convert a network’s output
@@ -64,36 +74,36 @@
         <h3 id="tanh">TanH Activation Function</h3>
         <img class="graph" src="Images/tanh.jpg">
         <p class="caption">Figure 3.3 - Graph \sigma\\of Tanh Activation Function</p>
-        <p>The tanh activation function takes the form: \(\sigma(x) = {e^{x}\ -\ e^{-\ x}\over{e^{x}\ +\ e^{-\ x}}}\). You may notice
+        <p>The tanh activation function takes the form: \(\displaystyle\sigma(x) = {e^{x}\ -\ e^{-x}\over{e^{x}\ +\ e^{-x}}}\). You may notice
             that it looks quite similar to the sigmoid activation function because it is actually just a squished version of it: another
             way you can write the tanh activation is: \(\sigma(x) = 2S(2x) - 1\), where \(S(x)\) is the sigmoid function. The derivative
             of the tanh activation function is: \(\sigma\,'(x) = 1 - \sigma(x)^{2}\). In case you didn’t already know, \(e\) refers to
             Euler’s number, and is mathematically</p>
-        <p>expressed as \(\begin{align}\smash{\sum^{\infty}_{n = 0}{1\over{n!}}}\end{align}\), and \(\sigma(x)^{2}\) refers to the square of the
+        <p>expressed as \(\displaystyle\sum^{\infty}_{n\ =\ 0}{1\over{n!}}\), and \(\sigma(x)^{2}\) refers to the square of the
             result of the tanh activation function.</p>
         <h3 id="relu">ReLU Activation Function</h3>
         <img class="graph" src="Images/relu.jpg">
         <p class="caption">Figure 3.4 - Graph of ReLU Activation Function</p>
-        <p>By far the least computationally expensive, the ReLU activation function takes the form: \(\sigma(x) = \{^{\ x,\ x\ >\ 0}_{\ 0,\ x\ ≤\ 0}\).
+        <p>By far the least computationally expensive, the ReLU activation function takes the form: \(\sigma(x) = \left\{\begin{array}{l} x,\ x > 0 \\ 0,\ x ≤ 0 \end{array} \right.\).
             What the equation means is, that if the input \(x\) is less than or equal to 0, the function returns 0, otherwise, it returns \(x\) itself.
             This is arguably the simplest activation function by far and is linear. The derivative for the ReLU activation function is really similar
-            to the function itself: \(\{^{\ 1,\ x\ >\ 0}_{\ 0,\ x\ ≤\ 0}\ \)(the only difference is in \(1, x > 0\)), and probably is the simplest
+            to the function itself: \(\left\{\begin{array}{l} 1,\ x > 0 \\ 0,\ x ≤ 0 \end{array} \right.\)(the only difference is in \(1,\ x > 0\)), and probably is the simplest
             derivative of all as well.</p>
         <h3 id="leak-relu">Leaky ReLU Activation Function</h3>
         <img class="graph" src="Images/leaky-relu.jpg">
-        <p class="caption">Figure 3.5 - Graph of Leaky ReLU Activation Function with \(\{_{\ 0.3x,\ x\ ≤\ 0}^{\ x,\ x\ >\ 0}\)</p>
+        <p class="caption">Figure 3.5 - Graph of Leaky ReLU Activation Function with \(\left\{\begin{array}{l} x,\ x > 0 \\ 0.3x,\ x ≤ 0 \end{array} \right.\)</p>
         <p>Another alternative to the ReLU activation function is the Leaky ReLU. In the graph above, I used
-           \(\{_{\ 0.3x,\ x\ ≤\ 0}^{\ x,\ x\ >\ 0}\) to better illustrate its difference from the ReLU activation function. Usually,
+           \(\left\{\begin{array}{l} x,\ x > 0 \\ 0.3x,\ x ≤ 0 \end{array} \right.\) to better illustrate its difference from the ReLU activation function. Usually,
             any input less than or equal to 0 is not “leaked” as much as the version I chose above. A popular form of the Leaky ReLU
-            takes the form \(\sigma(x) = \{_{\ 0.01x,\ x\ ≤\ 0}^{\ x,\ x\ >\ 0}\), and has a derivative of \(\sigma\,'(x) = \{_{\ 0.01,\ x\ ≤\ 0}^{\ 1,\ x\ >\ 0}\).
+            takes the form \(\sigma(x) = \left\{\begin{array}{l} x,\ x > 0 \\ 0.01x,\ x ≤ 0 \end{array} \right.\), and has a derivative of \(\sigma\,'(x) = \left\{\begin{array}{l} 1,\ x > 0 \\ 0.01,\ x ≤ 0 \end{array} \right.\).
             If you do not know what the derivative of something means, it will be explained later. The complex mathematical symbols will also be explained later in
             this chapter.</p>
         <h3 id="softplus">SoftPlus Activation Function</h3>
         <img class="graph" src="Images/softplus.jpg">
         <p class="caption">Figure 3.6 - Graph of SoftPlus Activation Function</p>
-        <p>The SoftPlus activation function is another commonly used activation function. Usually, it takes the form: \(\sigma(x) = ln(1 + e^{x})\) where \(ln(x)\)
+        <p>The SoftPlus activation function is another commonly used activation function. Usually, it takes the form: \(\sigma(x) = \ln(1 + e^{x})\) where \(\ln(x)\)
             refers to the natural logarithm(logarithm base e) of input \(x\). The derivative of the SoftPlus activation function is actually just the sigmoid activation
-            function: \(\sigma\,'(x) = {1\over{1\ +\ e^{-\ x}}}\). This activation function once again is nonlinear(particularly exponential growth, not linear).</p>
+            function: \(\displaystyle\sigma\,'(x) = {1\over{1\ +\ e^{-x}}}\). This activation function once again is nonlinear(particularly exponential growth, not linear).</p>
         <h3 id="notation">Notation</h3>
         <p>In my explanations, you may have started noticing an <em>excessive</em> use of the \(\sigma\) (lowercase sigma), to express an activation function.
             The first activation function that you may have heard of is the sigmoid function, which is named <em>sigmoid</em> because of its S-shaped appearance.
@@ -110,22 +120,22 @@
             Well, derivatives first take two points, one being the original point, and the other being one that slowly gets closer and closer to the original point.
             Call these points \((x, y)\) and \((x+\Delta x, y+\Delta y)\). Then, we keep on decreasing the changes \(\Delta x\) and \(\Delta y\) until the two points are the
             same, this will therefore give the slope of a function at the single point. By connecting the two points, we are given a line with a slope
-            of \(\Delta y\over\Delta x\). \(y\) can also be expressed as \(f(x)\)(function output with input of \(x\)), therefore we can rewrite the points as
-            \((x, f(x))\) and \((x + \Delta x, f(x + \Delta x))\). To find the slope, we can use the slope formula: \({\Delta y\over{\Delta x}} = {{f(x\ +\ \Delta x)\ -\ f(x)}\over{x}}\).
-            You can check that these two expressions are the same by simplifying: \({\Delta y\over{\Delta x}} = {f(x\ -\ x\ +\ \Delta x)\over{\Delta x}} = {f(\Delta x)\over{\Delta x}}\).
+            of \(\displaystyle{\Delta y\over\Delta x}\). \(y\) can also be expressed as \(f(x)\)(function output with input of \(x\)), therefore we can rewrite the points as
+            \((x, f(x))\) and \((x + \Delta x, f(x + \Delta x))\). To find the slope, we can use the slope formula: \(\displaystyle{\Delta y\over{\Delta x}} = {{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\).
+            You can check that these two expressions are the same by simplifying: \(\displaystyle{\Delta y\over{\Delta x}} = {f(x\ -\ x\ +\ \Delta x)\over{\Delta x}} = {f(\Delta x)\over{\Delta x}}\).
             We defined \(f(\Delta x)\) as \(\Delta y\), so therefore they are the same equation expressed differently. We use the slope formula because <em>differentiation</em> requires
-            finding the limit of the slope formula, as \(\Delta x\) approaches 0. Expressed mathematically, find \(\begin{align}\smash{\lim_{\Delta x\ \to\ 0}{{f(x\ + \Delta x) - f(x)}\over{\Delta x}}}\end{align}\).
-            We cannot directly substitute 0 as \(\Delta x\) because this gives: \({{f(x\ +\ 0)\ -\ f(x)}\over{0}} = {{f(0)}\over{0}}\), which is undefined.
+            finding the limit of the slope formula, as \(\Delta x\) approaches 0. Expressed mathematically, find \(\displaystyle\lim_{\Delta x\ \to\ 0}{{f(x\ + \Delta x) - f(x)}\over{\Delta x}}\).
+            We cannot directly substitute 0 as \(\Delta x\) because this gives: \(\displaystyle{{f(x\ +\ 0)\ -\ f(x)}\over{0}} = {{f(0)}\over{0}}\), which is undefined.
             Instead, we need to simplify the limit such that substituting \(\Delta x\) with 0 works.</p>
 
         <p>Let’s try an example:<br>Given \(f(x) = x^{2}\), find \(f'(x)\). Here, \(f'(x)\) represents the derivative of the function and \(f(x)\) represents the function.
             This type of notation is usually referred to as <em>Lagrange’s Notation</em> or <em>Prime Notation</em>, because of the use of prime marks(\(\ '\ \)) to represent derivatives.
-            Other notations commonly used are <em>Leibniz’s Notation</em>, where derivatives are expressed as \(dy\over{dx}\) or \({d\over{dx}}f\); and <em>Newton’s Notation</em> or
+            Other notations commonly used are <em>Leibniz’s Notation</em>, where derivatives are expressed as \(\displaystyle{dy\over{dx}}\) or \(\displaystyle{d\over{dx}}f\); and <em>Newton’s Notation</em> or
             <em>Dot Notation</em>, where derivatives are expressed as \(\dot{y}\). Anyway, carrying on, we can substitute the function into limit equation, giving:</p>
         <div class="equations">
-            <p>\(\begin{align}\smash{\lim_{\Delta x\ \to\ 0}{{{x^{2}\ +\ (\Delta x)^{2}\ +\ 2x\Delta x\ -\ x^{2}}\over{\Delta x}}}}\end{align}\)</p>
-            <p>\(= \begin{align}\smash{\lim_{\Delta x\ \to\ 0}{{(\Delta x)^{2}\ +\ 2x\Delta x}\over{\Delta x}}}\end{align}\)</p>
-            <p>\(= \begin{align}\smash{\lim_{\Delta x\ \to\ 0}{\Delta x + 2x}}\end{align}\)</p>
+            <p>\(\displaystyle\lim_{\Delta x\ \to\ 0}{{{x^{2}\ +\ (\Delta x)^{2}\ +\ 2x\Delta x\ -\ x^{2}}\over{\Delta x}}}\)</p>
+            <p>\(= \displaystyle\lim_{\Delta x\ \to\ 0}{{(\Delta x)^{2}\ +\ 2x\Delta x}\over{\Delta x}}\)</p>
+            <p>\(= \displaystyle\lim_{\Delta x\ \to\ 0}{\Delta x + 2x}\)</p>
             <p>\(= \underline{2x}\)</p>
         </div>
         <p>Therefore, for \(f(x) = x^{2}\), \(f'(x) = 2x\), and \(f''(x) = 2\). \(f''(x)\) means taking the second derivative of the function, or taking the derivative of the derivative of
@@ -151,32 +161,32 @@
 
                 <li>Sigmoid</li>
                 <ul>
-                    <li>Function: \(\sigma(x) = {{1}\over{1\ +\ e^{-\ x}}}\)</li>
+                    <li>Function: \(\displaystyle\sigma(x) = {{1}\over{1\ +\ e^{-x}}}\)</li>
                     <li>Derivative: \(\sigma\,'(x) = \sigma(x)(1 - \sigma(x))\)</li>
                 </ul>
 
                 <li>TanH</li>
                 <ul>
-                    <li>Function: \(\sigma(x) = {{e^{x}\ -\ e^{-\ x}}\over{e^{x}\ +\ e^{-\ x}}}\), or \(\sigma(x) = 2S(2x) - 1\), where \(S(x)\) is the Sigmoid Activation Function.</li>
+                    <li>Function: \(\displaystyle\sigma(x) = {{e^{x}\ -\ e^{-x}}\over{e^{x}\ +\ e^{-x}}}\), or \(\sigma(x) = 2S(2x) - 1\), where \(S(x)\) is the Sigmoid Activation Function.</li>
                     <li>Derivative: \(\sigma\,'(x) = 1 - \sigma(x)^{2}\)</li>
                 </ul>
 
                 <li>ReLU</li>
                 <ul>
-                    <li>Function: \(\sigma(x) = \{_{\ 0,\ x\ ≤\ 0}^{\ x,\ x\ >\ 0}\)</li>
-                    <li>Derivative: \(\sigma\,'(x) = \{_{\ 0,\ x\ ≤\ 0}^{\ 1,\ x\ >\ 0}\)</li>
+                    <li>Function: \(\sigma(x) = \left\{\begin{array}{l} x,\ x > 0 \\ 0,\ x ≤ 0 \end{array} \right.\)</li>
+                    <li>Derivative: \(\sigma\,'(x) = \left\{\begin{array}{l} 1,\ x > 0 \\ 0,\ x ≤ 0 \end{array} \right.\)</li>
                 </ul>
 
                 <li>Leaky ReLU</li>
                 <ul>
-                    <li>Function: \(\sigma(x) = \{_{\ 0.01x,\ x\ ≤\ 0}^{\ x,\ x\ >\ 0}\)</li>
-                    <li>Derivative: \(\sigma\,'(x) = \{_{\ 0.01,\ x\ ≤\ 0}^{\ 1,\ x\ >\ 0}\)</li>
+                    <li>Function: \(\sigma(x) = \left\{\begin{array}{l} x,\ x > 0 \\ 0.01x,\ x ≤ 0 \end{array} \right.\)</li>
+                    <li>Derivative: \(\sigma\,'(x) = \left\{\begin{array}{l} 1,\ x > 0 \\ 0.01,\ x ≤ 0 \end{array} \right.\)</li>
                 </ul>
 
                 <li>SoftPlus</li>
                 <ul>
-                    <li>Function: \(\sigma(x) = ln(1 + e^{x})\) where \(ln(x)\) refers to the natural logarithm(logarithm base e) of input \(x\).</li>
-                    <li>Derivative: \(\sigma\,'(x) = {{1}\over{1\ +\ e^{-\ x}}}\)</li>
+                    <li>Function: \(\sigma(x) = \ln(1 + e^{x})\) where \(\ln(x)\) refers to the natural logarithm(logarithm base e) of input \(x\).</li>
+                    <li>Derivative: \(\displaystyle\sigma\,'(x) = {{1}\over{1\ +\ e^{-x}}}\)</li>
                 </ul>
             </ul>
             <br>
@@ -188,9 +198,9 @@
             <li>The process of finding derivatives is called <em>differentiation</em>, which is in the field of <em>differential calculus</em>.</li><br>
             <li>The derivative of a linear function is <em>always</em> equal to its slope.</li><br>
             <li>Finding the derivative of a single point uses limits, where the distance between two points, one of which was the original, approaches 0.</li><br>
-            <li>The slope formula: \({{\Delta y}\over{\Delta x}} = {{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\), where \(\Delta x\) and \(\Delta y\) represent
-                the change in \(x\) and \(y\) respectively, given two points \((x, y)\) and \((x + \Delta x,\ y + \Delta y)\).</li><br>
-            <li>To find the derivative with the slope formula, simply simplify the limit: \(\begin{align}\smash{\lim_{x\ \to\ 0}{{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}}\end{align}\),
+            <li>The slope formula: \(\displaystyle{{\Delta y}\over{\Delta x}} = {{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\), where \(\Delta x\) and \(\Delta y\) represent
+                the change in \(x\) and \(y\) respectively, given two points \((x,\ y)\) and \((x + \Delta x,\ y + \Delta y)\).</li><br>
+            <li>To find the derivative with the slope formula, simply simplify the limit: \(\displaystyle\lim_{x\ \to\ 0}{{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\),
                 plugging in the point values or function into the equation.</li><br>
             <li>Backpropagation requires knowledge on derivatives.</li>
         </ol>

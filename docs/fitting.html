@@ -4,19 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overfitting and Underfitting</title>
-    <link rel="stylesheet" type="text/css" href="prism.css">
-    <script src="prism.js"></script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" type="text/css" href="prism/prism.css">
+    <script src="prism/prism.js"></script>
+
+    <!-- Math -->
+
+    <link rel="stylesheet" href="katex/katex.min.css">
+    <script defer src="katex/katex.min.js"></script>
+    <script defer src="katex/auto-render.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+            });
+        });
+    </script>
+
+
     <link rel="stylesheet" href="book.css" type="text/css">
     <style>
+        @media only screen and (max-width: 800px) {
+            tbody, thead, table, tr, td {
+                font-size: 24px;
+            }
+        }
+
         table, td, th {
             border: 1px solid black;
             border-collapse: collapse;
             font-weight: normal;
+            font-family: "Amiri";
             text-align: center;
             margin: auto;
             line-height: 1.8;
+        }
+
+        tbody {
+            font-size: 20px;
         }
 
         td, th {
@@ -135,11 +158,11 @@
     <p>The least squares method is defined as below:</p>
     <p class="indent">Given \((x_{1},\ y_{1}),\ (x_{2},\ y_{2}),\ ...,\ (x_{i},\ y_{i})\), find:</p>
     <ol class="indent">
-        <li>Let \(\begin{align}\smash{X = \sum_{n\ =\ 1}^{i}{x_{n}}}\end{align}\), and
-            \(\begin{align}\smash{Y = \sum_{n\ =\ 1}^{i}{y_{n}}}\end{align}\).</li><br>
+        <li>Let \(X = \displaystyle\sum_{n\ =\ 1}^{i}{x_{n}}\), and
+            \(Y = \displaystyle\sum_{n\ =\ 1}^{i}{y_{n}}\).</li><br>
         <li>Let \(\bar{x} = X\div i\), and \(\bar{y} = Y\div i\).</li><br>
-        <li>Find \(\begin{align}\smash{\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})(y_{n} - \bar{y})}}\end{align}\),
-            and divide it by \(\begin{align}\smash{\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})^2}}\end{align}\).</li><br>
+        <li>Find \(\displaystyle\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})(y_{n} - \bar{y})}\),
+            and divide it by \(\displaystyle\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})^2}\).</li><br>
         <li>Find y-intercept by evaluating \(\bar{y}-k\bar{x}\), where \(k\) is the value
             computed in step 3.</li><br>
         <li>The line of best fit should be: \(y = kx + (\bar{y} - k\bar{x})\), or \(y = kx + c\), where \(c = \bar{y} - k\bar{x}\).</li>
@@ -147,15 +170,16 @@
     <p>Given this five-step algorithm to computing a line of best fit, we can try it on
         our dataset above and see what it outputs!</p>
     <ol>
-        <li>\(X=2+3+5+6+7+8+9+10\), \(Y=2+4+3+4.5+6+5+7.6+6\)<br>
+        <li>\(X=2+3+5+6+7+8+9+10\), <br>
+            \(Y=2+4+3+4.5+6+5+7.6+6\)<br>
             \(X=50\) <br>
             \(Y=38.1\)</li><br>
         <li>\(\bar{x}=X\div {8}\), \(\bar{y}=Y\div {8}\) <br>
             \(\bar{x}=50\div{8}\), \(\bar{y}=38.1\div{8}\) <br>
             \(\bar{x}=6.25\) <br>
             \(\bar{y}=4.7625\)</li> <br>
-        <li>\(\begin{align}\smash{\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})(y_{n}-\bar{y})=(2-6.25)(2-4.7625)\,+\,...\,=30.275}}\end{align}\) <br><br>
-            \(\begin{align}\smash{\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})^{2}=(2-6.25)^{2}\,+\,...\,=55.5}}\end{align}\)</li><br>
+        <li>\(\displaystyle\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})(y_{n}-\bar{y})=(2-6.25)(2-4.7625)\,+\,...\,=30.275}\) <br><br>
+            \(\displaystyle\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})^{2}=(2-6.25)^{2}\,+\,...\,=55.5}\)</li><br>
         <li>\(\bar{y}-k\bar{x}=4.7625 - 0.545495495 \times 6.25 \approx 1.353\)</li><br>
         <li>\(y \approx 0.545x+1.353\)</li>
     </ol>
@@ -212,7 +236,7 @@
 <p class="functionBlue">Process finished with exit code 0</p>
     </code>
     <p>Explanation:</p>
-<div class="nobreak indent" style="line-height: 2; white-space: pre-wrap;"><span>
+<div class="explanation indent" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1-2: Note that I put '.0' behind every whole number in the arrays to make sure the Python interpreter understands that I want floating-point precision (the </span><p class="codeword">x</p><span> array are all whole numbers).
 Line 4-5: Initialize the variables that store the average of all input and output values as two different arrays. These values are to be used later on in the program.
 Line 7-8: Store values for the summation equations in Step 3 of the algorithm.
@@ -365,7 +389,7 @@ Line 25-30: Print out the values that we are interested in.
         Second, what does this imply? To answer these questions, let’s turn to our definition of
         overfitting and define underfitting alongside it. Here, I provide a comparison between the
         two, and further define underfitting:</p>
-    <table>
+    <table class="tableFont">
         <tr>
             <th>Overfitting</th>
             <th>Underfitting</th>
@@ -427,11 +451,11 @@ Line 25-30: Print out the values that we are interested in.
             determine a line of best fit. Defined below:</li>
         <p>Given \((x_{1},\ y_{1}),\ (x_{2},\ y_{2}),\ ...,\ (x_{i},\ y_{i})\), find:</p>
         <ol class="indent">
-            <li>Let \(\begin{align}\smash{X = \sum_{n\ =\ 1}^{i}{x_{n}}}\end{align}\), and
-                \(\begin{align}\smash{Y = \sum_{n\ =\ 1}^{i}{y_{n}}}\end{align}\).</li><br>
+            <li>Let \(X = \displaystyle\sum_{n\ =\ 1}^{i}{x_{n}}\), and
+                \(Y = \displaystyle\sum_{n\ =\ 1}^{i}{y_{n}}\).</li><br>
             <li>Let \(\bar{x} = X\div i\), and \(\bar{y} = Y\div i\).</li><br>
-            <li>Find \(\begin{align}\smash{\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})(y_{n} - \bar{y})}}\end{align}\),
-                and divide it by \(\begin{align}\smash{\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})^2}}\end{align}\).</li><br>
+            <li>Find \(\displaystyle\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})(y_{n} - \bar{y})}\),
+                and divide it by \(\displaystyle\sum^{i}_{n\ =\ 1}{(x_{n} - \bar{x})^2}\).</li><br>
             <li>Find y-intercept by evaluating \(\bar{y}-k\bar{x}\), where \(k\) is the value
                 computed in step 3.</li><br>
             <li>The line of best fit should be: \(y = kx + (\bar{y} - k\bar{x})\), or \(y = kx + c\), where \(c = \bar{y} - k\bar{x}\).</li>
