@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="Description" content="Building neural networks from scratch using Java.">
+
     <title>Overfitting and Underfitting</title>
     <link rel="stylesheet" type="text/css" href="prism/prism.css">
     <script src="prism/prism.js"></script>
@@ -55,7 +57,7 @@
 </nav>
 <div id="visible">
     <h2>Chapter 5 - Overfitting and Underfitting</h2>
-    <h4 class="quote">“Those who don’t believe in magic will never find it.”<br>— The Minpins by Roald Dahl</h4>
+    <h3 class="quote">“Those who don’t believe in magic will never find it.”<br>— The Minpins by Roald Dahl</h3>
     <p>In the previous chapter, I mentioned briefly the issue of <em>overfitting</em> and
         <em>underfitting</em>, which I want to go over quickly in this chapter.</p>
     <h3 id="overfitting">Overfitting</h3>
@@ -150,7 +152,7 @@
         correlation between the input and output. Therefore, we can conclude the function
         <em>can</em> be approximated. Without the use of neural networks, datasets like the
         above are usually approximated using a <em>line of best fit</em>.
-        <a target="_blank" href="https://en.wikipedia.org/wiki/Line_fitting">Wikipedia</a>
+        <a rel="noopener" target="_blank" href="https://en.wikipedia.org/wiki/Line_fitting">Wikipedia</a>
         has a whole <em>list</em> of various algorithms to fit lines, so let’s go over one
         of them and see if we compare and contrast the algorithm with a neural network’s
         learning algorithm.</p>
@@ -338,7 +340,7 @@ Line 25-30: Print out the values that we are interested in.
     <img src="Images/good-network-approx.jpg">
     <p class="caption">Figure 5-5: A better approximation of a function by a neural network.</p>
     <p>If you wonder how I created these graphs, visit the website
-        <a target="_blank" href="https://www.desmos.com/calculator">Desmos</a>. There, you can
+        <a rel="noopener" target="_blank" href="https://www.desmos.com/calculator">Desmos</a>. There, you can
         actually play around with parameters and see how they affect the graphical representation.</p>
     <p>Above, you can see that the line doesn’t perfectly match the data points on the graph,
         but instead loop through them. This is the result that we want to achieve with our
