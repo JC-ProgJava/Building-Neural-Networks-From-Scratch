@@ -122,7 +122,7 @@
     }
 
     ol, ul, li, div span {
-        font-size: 24px;
+        font-size: 24px !important;
     }
 
     h2 {
@@ -150,6 +150,8 @@
 
     #visible {
         width: 90% !important;
+        overflow-x: scroll;
+        padding: 0px 10px 0px 10px;
     }
 
     img {
@@ -353,4 +355,3 @@ code {
     color: #871094;
     display: inline;
 }
-
