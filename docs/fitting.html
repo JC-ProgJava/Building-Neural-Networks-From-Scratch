@@ -23,31 +23,6 @@
 
 
     <link rel="stylesheet" href="book.css" type="text/css">
-    <style>
-        @media only screen and (max-width: 800px) {
-            tbody, thead, table, tr, td {
-                font-size: 24px;
-            }
-        }
-
-        table, td, th {
-            border: 1px solid black;
-            border-collapse: collapse;
-            font-weight: normal;
-            font-family: "Amiri";
-            text-align: center;
-            margin: auto;
-            line-height: 1.8;
-        }
-
-        tbody {
-            font-size: 20px;
-        }
-
-        td, th {
-            padding: 10px 20px 10px 20px;
-        }
-    </style>
 </head>
 <body>
 <nav>
@@ -257,11 +232,11 @@ Line 25-30: Print out the values that we are interested in.
 02      public static void main(String[] args) {
 03        double[] x = {
 04                2.0, 3.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0
-05       };
+05        };
 06
 07        double[] y = {
 08                2.0, 4.0, 3.0, 4.5, 6.0, 5.0, 7.6, 6.0
-09       };
+09        };
 10
 11        double xAverage = 0;
 12        double yAverage = 0;
@@ -391,7 +366,7 @@ Line 25-30: Print out the values that we are interested in.
         Second, what does this imply? To answer these questions, let’s turn to our definition of
         overfitting and define underfitting alongside it. Here, I provide a comparison between the
         two, and further define underfitting:</p>
-    <table class="tableFont">
+    <table>
         <tr>
             <th>Overfitting</th>
             <th>Underfitting</th>
@@ -481,7 +456,7 @@ Line 25-30: Print out the values that we are interested in.
     </ol>
     <br>
     <button onclick="location.href = 'task1.html';">Previous Chapter</button>
-    <!--<button onclick="location.href = 'task1.html';">Next Chapter</button>-->
+    <button onclick="location.href = 'validation.html';">Next Chapter</button>
 </div>
 </body>
 </html>
