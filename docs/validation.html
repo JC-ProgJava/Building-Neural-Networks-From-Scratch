@@ -32,10 +32,228 @@
     </nav>
     <div id="visible">
         <h2>Chapter 6 - Validation Datasets</h2>
-        <h3 class="quote">“The moment you doubt whether you can fly, you cease forever to be able to do it.”<br>— Peter Pan by J.M. Barrie</h3>
-
-
+        <h3 class="quote">“The moment you doubt whether you can fly, you cease forever to
+            be able to do it.”<br>— Peter Pan by J.M. Barrie</h3>
+        <p>In this chapter, I aim to answer several questions about testing, training, and
+            validation datasets:</p>
+        <ol>
+            <li>What are testing and training datasets for?</li>
+            <li>What are validation datasets?</li>
+            <li>Why are validation datasets needed?</li>
+            <li>Usually, how much of the entire dataset is dedicated to a validation
+                sub-dataset?</li>
+            <li>What is the difference between the validation and testing dataset?</li>
+            <li>How are datasets separated into three sub-datasets(training, testing,
+                validation)?</li>
+            <li>Are validation datasets necessary?</li>
+        </ol>
+        <p>First of all, what <em>are</em> datasets? According to the Cambridge Advanced
+            Learner's Dictionary (4th Edition), a dataset is <em>“a collection of separate
+            sets of information that is treated as a single unit by a computer”</em>. This
+            somewhat defines the term “dataset” with general terms and can be used to describe
+            <em>any</em> dataset. So, why do we <em>need</em> a dataset? If you take a look at
+            Google Books’ Ngram Viewer of the word, you find that it only started being used
+            widely in the past few decades. </p>
+        <img src="Images/ngram.png">
+        <p class="caption">Figure 6-1: A graph showing the usage of the word ‘dataset’ over
+            time (1900-2019).</p>
+        <p>This shows that <em>datasets</em> have only become popular recently, probably
+            due to renewed interest in empirical scientific research (research from observation
+            and measurements) and the development of new fields like data and computer science.
+            With this, we can conclude that datasets are created for scientific research, and
+            often consist of similar data grouped in such a way to show correlations or patterns.</p>
+        <p>Training neural networks require data. This means we need to find a collection of
+            examples to <em>give</em> to our network in order to achieve an approximation
+            <em>of</em> the examples that we like. In order to see how well our network
+            performs, we need to provide <em>another</em> set of data that <em>wasn’t</em>
+            used in the training process and run our network through the inputs and find its
+            <em>accuracy</em> or <em>error rate</em>/<em>loss</em>. The dataset used for
+            training is called the <em>training dataset</em>, and the one used to evaluate
+            a network’s performance is called the <em>testing dataset</em>. Note these
+            definitions and purposes of the dataset types above are important when in
+            consideration of what <em>validation datasets</em> are.</p>
+        <p>An important question comes up after a network is trained and a testing dataset
+            is used to evaluate its performance is: <em>what if I’m not satisfied with my
+            network prediction accuracy on the testing dataset?</em> Your first reaction
+            should be to adjust various <em>hyperparameters</em> of the network like the
+            <em>learning rate</em>, <em>epoch number</em>, or <em>network structure</em>
+            (consisting of <em>layer number</em>, <em>neuron number</em>, <em>activation
+            function</em>, and various other decisions like whether <em>biases</em> should
+            be used), which should undoubtedly either <em>improve</em> or <em>worsen</em>
+            your network accuracy. If this doesn’t work, then you should realize that
+            neural networks probably aren’t the best solution for what you have in mind.</p>
+        <p>In the <em>Overfitting and Underfitting</em> chapter, I stated that
+            <em>biased networks</em> are caused by a lack of data generalizing the use case,
+            an improper shuffling of data, or just chance. Apart from this, networks can
+            actually be biased because of the <em>operator’s choices</em>. This means,
+            choices like hyperparameter tuning, dataset source, etc. directly affect whether
+            a network becomes <em>biased</em>, <em>overfitted</em>, or <em>underfitted</em>.
+            Why? In the previous paragraph, the decision to adjust <em>hyperparameters</em>
+            in order to improve network accuracy leads to an unavoidable problem: the
+            network is being fitted <em>for</em> the testing dataset, meaning it might have
+            a bias on the testing dataset. This is because the <em>operator</em> of the network
+            <em>evaluates</em> the network’s performance on the testing dataset, which
+            means that the <em>aim</em> of <em>hyperparameter adjustment</em> isn’t just to
+            improve training dataset accuracy, but ultimately the testing dataset accuracy.
+            This means that the operator is <em>hoping</em> for a <em>higher testing
+            accuracy</em>, which is why the operator is making adjustments to the network
+            parameters that may <em>bias</em> towards the testing dataset. This undoubtedly
+            isn’t intended, and will most definitely affect the real-world performance of
+            the neural network, which is why network operators invented something to fix
+            this issue: <em>validation datasets</em>. Validation datasets are <em>another</em>
+            separate dataset that is used <em>also</em> to evaluate the network’s
+            performance. But instead of evaluating the performance of the network after
+            every <em>iteration</em> of hyperparameter adjustment, evaluate it at the
+            <em>last minute</em>, meaning you should use the validation dataset to evaluate
+            the performance of the network <em>just before</em> the network is exported or
+            ported off for use in applications. If the <em>testing accuracy</em> is a lot
+            higher than the <em>validation accuracy</em> (accuracy of the network on the
+            <em>validation dataset</em>), the network is definitely becoming <em>biased</em>
+            to the testing dataset. This way of splitting an entire dataset also has
+            other benefits, e.g., you can better detect overfitting because you have a
+            second “layer” of testing before the network is deployed for use in the real
+            world. Below, I provide a comparison between the three types of datasets or
+            sub-datasets:</p>
+        <table>
+            <tr>
+                <th>Training Sub-Dataset</th>
+                <th>Testing Sub-Dataset</th>
+                <th>Validation Sub-Dataset</th>
+            </tr>
+            <tr>
+                <td>Usually a substantial portion of the entire dataset.</td>
+                <td colspan="2">Both training and validation sub-datasets are usually
+                    around the same size and each covers roughly 10-30% of the entire
+                    dataset.</td>
+            </tr>
+            <tr>
+                <td>Used to train the neural network by the adjustment of weights and
+                    biases through a learning process.</td>
+                <td>Used to evaluate a network’s performance after every iteration of
+                    hyperparameter adjustment.</td>
+                <td>Used to evaluate the network’s performance just before deployment.</td>
+            </tr>
+            <tr>
+                <td colspan="2">Necessary/compulsory in order to train a neural network.</td>
+                <td>Optional, but usually preferred because it can prevent overfitting and
+                    underfitting as well as make sure the network isn’t biased and performs
+                    as expected in the real world.</td>
+            </tr>
+            <tr>
+                <td>Randomized.</td>
+                <td colspan="2">Not randomized (there is no need).</td>
+            </tr>
+        </table>
+        <p class="caption">Figure 6-2: A comparison of testing, training, and validation
+            datasets.</p>
+        <p>Note that I wrote “[validation datasets are] <em>optional but usually preferred
+            because it can prevent overfitting and underfitting as well as make sure the
+            network isn’t biased and performs as expected in the real world”</em>. This means,
+            that it is up to the operator to choose whether to use validation datasets, so
+            when should you not use a validation dataset? You shouldn’t use a validation
+            dataset when your dataset is small. This is because it limits the number of
+            training and/or testing samples that can be used when training your model.
+            Since networks learn better when given more examples that <em>generalize</em>
+            the use case, this inevitably will reduce the network’s training accuracy,
+            so operators of networks tend to opt-out of creating a validation dataset
+            when data is limited.</p>
+        <h3 id="separation">Separation of Testing, Training, and Validation Datasets</h3>
+        <p>So how should a single dataset be separated into these three separate
+            sub-datasets? Is there any optimal way of splitting the data? Usually, the best
+            way to split a dataset into the three datasets is to spread examples evenly
+            into each dataset with an equal (or relatively close) amount of each type of
+            example in each dataset. For example, putting 1000 images of different 0-9 digits
+            into each of the three datasets (training, testing, and validation). If your use
+            case isn’t classification, but regression, you should find a wide range of inputs
+            that cover most of the regressing problem you want to solve, and pick various
+            points in between these training samples to be your testing and validation
+            samples. This ensures your network has a somewhat whole viewpoint/outlook on
+            the function being approximated so the network will be able to predict outputs
+            for new input values.</p>
+        <p>That’s just about it, head on to the next chapter!</p>
         <h3 id="summary">Chapter Summary</h3>
+        <ol>
+            <li>A dataset is “<em>a collection of separate sets of information that is
+                treated as a single unit by a computer</em>”, and are created for
+                scientific research, and often consist of similar data grouped in such
+                a way to show correlations or patterns.</li><br>
+            <li>Training neural networks require data. This means we need to find a
+                collection of examples to <em>give</em> to our network in order to
+                achieve an approximation <em>of</em> the examples that we like. In order
+                to see how well our network performs, we need to provide <em>another</em>
+                set of data that <em>wasn’t</em> used in the training process and run our
+                network through the inputs and find its <em>accuracy</em> or
+                <em>error rate</em>/<em>loss</em>.</li><br>
+            <li>The dataset used for training is called the <em>training dataset</em>, and
+                the one used to evaluate a network’s performance is called the
+                <em>testing dataset</em>.</li><br>
+            <li>Networks can be biased because of an <em>operator’s choices</em>. This means,
+                choices like hyperparameter tuning, dataset source, etc. directly affect
+                whether a network becomes <em>biased</em>, <em>overfitted</em>, or
+                <em>underfitted</em>.<br>Reasoning: The operator of the network is
+                <em>hoping</em> for a <em>higher testing accuracy</em>, which is why the
+                operator makes adjustments to the network; thus, parameters may make the
+                network be <em>biased</em> towards the testing dataset.</li><br>
+            <li>Validation datasets are <em>another</em> separate dataset that is
+                <em>also</em> used to evaluate the network’s performance. But instead of
+                evaluating the performance of the network after every <em>iteration</em>
+                of hyperparameter adjustment, evaluate it at the <em>last minute</em>,
+                meaning the validation dataset is used to evaluate the performance of the
+                network <em>just before</em> the network is exported or ported off for use
+                in applications. If the <em>testing accuracy</em> is a lot higher than the
+                <em>validation accuracy</em> (accuracy of the network on the
+                <em>validation dataset</em>), the network is definitely becoming
+                <em>biased</em> to the testing dataset.</li><br>
+            <li style="margin-bottom: 20px;">A comparison between testing, training, and
+                validation datasets:</li>
+            <table>
+                <tr>
+                    <th>Training Sub-Dataset</th>
+                    <th>Testing Sub-Dataset</th>
+                    <th>Validation Sub-Dataset</th>
+                </tr>
+                <tr>
+                    <td>Usually a substantial portion of the entire dataset.</td>
+                    <td colspan="2">Both training and validation sub-datasets are usually
+                        around the same size and each covers roughly 10-30% of the entire
+                        dataset.</td>
+                </tr>
+                <tr>
+                    <td>Used to train the neural network by the adjustment of weights and
+                        biases through a learning process.</td>
+                    <td>Used to evaluate a network’s performance after every iteration of
+                        hyperparameter adjustment.</td>
+                    <td>Used to evaluate the network’s performance just before deployment.</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Necessary/compulsory in order to train a neural network.</td>
+                    <td>Optional, but usually preferred because it can prevent overfitting and
+                        underfitting as well as make sure the network isn’t biased and performs
+                        as expected in the real world.</td>
+                </tr>
+                <tr>
+                    <td>Randomized.</td>
+                    <td colspan="2">Not randomized (there is no need).</td>
+                </tr>
+            </table>
+            <br>
+            <li>You shouldn’t use a validation dataset when your dataset is small. This is
+                because it limits the number of training and/or testing samples that can be
+                used when training your model. Since networks learn better when given more
+                examples that <em>generalize</em> the use case, this inevitably will reduce
+                the network’s training accuracy, which is why operators of networks tend to
+                opt-out of creating a validation dataset when data is limited.</li><br>
+            <li>The best way to split a dataset into the three datasets is to spread examples
+                evenly into each dataset with an equal (or relatively close) amount of each
+                type of example in each dataset. For example, putting 1000 images of
+                different 0-9 digits into each of the three datasets (training, testing,
+                and validation). If your use case isn’t classification, but regression, you
+                should find a wide range of inputs that cover most of the regressing problem
+                you want to solve, and pick various points in between these training samples
+                to be your testing and validation samples. This ensures your network has a
+                somewhat whole viewpoint/outlook on the function being approximated so the
+                network will be able to predict outputs for new input values.</li>
+        </ol>
 
         <br>
         <button onclick="location.href = 'fitting.html';">Previous Chapter</button>

@@ -16,18 +16,22 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 <br>
 
 # Changelog
+29 December 2020
+- Finished Chapter 6 - Validation Datasets 🙂
+- Pushed Chapter 6 to the web. 🚀
+
 20-26 December 2020
 - Patching web version to improve mobile compatibility.
 - Gathering resources for Chapter 6 - Validation Datasets
 
 19 December 2020
 - Finished Chapter 5 - Overfitting and Underfitting.
-- Converted Chapter 5 to web form.
+- Pushed Chapter 5 to the web. 🚀
 - Added "Overfitting_Underfitting" code folder.
 
 7 December 2020
 - Finished Task 1 - Recognizing Digits
-- Converted all chapters to web form.
+- Pushed all chapters (Chpt. 1-4 & Task 1) to the web. 🚀
 - Added "Project1"(Task 1) code folder.
 
 18 November 2020
