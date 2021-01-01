@@ -16,11 +16,17 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 <br>
 
 # Changelog
+1 January 2021
+- 🎉 Happy New Year! 🎉
+- Updated `preface.html` to make `<aside>` section match `<p>` text size.
+- LN 205 in `activation.html`: fixed equation for derivative in Chapter Summary (in limit '∆x -> 0' instead of 'x -> 0')
+
 29 December 2020
 - Finished Chapter 6 - Validation Datasets 🙂
 - Pushed Chapter 6 to the web. 🚀
 
 20-26 December 2020
+- Merry Christmas! 🎄
 - Patching web version to improve mobile compatibility.
 - Gathering resources for Chapter 6 - Validation Datasets
 
