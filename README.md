@@ -18,6 +18,8 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 # Changelog
 1 January 2021
 - 🎉 Happy New Year! 🎉
+
+<pre>
 ==========     ===========    ==========     //
 
           ||  ||         ||             ||   //
@@ -35,6 +37,7 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 ||            ||         ||  ||              //
 
  ==========   ===========     ==========     //
+</pre>
 
 - Updated `preface.html` to make `<aside>` section match `<p>` text size.
 - LN 205 in `activation.html`: fixed equation for derivative in Chapter Summary (in limit '∆x -> 0' instead of 'x -> 0')
