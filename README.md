@@ -19,13 +19,21 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 1 January 2021
 - 🎉 Happy New Year! 🎉
 ==========     ===========    ==========     //
+
           ||  ||         ||             ||   //
+
           ||  ||         ||             ||   //
+
           ||  ||         ||             ||   //
+
  ==========   ||         ||   ==========     //
+
 ||            ||         ||  ||              //
+
 ||            ||         ||  ||              //
+
 ||            ||         ||  ||              //
+
  ==========   ===========     ==========     //
 
 - Updated `preface.html` to make `<aside>` section match `<p>` text size.
