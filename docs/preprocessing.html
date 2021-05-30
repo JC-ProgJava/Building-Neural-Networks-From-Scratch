@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Building neural networks from scratch using Java.">
 
-<<<<<<< Updated upstream
-=======
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -22,8 +20,7 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/79958107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 
->>>>>>> Stashed changes
-    <title></title>
+    <title>Image Preprocessing</title>
 
     <!-- Syntax Highlighting -->
     <link rel="stylesheet" type="text/css" href="prism/prism.css">
@@ -49,14 +46,32 @@
         </a>
     </nav>
     <div id="visible">
-        <h2></h2>
-        <h3 class="quote"></h3>
+        <h2>Chapter 7 - Image Preprocessing</h2>
+        <h3 class="quote">“Time you enjoy wasting is not wasted time.”
+            <br>— Phrynette Married by Marthe Troly-Curtin</h3>
 
 
+        <h3 id="summary">Chapter Summary</h3>
 
         <br>
-        <button onclick="location.href = 'DONOTKNOW.html';">Previous Chapter</button>
+        <button onclick="location.href = 'validation.html';">Previous Chapter</button>
         <!--<button onclick="location.href = 'DONOTKNOW.html';">Next Chapter</button>-->
     </div>
 </body>
+<script>
+// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementsByTagName("nav")[0].style.top = "0";
+  } else {
+    document.getElementsByTagName("nav")[0].style.top = "-110px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+// Code borrowed, please look at the link for the tutorial to make collapsible sections
+// Code was modified for suitability purposes
+// END W3SCHOOL CODE
+</script>
 </html>
