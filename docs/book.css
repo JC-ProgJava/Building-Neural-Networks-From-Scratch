@@ -67,6 +67,49 @@
         font-size: 20px;
     }
 
+    tbody {
+        font-size: 20px;
+    }
+
+    div span {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 25px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    code {
+        font-family: "Source Code Pro";
+        padding: 10px 20px 10px 40px !important;
+        display: block;
+        border-radius: 30px !important;
+        background: rgb(244, 242, 240);
+        overflow-x: scroll;
+        font-size: 17px;
+        line-height: 1.5;
+    }
+
+    code p {
+        font-size: 17px;
+    }
+
+    code span {
+        font-size: 17px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    code pre {
+        font-size: 17px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
     .definition {
         margin-left: 20px;
         margin-right: 20px;
@@ -93,6 +136,33 @@
 @media only screen and (max-width: 800px) {
     tbody, thead, table, tr, td {
         font-size: 24px;
+    }
+
+    code {
+        font-family: "Source Code Pro";
+        padding: 10px 20px 10px 40px !important;
+        display: block;
+        border-radius: 30px !important;
+        background: rgb(244, 242, 240);
+        overflow-x: scroll;
+        font-size: 19px;
+        line-height: 1.5;
+    }
+
+    code p {
+        font-size: 19px;
+    }
+
+    code span {
+        font-size: 19px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    code pre {
+        font-size: 19px;
+        padding-top: 4px;
+        padding-bottom: 4px;
     }
 
     body {
@@ -173,16 +243,8 @@ table, td, th {
     line-height: 1.8;
 }
 
-tbody {
-    font-size: 20px;
-}
-
 td, th {
     padding: 10px 20px 10px 20px;
-}
-
-div span {
-    font-size: 20px;
 }
 
 nav {
@@ -277,7 +339,6 @@ h1 {
 h2 {
     font-family: "Amiri";
     font-weight: 600;
-    font-size: 28px;
 }
 
 .center {
@@ -291,7 +352,6 @@ ul, ol {
 h3 {
     font-family: "Amiri";
     font-weight: 600;
-    font-size: 25px;
 }
 
 h4 {
@@ -335,18 +395,6 @@ p {
     color: #00627A;
 }
 
-.keyword {
-    font-family: "Source Code Pro";
-    display: inline;
-    color: #0033B3;
-}
-
-.annotation {
-    font-family: "Source Code Pro";
-    color: #9E880D;
-    display: inline;
-}
-
 div.explanation:first-line {
     margin-top: -1em;
     line-height: 0px;
@@ -358,19 +406,72 @@ div.explanation:first-line {
     display: inline;
 }
 
-code {
-    font-family: "Source Code Pro";
-    padding: 10px 20px 10px 40px !important;
-    display: block;
-    border-radius: 30px !important;
-    background: rgb(244, 242, 240);
-    overflow-x: scroll;
-    font-size: 20px !important;
-}
-
 .globalVar {
     font-style: italic;
     font-family: "Source Code Pro";
     color: #871094;
     display: inline;
+}
+
+code span {
+  display: inline;
+  white-space: pre;
+}
+
+.keyword {
+  font-family: "Source Code Pro";
+  color: #003399;
+  font-weight: bold;
+  display: inline;
+}
+
+.identifer {
+  color: black;
+  display: inline;
+}
+
+.number {
+  color: #1740E6;
+}
+
+.string {
+  color: #106B10;
+}
+
+.space {
+  color: black;
+}
+
+.newline {
+  color: black;
+}
+
+.tab {
+  color: black;
+}
+
+.importname {
+  color: #006699;
+}
+
+.headdatatype {
+  color: #034524;
+}
+
+.otherpunctuation {
+  color: black;
+}
+
+.constant {
+  color: #660E7A;
+}
+
+.javadoc {
+  color: #bf8f1d;
+}
+
+.annotation {
+  color: #808000;
+  font-family: "Source Code Pro";
+  display: inline;
 }

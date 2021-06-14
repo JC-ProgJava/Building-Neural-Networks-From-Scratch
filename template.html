@@ -21,10 +21,6 @@
 
     <title></title>
 
-    <!-- Syntax Highlighting -->
-    <link rel="stylesheet" type="text/css" href="prism/prism.css">
-    <script src="prism/prism.js"></script>
-
     <!-- Math -->
     <link rel="stylesheet" href="katex/katex.min.css">
     <script defer src="katex/katex.min.js"></script>
@@ -48,11 +44,26 @@
         <h2></h2>
         <h3 class="quote"></h3>
 
-
-
         <br>
         <button onclick="location.href = 'DONOTKNOW.html';">Previous Chapter</button>
         <!--<button onclick="location.href = 'DONOTKNOW.html';">Next Chapter</button>-->
     </div>
 </body>
+<script>
+// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementsByTagName("nav")[0].style.top = "0";
+  } else {
+    document.getElementsByTagName("nav")[0].style.top = "-110px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+// Code borrowed, please look at the link for the tutorial to make collapsible sections
+// Code was modified for suitability purposes
+// END W3SCHOOL CODE
+</script>
+<script src="syntax.js"></script>
 </html>

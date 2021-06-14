@@ -23,9 +23,13 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 - Started on Chapter 7 and opened issue #14.
 - Added a page on fonts used in the book (Source Code Pro for code and Amiri for text. Both are under the Open Font License [OFL] and were obtained through Google Fonts)
 - Updated word and hour-of-work count.
-- Added rights info in a footer on web version ("Rights reserved. 2020-2021 JC-ProgJava")
+- Added rights info in a footer on web version ("Rights reserved by JC-ProgJava. © 2020-2021")
+- Reworked front page.
+- Reworked syntax highlighting scheme in web version.
 - Header on web version now collapses after scrolling to enhance reading experience. The header appears once users scroll up slightly.
 - New chapter idea (Chapter 11 - Convolutional Neural Networks)
+- Changed syntax highlighting architecture to [this](https://github.com/JC-ProgJava/SyntaxHighlighter) (made by me! 🙂).
+- Fixed #17 and #19.
 
 1 January 2021
 - 🎉 Happy New Year! 🎉
