@@ -1,3 +1,4 @@
+// Token types (see the Java version for more info.)
 const TokenType = Object.freeze({
   IDENTIFIER: "IDENTIFIER",
   KEYWORD: "KEYWORD",
@@ -62,6 +63,9 @@ class Parser {
             String(this.tokens[index].type).toLowerCase() +
             '"> </span>';
           this.outPlain += " ";
+          break;
+        default:
+          console.log("Unknown token: " + String(this.tokens[index].type));
           break;
       }
     }
@@ -379,7 +383,7 @@ class Tokenizer {
               break;
             case '"':
               // Supports multiline strings
-              if (this.peek() == '\"' && this.peekNext() == '\"') {
+              if (this.peek() == '"' && this.peekNext() == '"') {
                 this.current += 2;
                 this.multilineString();
               } else {
