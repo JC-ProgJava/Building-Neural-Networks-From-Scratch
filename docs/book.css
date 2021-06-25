@@ -125,7 +125,7 @@
         font-size: 24px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0px 0px 0px 0px;
+        padding: 0;
     }
 
     ul, ol {
@@ -188,7 +188,7 @@
         font-size: 24px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0px 0px 0px 0px;
+        padding: 0;
     }
 
     ol, ul, li, div span {
@@ -221,7 +221,7 @@
     #visible {
         width: 90% !important;
         overflow-x: scroll;
-        padding: 0px 10px 0px 10px;
+        padding: 0 10px;
     }
 
     img {
@@ -244,7 +244,7 @@ table, td, th {
 }
 
 td, th {
-    padding: 10px 20px 10px 20px;
+    padding: 10px 20px;
 }
 
 nav {
@@ -285,7 +285,7 @@ aside {
     line-height: 1.8;
     margin-left: 20px;
     margin-right: 20px;
-    padding: 20px 30px 20px 30px;
+    padding: 20px 30px;
     background-color: rgb(245, 245, 245);
     border-radius: 10px;
 }
@@ -305,7 +305,7 @@ aside {
     margin-left: auto;
     margin-right: auto;
     background-color: white;
-    padding: 0px 40px 20px 40px;
+    padding: 0 40px 20px;
     border-radius: 20px;
 }
 
