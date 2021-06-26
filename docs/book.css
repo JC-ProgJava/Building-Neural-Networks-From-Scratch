@@ -413,65 +413,16 @@ div.explanation:first-line {
     display: inline;
 }
 
-code span {
-  display: inline;
-  white-space: pre;
-}
-
 .keyword {
   font-family: "Source Code Pro";
-  color: #003399;
-  font-weight: bold;
   display: inline;
 }
 
 .identifer {
-  color: black;
   display: inline;
 }
 
-.number {
-  color: #1740E6;
-}
-
-.string {
-  color: #106B10;
-}
-
-.space {
-  color: black;
-}
-
-.newline {
-  color: black;
-}
-
-.tab {
-  color: black;
-}
-
-.importname {
-  color: #006699;
-}
-
-.headdatatype {
-  color: #034524;
-}
-
-.otherpunctuation {
-  color: black;
-}
-
-.constant {
-  color: #660E7A;
-}
-
-.javadoc {
-  color: #bf8f1d;
-}
-
 .annotation {
-  color: #808000;
   font-family: "Source Code Pro";
   display: inline;
 }
