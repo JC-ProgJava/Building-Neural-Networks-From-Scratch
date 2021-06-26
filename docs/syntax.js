@@ -579,6 +579,81 @@ class Tokenizer {
   }
 }
 
+// Highlighting configuration below ------
+var css = `
+    code span {
+      display: inline;
+      white-space: pre;
+    }
+
+    .keyword {
+      color: #003399;
+      font-weight: bold;
+    }
+
+    .identifer {
+      color: black;
+    }
+
+    .number {
+      color: #1740E6;
+    }
+
+    .string {
+      color: #106B10;
+    }
+
+    .space {
+      color: black;
+    }
+
+    .newline {
+      color: black;
+    }
+
+    .tab {
+      color: black;
+    }
+
+    .importname {
+      color: #006699;
+    }
+
+    .headdatatype {
+      color: #034524;
+    }
+
+    .otherpunctuation {
+      color: black;
+    }
+
+    .constant {
+      color: #660E7A;
+    }
+
+    .javadoc {
+      color: #bf8f1d;
+    }
+
+    .annotation {
+      color: #808000;
+    }
+`;
+// ----------
+
+var head = document.head || document.getElementsByTagName('head')[0];
+var style = document.createElement('style');
+
+head.appendChild(style);
+
+style.type = 'text/css';
+if (style.styleSheet){
+  style.styleSheet.cssText = css;
+} else {
+  style.appendChild(document.createTextNode(css));
+}
+
+
 var code = document.getElementsByTagName("code");
 for (var i = 0; i < code.length; i++) {
   var tokensList = new Tokenizer().tokenize(code[i].innerText);
