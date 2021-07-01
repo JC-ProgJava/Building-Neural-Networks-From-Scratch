@@ -67,6 +67,49 @@
         font-size: 20px;
     }
 
+    tbody {
+        font-size: 20px;
+    }
+
+    div span {
+        font-size: 20px;
+    }
+
+    h3 {
+        font-size: 25px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    code {
+        font-family: "Source Code Pro";
+        padding: 10px 20px 10px 40px !important;
+        display: block;
+        border-radius: 30px !important;
+        background: rgb(244, 242, 240);
+        overflow-x: scroll;
+        font-size: 17px;
+        line-height: 1.5;
+    }
+
+    code p {
+        font-size: 17px;
+    }
+
+    code span {
+        font-size: 17px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    code pre {
+        font-size: 17px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
     .definition {
         margin-left: 20px;
         margin-right: 20px;
@@ -82,7 +125,7 @@
         font-size: 24px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0px 0px 0px 0px;
+        padding: 0;
     }
 
     ul, ol {
@@ -93,6 +136,33 @@
 @media only screen and (max-width: 800px) {
     tbody, thead, table, tr, td {
         font-size: 24px;
+    }
+
+    code {
+        font-family: "Source Code Pro";
+        padding: 10px 20px 10px 40px !important;
+        display: block;
+        border-radius: 30px !important;
+        background: rgb(244, 242, 240);
+        overflow-x: scroll;
+        font-size: 19px;
+        line-height: 1.5;
+    }
+
+    code p {
+        font-size: 19px;
+    }
+
+    code span {
+        font-size: 19px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    code pre {
+        font-size: 19px;
+        padding-top: 4px;
+        padding-bottom: 4px;
     }
 
     body {
@@ -118,7 +188,7 @@
         font-size: 24px;
         margin-left: auto;
         margin-right: auto;
-        padding: 0px 0px 0px 0px;
+        padding: 0;
     }
 
     ol, ul, li, div span {
@@ -151,7 +221,7 @@
     #visible {
         width: 90% !important;
         overflow-x: scroll;
-        padding: 0px 10px 0px 10px;
+        padding: 0 10px;
     }
 
     img {
@@ -173,16 +243,8 @@ table, td, th {
     line-height: 1.8;
 }
 
-tbody {
-    font-size: 20px;
-}
-
 td, th {
-    padding: 10px 20px 10px 20px;
-}
-
-div span {
-    font-size: 20px;
+    padding: 10px 20px;
 }
 
 nav {
@@ -194,6 +256,7 @@ nav {
     padding-bottom: 2px;
     top: 0;
     z-index: 1000;
+    transition: top 0.3s;
 }
 
 img {
@@ -222,7 +285,7 @@ aside {
     line-height: 1.8;
     margin-left: 20px;
     margin-right: 20px;
-    padding: 20px 20px 30px 30px;
+    padding: 20px 30px;
     background-color: rgb(245, 245, 245);
     border-radius: 10px;
 }
@@ -242,7 +305,7 @@ aside {
     margin-left: auto;
     margin-right: auto;
     background-color: white;
-    padding: 0px 40px 20px 40px;
+    padding: 0 40px 20px;
     border-radius: 20px;
 }
 
@@ -276,7 +339,6 @@ h1 {
 h2 {
     font-family: "Amiri";
     font-weight: 600;
-    font-size: 28px;
 }
 
 .center {
@@ -290,7 +352,6 @@ ul, ol {
 h3 {
     font-family: "Amiri";
     font-weight: 600;
-    font-size: 25px;
 }
 
 h4 {
@@ -334,18 +395,6 @@ p {
     color: #00627A;
 }
 
-.keyword {
-    font-family: "Source Code Pro";
-    display: inline;
-    color: #0033B3;
-}
-
-.annotation {
-    font-family: "Source Code Pro";
-    color: #9E880D;
-    display: inline;
-}
-
 div.explanation:first-line {
     margin-top: -1em;
     line-height: 0px;
@@ -357,19 +406,23 @@ div.explanation:first-line {
     display: inline;
 }
 
-code {
-    font-family: "Source Code Pro";
-    padding: 10px 20px 10px 40px !important;
-    display: block;
-    border-radius: 30px !important;
-    background: rgb(244, 242, 240);
-    overflow-x: scroll;
-    font-size: 20px !important;
-}
-
 .globalVar {
     font-style: italic;
     font-family: "Source Code Pro";
     color: #871094;
     display: inline;
+}
+
+.keyword {
+  font-family: "Source Code Pro";
+  display: inline;
+}
+
+.identifer {
+  display: inline;
+}
+
+.annotation {
+  font-family: "Source Code Pro";
+  display: inline;
 }

@@ -19,11 +19,54 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 <br>
 
 # Changelog
+9 May 2021
+- Combined chapters Data Augmentation (Chpt. 11) and Image Preprocessing (Chpt. 7) into Chpt. 7 (Image Preprocessing and Data Augmentation)
+- Renamed chapter 7 to "Data Preprocessing & Augmentation"
+- Created a separate version of the references list. It is more readable than the bibliography, and is for readers that are interested in how the book was made and want to read more on topics covered in the book.
+- Started on Chapter 7 and opened issue #14.
+- Added a page on fonts used in the book (Source Code Pro for code and Amiri for text. Both are under the Open Font License [OFL] and were obtained through Google Fonts)
+- Updated word and hour-of-work count.
+- Added rights info in a footer on web version ("Rights reserved by JC-ProgJava. © 2020-2021")
+- Reworked front page.
+- Reworked syntax highlighting scheme in web version.
+- Header on web version now collapses after scrolling to enhance reading experience. The header appears once users scroll up slightly.
+- New chapter idea (Chapter 11 - Convolutional Neural Networks)
+- Changed syntax highlighting architecture to [this](https://github.com/JC-ProgJava/SyntaxHighlighter) (made by me! 🙂).
+- Fixed #17 and #19.
+
+1 January 2021
+- 🎉 Happy New Year! 🎉
+
+<pre>
+==========     ===========    ==========     //
+
+          ||  ||         ||             ||   //
+
+          ||  ||         ||             ||   //
+
+          ||  ||         ||             ||   //
+
+ ==========   ||         ||   ==========     //
+
+||            ||         ||  ||              //
+
+||            ||         ||  ||              //
+
+||            ||         ||  ||              //
+
+ ==========   ===========     ==========     //
+</pre>
+
+- Updated `preface.html` to make `<aside>` section match `<p>` text size on laptop screen viewports.
+- LN 205 in `activation.html`: fixed equation for derivative in Chapter Summary (in limit '∆x -> 0' instead of 'x -> 0')
+- Will be taking a break, be back soon! ☕️
+
 29 December 2020
 - Finished Chapter 6 - Validation Datasets 🙂
 - Pushed Chapter 6 to the web. 🚀
 
 20-26 December 2020
+- Merry Christmas! 🎄
 - Patching web version to improve mobile compatibility.
 - Gathering resources for Chapter 6 - Validation Datasets
 
