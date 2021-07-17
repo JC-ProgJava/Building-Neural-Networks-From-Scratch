@@ -19,7 +19,9 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 <br>
 
 # Changelog
+
 9 May 2021
+
 - Combined chapters Data Augmentation (Chpt. 11) and Image Preprocessing (Chpt. 7) into Chpt. 7 (Image Preprocessing and Data Augmentation)
 - Renamed chapter 7 to "Data Preprocessing & Augmentation"
 - Created a separate version of the references list. It is more readable than the bibliography, and is for readers that are interested in how the book was made and want to read more on topics covered in the book.
@@ -32,9 +34,12 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 - Header on web version now collapses after scrolling to enhance reading experience. The header appears once users scroll up slightly.
 - New chapter idea (Chapter 11 - Convolutional Neural Networks)
 - Changed syntax highlighting architecture to [this](https://github.com/JC-ProgJava/SyntaxHighlighter) (made by me! 🙂).
-- Fixed #17 and #19.
+- Fixed #14, #17, #19, #23, #24.
+- Modified font size in mobile viewports.
+- Added support for printing chapters.
 
 1 January 2021
+
 - 🎉 Happy New Year! 🎉
 
 <pre>
@@ -62,42 +67,50 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 - Will be taking a break, be back soon! ☕️
 
 29 December 2020
+
 - Finished Chapter 6 - Validation Datasets 🙂
 - Pushed Chapter 6 to the web. 🚀
 
 20-26 December 2020
+
 - Merry Christmas! 🎄
 - Patching web version to improve mobile compatibility.
 - Gathering resources for Chapter 6 - Validation Datasets
 
 19 December 2020
+
 - Finished Chapter 5 - Overfitting and Underfitting.
 - Pushed Chapter 5 to the web. 🚀
 - Added "Overfitting_Underfitting" code folder.
 
 7 December 2020
+
 - Finished Task 1 - Recognizing Digits
 - Pushed all chapters (Chpt. 1-4 & Task 1) to the web. 🚀
 - Added "Project1"(Task 1) code folder.
 
 18 November 2020
+
 - Challenge section in Task 1 - Recognizing Digits almost complete: only Solution and Visualizing Weights parts incomplete.
 
-
 13 November 2020
+
 - Full re-edit of book.
 - Planning in Objectives file locally.
 
 12 November 2020
+
 - Finished Task 1 - Recognizing Digits
 - Scheduled Challenge in Task 1 - Recognizing Digits
 - Scheduled Book Summary
 
 8 November 2020
+
 - Added "Notation" and "Derivative" sections to Activation Functions
 - Added Chapter Summaries.
 
 6 November 2020
+
 - Added Contents
 - Added Citations
 - Added License Notice
@@ -106,10 +119,12 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 - Finished Activation Functions
 
 31 October 2020
+
 - Finished Chapter 3 - Neural Networks and Learning
 - Scheduled Task 1 - Recognizing Digits
 
 29 October 2020
+
 - Updated Preface
 - Updated Perceptron
 - Switch to Amiri font.
@@ -118,6 +133,7 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 - Scheduled Chapter 4 - Activation Functions
 
 27 October 2020
+
 - Finished Chapter 1 - Introduction.
 - Finished Chapter 2 - Perceptron.
 - Scheduled Further Reading.
@@ -125,5 +141,6 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 - Updated foreword.
 
 25 October 2020
+
 - Finished foreword.
 - Scheduled Chapter 1 - Perceptron.

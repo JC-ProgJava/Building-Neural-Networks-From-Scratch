@@ -63,6 +63,38 @@
 }
 
 @media only screen and (min-width: 800px) {
+    img {
+        width: 80%;
+        border: 3px black solid;
+    }
+
+    .quote {
+        margin-left: 95px;
+        margin-right: 95px;
+        color: rgb(80, 80, 80);
+        font-size: 27px;
+        font-style: italic;
+        font-weight: 400;
+    }
+
+    td, th {
+        padding: 10px 20px;
+    }
+
+    #visible {
+        margin-bottom: 80px;
+        width: 70%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        padding: 0 40px 20px;
+        border-radius: 20px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
     p {
         font-size: 20px;
     }
@@ -130,12 +162,29 @@
 
     ul, ol {
         font-size: 20px;
+        padding-inline-start: 40px;
     }
 }
 
 @media only screen and (max-width: 800px) {
+    ul, ol {
+        padding-inline-start: 5px;
+    }
+
+    td, th {
+        padding: 2px 3px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
     tbody, thead, table, tr, td {
-        font-size: 24px;
+        font-size: 15px;
+    }
+
+    ol, ul, li, div span {
+        font-size: 16px;
     }
 
     code {
@@ -145,22 +194,22 @@
         border-radius: 30px !important;
         background: rgb(244, 242, 240);
         overflow-x: scroll;
-        font-size: 19px;
+        font-size: 13px;
         line-height: 1.5;
     }
 
     code p {
-        font-size: 19px;
+        font-size: 13px;
     }
 
     code span {
-        font-size: 19px;
+        font-size: 13px;
         padding-top: 4px;
         padding-bottom: 4px;
     }
 
     code pre {
-        font-size: 19px;
+        font-size: 13px;
         padding-top: 4px;
         padding-bottom: 4px;
     }
@@ -170,7 +219,7 @@
     }
 
     p {
-        font-size: 24px;
+        font-size: 16px;
     }
 
     .definition {
@@ -180,27 +229,23 @@
         background-color: rgb(250, 250, 250);
         border-radius: 10px;
         line-height: 1.8;
-        font-size: 24px;
+        font-size: 16px;
     }
 
     .definition .title {
         text-align: center;
-        font-size: 24px;
+        font-size: 16px;
         margin-left: auto;
         margin-right: auto;
         padding: 0;
     }
 
-    ol, ul, li, div span {
+    h2 {
         font-size: 24px;
     }
 
-    h2 {
-        font-size: 35px;
-    }
-
     h3 {
-        font-size: 30px;
+        font-size: 21px;
     }
 
     .indent {
@@ -208,8 +253,12 @@
     }
 
     .quote {
-        margin-left: 20px !important;
-        margin-right: 20px !important;
+        margin-left: 20px;
+        margin-right: 20px;
+        color: rgb(80, 80, 80);
+        font-size: 18px;
+        font-style: italic;
+        font-weight: 400;
     }
 
     ol, ul, li {
@@ -219,13 +268,19 @@
     }
 
     #visible {
-        width: 90% !important;
-        overflow-x: scroll;
+        margin-bottom: 80px;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
         padding: 0 10px;
+        border-radius: 20px;
+        overflow-x: scroll;
     }
 
     img {
-        width: 90% !important;
+        width: 90%;
+        border: 1px black solid;
     }
 }
 
@@ -243,10 +298,6 @@ table, td, th {
     line-height: 1.8;
 }
 
-td, th {
-    padding: 10px 20px;
-}
-
 nav {
     position: sticky;
     display: block;
@@ -260,11 +311,9 @@ nav {
 }
 
 img {
-    width: 80%;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    border: 3px black solid;
 }
 
 .caption {
@@ -288,25 +337,6 @@ aside {
     padding: 20px 30px;
     background-color: rgb(245, 245, 245);
     border-radius: 10px;
-}
-
-.quote {
-    margin-left: 95px;
-    margin-right: 95px;
-    color: rgb(80, 80, 80);
-    font-size: 27px;
-    font-style: italic;
-    font-weight: 400;
-}
-
-#visible {
-    margin-bottom: 80px;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    padding: 0 40px 20px;
-    border-radius: 20px;
 }
 
 nav h1 {
@@ -333,7 +363,6 @@ a:visited {
 h1 {
     font-family: "Amiri";
     font-weight: 600;
-    font-size: 30px;
 }
 
 h2 {
@@ -425,4 +454,8 @@ div.explanation:first-line {
 .annotation {
   font-family: "Source Code Pro";
   display: inline;
+}
+
+::selection {
+    background: #fcd6a5;
 }
