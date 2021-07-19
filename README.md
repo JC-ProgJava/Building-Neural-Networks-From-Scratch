@@ -20,6 +20,11 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+19 July 2021
+
+- Finished Chapter 7 Data Preprocessing & Augmentation. 🙂
+- Pushed Chapter 7 to the web. 🚀
+
 9 May 2021
 
 - Combined chapters Data Augmentation (Chpt. 11) and Image Preprocessing (Chpt. 7) into Chpt. 7 (Image Preprocessing and Data Augmentation)
@@ -28,7 +33,6 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 - Started on Chapter 7 and opened issue #14.
 - Added a page on fonts used in the book (Source Code Pro for code and Amiri for text. Both are under the Open Font License [OFL] and were obtained through Google Fonts)
 - Updated word and hour-of-work count.
-- Added rights info in a footer on web version ("Rights reserved by JC-ProgJava. © 2020-2021")
 - Reworked front page.
 - Reworked syntax highlighting scheme in web version.
 - Header on web version now collapses after scrolling to enhance reading experience. The header appears once users scroll up slightly.

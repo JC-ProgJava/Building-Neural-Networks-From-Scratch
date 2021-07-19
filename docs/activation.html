@@ -62,7 +62,7 @@
             problem as one that is probabilistic? So, there would be a layer of perceptrons in the output
             layer, but instead of only outputting 0 or 1, all values in between are covered as well.
             This is essentially the main purpose of the activation function, a function that takes an
-            input and outputs a corresponding value in a given range(usually -1 to 1, or 0 to 1). We will
+            input and outputs a corresponding value in a given range (usually -1 to 1, or 0 to 1). We will
             talk about the name’s origin and various widely-used activation functions in this chapter.</p>
         <p>In previous chapters, the <em>input</em> of the perceptron was also called the alternative name
             <em>activation</em>. This seems to coincidentally match the name of this chapter, doesn’t it?
@@ -137,12 +137,11 @@
             Well, derivatives first take two points, one being the original point, and the other being one that slowly gets closer and closer to the original point.
             Call these points \((x, y)\) and \((x+\Delta x, y+\Delta y)\). Then, we keep on decreasing the changes \(\Delta x\) and \(\Delta y\) until the two points are the
             same, this will therefore give the slope of a function at the single point. By connecting the two points, we are given a line with a slope
-            of \(\displaystyle{\Delta y\over\Delta x}\). \(y\) can also be expressed as \(f(x)\)(function output with input of \(x\)), therefore we can rewrite the points as
-            \((x, f(x))\) and \((x + \Delta x, f(x + \Delta x))\). To find the slope, we can use the slope formula: \(\displaystyle{\Delta y\over{\Delta x}} = {{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\).
-            You can check that these two expressions are the same by simplifying: \(\displaystyle{\Delta y\over{\Delta x}} = {f(x\ -\ x\ +\ \Delta x)\over{\Delta x}} = {f(\Delta x)\over{\Delta x}}\).
-            We defined \(f(\Delta x)\) as \(\Delta y\), so therefore they are the same equation expressed differently. We use the slope formula because <em>differentiation</em> requires
-            finding the limit of the slope formula, as \(\Delta x\) approaches 0. Expressed mathematically, find \(\displaystyle\lim_{\Delta x\ \to\ 0}{{f(x\ + \Delta x) - f(x)}\over{\Delta x}}\).
-            We cannot directly substitute 0 as \(\Delta x\) because this gives: \(\displaystyle{{f(x\ +\ 0)\ -\ f(x)}\over{0}} = {{f(0)}\over{0}}\), which is undefined.
+            of \(\displaystyle{\Delta y\over\Delta x}\). \(y\) can also be expressed as \(f(x)\) (function output with input of \(x\)), therefore we can rewrite the points as
+            \((x, f(x))\) and \((x + \Delta x, f(x + \Delta x))\) (note that \(y +\Delta y=f(x+\Delta x)\)). To find the slope, we can use the slope formula (traditionally, rise over run): $$\displaystyle{\Delta y\over{\Delta x}} = {{f(x +\Delta x)-f(x)}\over{x+\Delta x - x}}={{f(x+\Delta x)- f(x)}\over{\Delta x}}$$
+            We use the slope formula because <em>differentiation</em> requires
+            finding the limit of the slope formula, as \(\Delta x\) approaches 0. Expressed mathematically, find: $$\displaystyle\lim_{\Delta x\ \to\ 0}{{f(x\ + \Delta x) - f(x)}\over{\Delta x}}$$
+            We cannot directly substitute 0 as \(\Delta x\) because this gives: \(\displaystyle{{f(x\ +\ 0)\ -\ f(x)}\over{0}} = {{f(0)}\over{0}}\), which is undefined (divide by 0).
             Instead, we need to simplify the limit such that substituting \(\Delta x\) with 0 works.</p>
 
         <p>Let’s try an example:<br>Given \(f(x) = x^{2}\), find \(f'(x)\). Here, \(f'(x)\) represents the derivative of the function and \(f(x)\) represents the function.

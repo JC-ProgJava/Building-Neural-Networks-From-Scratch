@@ -137,7 +137,7 @@
        9: \([\,1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1\,]\).</p>
     <p>So, the above set of arrays should be our <em>input</em> array. Next, we need to define a
         <em>learning rate</em>, <em>input neuron number</em>, <em>output neuron number</em>,
-        <em>target array</em> and <em>epoch</em>. For our example(after I experimented around a
+        <em>target array</em> and <em>epoch</em>. For our example (after I experimented around a
         while), here are the optimal values(that work as expected):</p>
     <p><em>Learning rate</em> (\(\alpha\) or \(\eta\)): 0.5<br>
        <em>Epoch</em>: 1000<br>
@@ -648,7 +648,7 @@ Line 45: Get the answer. E.g., 5, 3, 4... instead of an array of values between 
     <p>One of the prominent reasons why I chose Java to write all the code in this book is because
         Java provides a method for saving objects called <em>serialization</em> and one called
         <em>deserialization</em> to extract objects from the saved files. Basically, it saves an
-        object into a file with extension name(usually) .<em>ser</em>, which can be exported to
+        object into a file with extension name (usually) .<em>ser</em>, which can be exported to
         other computers and locations for deployment. Below you can find the code to do just that,
         in five lines:</p>
     <code class="language-java" style="white-space: pre;">
@@ -733,7 +733,7 @@ Line 45: Get the answer. E.g., 5, 3, 4... instead of an array of values between 
         in the real world, and slightly modified it for display on its own.</p>
     <h3 id="findingDatasets">Finding Datasets For Model Training</h3>
     <p>As we have seen previously, we need data to be able to train a neural network, so where
-        can we get manually labelled(100% accurately labelled) digit recognition data? Well, if
+        can we get manually labelled (100% accurately labelled) digit recognition data? Well, if
         you have tried to make models previously to recognize digits, you will have heard of the
         MNIST dataset, which is a dataset with a curation of 70000 images, 60000 of which are
         used to train the model, and 10000 of them are used to test the model’s accuracy. Each
@@ -767,7 +767,7 @@ Line 45: Get the answer. E.g., 5, 3, 4... instead of an array of values between 
        Step 2: Recognize digits 0-9 of any input length accurately.</p>
     <h5 id="challenge-background">Background</h5>
     <p class="indent">This task requires knowledge of activation functions, the delta learning rule and the
-        perceptron model. Also, knowledge of Java(or C-like) programming may help you get
+        perceptron model. Also, knowledge of Java (or C-like) programming may help you get
         through this part of the book more smoothly.</p>
     <h5 id="challenge-descript">Description</h5>
     <p>The MNIST dataset represents digits in 28x28 grids. Here is what each digit’s file
@@ -831,7 +831,7 @@ Line 45: Get the answer. E.g., 5, 3, 4... instead of an array of values between 
        <em>Input Neuron Number</em>: 784(28 * 28 = 784, one for each input value in 28x28
         grid input)<br>
        <em>Output Neuron Number</em>: 10(0-9, one for each digit)<br>
-       <em>Expected output accuracy</em>: 50% or above(should be around 80%-90%, but 50% should really
+       <em>Expected output accuracy</em>: 50% or above (should be around 80%-90%, but 50% should really
         be the minimum by far, if you get around 10%, something is wrong with your training or
         testing class).</p>
     <h3 id="challenge-steps">Steps to Take</h3>
