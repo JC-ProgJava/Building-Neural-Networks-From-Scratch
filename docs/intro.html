@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Building neural networks from scratch using Java.">
-
-
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -21,7 +19,9 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/79958107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 
+
     <link href="book.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
     <title>Introduction</title>
 </head>
 <body>
@@ -145,4 +145,21 @@
         <button onclick="location.href = 'perceptron.html';">Next Chapter</button>
     </div>
 </body>
+
+<script>
+// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementsByTagName("nav")[0].style.top = "0";
+  } else {
+    document.getElementsByTagName("nav")[0].style.top = "-110px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+// Code borrowed, please look at the link for the tutorial to make collapsible sections
+// Code was modified for suitability purposes
+// END W3SCHOOL CODE
+</script>
 </html>

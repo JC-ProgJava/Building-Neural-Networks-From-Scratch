@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Building neural networks from scratch using Java.">
-
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -56,7 +55,7 @@
 
             #visible {
                 width: 90% !important;
-                padding: 0px 20px 0px 20px !important;
+                padding: 0 20px !important;
             }
         }
 
@@ -69,6 +68,7 @@
             padding-bottom: 2px;
             top: 0;
             z-index: 1000;
+            transition: top 0.3s;
         }
 
         img {
@@ -93,7 +93,7 @@
             margin-left: auto;
             margin-right: auto;
             background-color: white;
-            padding: 0px 40px 20px 40px;
+            padding: 0 40px 20px;
             border-radius: 20px;
         }
 
@@ -123,6 +123,10 @@
             font-family: "Amiri";
             font-weight: 600;
         }
+
+        ::selection {
+            background: #fcd6a5;
+        }
     </style>
 </head>
 <body>
@@ -137,4 +141,20 @@
     <button onclick="location.href = 'preface.html';">Next</button>
 </div>
 </body>
+<script>
+// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementsByTagName("nav")[0].style.top = "0";
+  } else {
+    document.getElementsByTagName("nav")[0].style.top = "-110px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+// Code borrowed, please look at the link for the tutorial to make collapsible sections
+// Code was modified for suitability purposes
+// END W3SCHOOL CODE
+</script>
 </html>

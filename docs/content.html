@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Building neural networks from scratch using Java.">
 
-
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -118,6 +117,7 @@
             padding-bottom: 2px;
             top: 0;
             z-index: 1000;
+            transition: top 0.3s;
         }
 
         nav a {
@@ -156,11 +156,11 @@
 
         ol ul li {
             font-weight: 500;
-            padding: 0px;
+            padding: 0;
         }
 
         ol ul {
-            padding: 0px;
+            padding: 0;
         }
 
         ol li {
@@ -172,7 +172,7 @@
             background: rgb(2,0,36);
             background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(231,236,139,1) 0%, rgba(255,166,0,1) 100%);
             border-radius: 20px;
-            padding: 10px 20px 10px 20px;
+            padding: 10px 20px;
             width: 150px;
             position: fixed;
             right: 30px;
@@ -188,7 +188,7 @@
         #count {
             background-color: rgb(240, 240, 240);
             border-radius: 20px;
-            padding: 5px 5px 5px 5px;
+            padding: 5px;
             font-family: "Source Code Pro";
             font-size: 20px;
         }
@@ -222,6 +222,10 @@
           transition: max-height 0.2s ease-out;
         }
         /* END https://www.w3schools.com/howto/howto_js_collapsible.asp */
+
+        ::selection {
+            background: #fcd6a5;
+        }
     </style>
 </head>
 <body>
@@ -445,7 +449,7 @@
         </ul>
 
         <li class="collapsible">
-            <a href="fitting.html">Overfitting and Underfitting - ✨ New ✨</a>
+            <a href="fitting.html">Overfitting and Underfitting</a>
         </li>
         <ul class="content">
             <li>
@@ -477,15 +481,49 @@
             <li>
                 <a href="validation.html#separation">Separation of Testing, Training, and Validation Datasets</a>
             </li>
-            
+
             <li>
                 <a href="validation.html#summary">Chapter Summary</a>
             </li>
         </ul>
 
         <li class="collapsible">
-            <a>Image Preprocessing - Under progress! 🙂</a>
+            <a href="preprocessing.html">Image Preprocessing - ✨ New ✨</a>
         </li>
+        <ul class="content">
+            <li>
+                <a href="preprocessing.html#image-preprocessing">Image Preprocessing</a>
+            </li>
+            <li>
+                <a href="preprocessing.html#image-data-augmentation">Image Data Augmentation</a>
+            </li>
+            <li>
+                <a href="preprocessing.html#image-preprocessing-and-image-data-augmentation-techniques">Image Preprocessing and Image Data Augmentation Techniques</a>
+            </li>
+            <li>
+                <a href="preprocessing.html#other-mediums-data-augmentation">Other Mediums of Data Augmentation</a>
+            </li>
+            <li>
+                <a href="preprocessing.html#other-mediums-data-preprocessing">Other Mediums of Data Preprocessing</a>
+            </li>
+            <li>
+                <a href="preprocessing.html#code-examples">Code Examples</a>
+            </li>
+            <ul>
+                <li>
+                    <a href="preprocessing.html#task1">Task 1</a>
+                </li>
+                <li>
+                    <a href="preprocessing.html#task2">Task 2</a>
+                </li>
+                <li>
+                    <a href="preprocessing.html#task3">Task 3</a>
+                </li>
+            </ul>
+            <li>
+                <a href="preprocessing.html#summary">Chapter Summary</a>
+            </li>
+        </ul>
 
         <li class="collapsible">
             <a>Backpropagation - Under progress! 🙂</a>
@@ -530,7 +568,7 @@
         fetch('https://api.countapi.xyz/hit/buildingnnsfromscratch.com/key')
         .then(res => res.json())
         .then(res => {
-            countEl.innerHTML = res.value;
+            countEl.innerText = res.value;
         })
     }
 
@@ -552,5 +590,21 @@
     // Code borrowed, please look at the link for the tutorial to make collapsible sections
     // Code was modified for suitability purposes
     // END W3SCHOOL CODE
+
+// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementsByTagName("nav")[0].style.top = "0";
+  } else {
+    document.getElementsByTagName("nav")[0].style.top = "-110px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+// Code borrowed, please look at the link for the tutorial to make collapsible sections
+// Code was modified for suitability purposes
+// END W3SCHOOL CODE
+
 </script>
 </html>

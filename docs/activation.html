@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Building neural networks from scratch using Java.">
-
-
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -35,6 +33,7 @@
     </script>
 
     <link rel="stylesheet" href="book.css" type="text/css">
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
     <style>
         .graph {
             width: 60%;
@@ -63,7 +62,7 @@
             problem as one that is probabilistic? So, there would be a layer of perceptrons in the output
             layer, but instead of only outputting 0 or 1, all values in between are covered as well.
             This is essentially the main purpose of the activation function, a function that takes an
-            input and outputs a corresponding value in a given range(usually -1 to 1, or 0 to 1). We will
+            input and outputs a corresponding value in a given range (usually -1 to 1, or 0 to 1). We will
             talk about the name’s origin and various widely-used activation functions in this chapter.</p>
         <p>In previous chapters, the <em>input</em> of the perceptron was also called the alternative name
             <em>activation</em>. This seems to coincidentally match the name of this chapter, doesn’t it?
@@ -138,12 +137,11 @@
             Well, derivatives first take two points, one being the original point, and the other being one that slowly gets closer and closer to the original point.
             Call these points \((x, y)\) and \((x+\Delta x, y+\Delta y)\). Then, we keep on decreasing the changes \(\Delta x\) and \(\Delta y\) until the two points are the
             same, this will therefore give the slope of a function at the single point. By connecting the two points, we are given a line with a slope
-            of \(\displaystyle{\Delta y\over\Delta x}\). \(y\) can also be expressed as \(f(x)\)(function output with input of \(x\)), therefore we can rewrite the points as
-            \((x, f(x))\) and \((x + \Delta x, f(x + \Delta x))\). To find the slope, we can use the slope formula: \(\displaystyle{\Delta y\over{\Delta x}} = {{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\).
-            You can check that these two expressions are the same by simplifying: \(\displaystyle{\Delta y\over{\Delta x}} = {f(x\ -\ x\ +\ \Delta x)\over{\Delta x}} = {f(\Delta x)\over{\Delta x}}\).
-            We defined \(f(\Delta x)\) as \(\Delta y\), so therefore they are the same equation expressed differently. We use the slope formula because <em>differentiation</em> requires
-            finding the limit of the slope formula, as \(\Delta x\) approaches 0. Expressed mathematically, find \(\displaystyle\lim_{\Delta x\ \to\ 0}{{f(x\ + \Delta x) - f(x)}\over{\Delta x}}\).
-            We cannot directly substitute 0 as \(\Delta x\) because this gives: \(\displaystyle{{f(x\ +\ 0)\ -\ f(x)}\over{0}} = {{f(0)}\over{0}}\), which is undefined.
+            of \(\displaystyle{\Delta y\over\Delta x}\). \(y\) can also be expressed as \(f(x)\) (function output with input of \(x\)), therefore we can rewrite the points as
+            \((x, f(x))\) and \((x + \Delta x, f(x + \Delta x))\) (note that \(y +\Delta y=f(x+\Delta x)\)). To find the slope, we can use the slope formula (traditionally, rise over run): $$\displaystyle{\Delta y\over{\Delta x}} = {{f(x +\Delta x)-f(x)}\over{x+\Delta x - x}}={{f(x+\Delta x)- f(x)}\over{\Delta x}}$$
+            We use the slope formula because <em>differentiation</em> requires
+            finding the limit of the slope formula, as \(\Delta x\) approaches 0. Expressed mathematically, find: $$\displaystyle\lim_{\Delta x\ \to\ 0}{{f(x\ + \Delta x) - f(x)}\over{\Delta x}}$$
+            We cannot directly substitute 0 as \(\Delta x\) because this gives: \(\displaystyle{{f(x\ +\ 0)\ -\ f(x)}\over{0}} = {{f(0)}\over{0}}\), which is undefined (divide by 0).
             Instead, we need to simplify the limit such that substituting \(\Delta x\) with 0 works.</p>
 
         <p>Let’s try an example:<br>Given \(f(x) = x^{2}\), find \(f'(x)\). Here, \(f'(x)\) represents the derivative of the function and \(f(x)\) represents the function.
@@ -218,7 +216,7 @@
             <li>Finding the derivative of a single point uses limits, where the distance between two points, one of which was the original, approaches 0.</li><br>
             <li>The slope formula: \(\displaystyle{{\Delta y}\over{\Delta x}} = {{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\), where \(\Delta x\) and \(\Delta y\) represent
                 the change in \(x\) and \(y\) respectively, given two points \((x,\ y)\) and \((x + \Delta x,\ y + \Delta y)\).</li><br>
-            <li>To find the derivative with the slope formula, simply simplify the limit: \(\displaystyle\lim_{x\ \to\ 0}{{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\),
+            <li>To find the derivative with the slope formula, simply simplify the limit: \(\displaystyle\lim_{\Delta x\ \to\ 0}{{f(x\ +\ \Delta x)\ -\ f(x)}\over{\Delta x}}\),
                 plugging in the point values or function into the equation.</li><br>
             <li>Backpropagation requires knowledge on derivatives.</li>
         </ol>
@@ -227,4 +225,20 @@
         <button onclick="location.href = 'networksAndLearning.html';">Next Chapter</button>
     </div>
 </body>
+<script>
+// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementsByTagName("nav")[0].style.top = "0";
+  } else {
+    document.getElementsByTagName("nav")[0].style.top = "-110px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+// Code borrowed, please look at the link for the tutorial to make collapsible sections
+// Code was modified for suitability purposes
+// END W3SCHOOL CODE
+</script>
 </html>

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="Description" content="Building neural networks from scratch using Java.">
 
-
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript" >
    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
@@ -35,6 +34,7 @@
     </script>
 
     <link rel="stylesheet" href="book.css" type="text/css">
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
     <style>
         .equations {
             margin-top: 20px;
@@ -106,7 +106,7 @@
     </div>
 
     <p>Any other “peaks” or “valleys” that are not the highest and lowest respectively are called local maximums and minimums respectively.
-        The \(t\) and \(y\) variables in the equation stand for the target value or expected value and predicted value(the output of the
+        The \(t\) and \(y\) variables in the equation stand for the target value or expected value and predicted value (the output of the
         network) and their difference is usually referred to as the <em>training error</em>. \(\sigma\,'(h)\) stands for the derivative
         of the activation function on a particular value \(h\) which is the weighted sum of inputs. Finally, \(x\) stands for the single
         input at the current index. The second equation shows that the next generation or iterations’ weights should be the sum of the
@@ -178,4 +178,21 @@
     <button onclick="location.href = 'task1.html';">Next Chapter</button>
 </div>
 </body>
+
+<script>
+// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementsByTagName("nav")[0].style.top = "0";
+  } else {
+    document.getElementsByTagName("nav")[0].style.top = "-110px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+// Code borrowed, please look at the link for the tutorial to make collapsible sections
+// Code was modified for suitability purposes
+// END W3SCHOOL CODE
+</script>
 </html>

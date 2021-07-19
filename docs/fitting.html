@@ -20,12 +20,10 @@
 <noscript><div><img src="https://mc.yandex.ru/watch/79958107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
 
+
     <title>Overfitting and Underfitting</title>
-    <link rel="stylesheet" type="text/css" href="prism/prism.css">
-    <script src="prism/prism.js"></script>
 
     <!-- Math -->
-
     <link rel="stylesheet" href="katex/katex.min.css">
     <script defer src="katex/katex.min.js"></script>
     <script defer src="katex/auto-render.min.js"></script>
@@ -36,8 +34,8 @@
         });
     </script>
 
-
     <link rel="stylesheet" href="book.css" type="text/css">
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
 </head>
 <body>
 <nav>
@@ -170,7 +168,7 @@
             \(\bar{x}=50\div{8}\), \(\bar{y}=38.1\div{8}\) <br>
             \(\bar{x}=6.25\) <br>
             \(\bar{y}=4.7625\)</li> <br>
-        <li>\(\displaystyle\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})(y_{n}-\bar{y})=(2-6.25)(2-4.7625)\,+\,...\,=30.275}\) <br><br>
+        <li>\(\displaystyle\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})(y_{n}-\bar{y})}\)\({=(2-6.25)(2-4.7625)\,+\,...\,=30.275}\) <br><br>
             \(\displaystyle\sum_{n\ =\ 1}^{i}{(x_{n}-\bar{x})^{2}=(2-6.25)^{2}\,+\,...\,=55.5}\)</li><br>
         <li>\(\bar{y}-k\bar{x}=4.7625 - 0.545495495 \times 6.25 \approx 1.353\)</li><br>
         <li>\(y \approx 0.545x+1.353\)</li>
@@ -225,8 +223,8 @@
 6.25
 4.7625
 
-<p class="functionBlue">Process finished with exit code 0</p>
-    </code>
+Process finished with exit code 0<br>
+</code>
     <p>Explanation:</p>
 <div class="explanation indent" style="line-height: 2; white-space: pre-wrap;"><span>
 Line 1-2: Note that I put '.0' behind every whole number in the arrays to make sure the Python interpreter understands that I want floating-point precision (the </span><p class="codeword">x</p><span> array are all whole numbers).
@@ -474,4 +472,21 @@ Line 25-30: Print out the values that we are interested in.
     <button onclick="location.href = 'validation.html';">Next Chapter</button>
 </div>
 </body>
+<script>
+// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+  var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementsByTagName("nav")[0].style.top = "0";
+  } else {
+    document.getElementsByTagName("nav")[0].style.top = "-110px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+// Code borrowed, please look at the link for the tutorial to make collapsible sections
+// Code was modified for suitability purposes
+// END W3SCHOOL CODE
+</script>
+<script src="syntax.js"></script>
 </html>
