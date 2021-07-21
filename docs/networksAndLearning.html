@@ -187,7 +187,7 @@ window.onscroll = function() {
   if (prevScrollpos > currentScrollPos) {
     document.getElementsByTagName("nav")[0].style.top = "0";
   } else {
-    document.getElementsByTagName("nav")[0].style.top = "-110px";
+    document.getElementsByTagName("nav")[0].style.top = -document.getElementsByTagName("nav")[0].offsetHeight + "px";
   }
   prevScrollpos = currentScrollPos;
 }
