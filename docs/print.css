@@ -62,11 +62,6 @@
   font-display: swap;
 }
 
-img {
-    width: 80%;
-    border: 3px black solid;
-}
-
 .quote {
     margin-left: 30px;
     margin-right: 30px;
@@ -90,28 +85,12 @@ td, th {
     border-radius: 20px;
 }
 
-h1 {
-    font-size: 30px;
-}
-
-p {
-    font-size: 20px;
-}
-
 tbody {
     font-size: 20px;
 }
 
 div span {
     font-size: 20px;
-}
-
-h3 {
-    font-size: 25px;
-}
-
-h2 {
-    font-size: 28px;
 }
 
 code {
@@ -168,11 +147,6 @@ code pre {
     padding: 0;
 }
 
-ul, ol {
-    font-size: 20px;
-    padding-inline-start: 40px;
-}
-
 .katex, .katex span {
     font-size: 1em;
 }
@@ -194,6 +168,8 @@ img {
     break-inside: avoid;
     break-before: avoid;
     margin-right: auto;
+    width: 80%;
+    border: 3px black solid;
 }
 
 .caption {
@@ -241,12 +217,14 @@ h1 {
     font-family: "Amiri";
     break-after: avoid;
     font-weight: 600;
+    font-size: 30px;
 }
 
 h2 {
     font-family: "Amiri";
     break-after: avoid;
     font-weight: 600;
+    font-size: 28px;
 }
 
 .center {
@@ -255,12 +233,15 @@ h2 {
 
 ul, ol {
     font-family: "Amiri";
+    font-size: 20px;
+    padding-inline-start: 40px;
 }
 
 h3 {
     font-family: "Amiri";
     break-after: avoid;
     font-weight: 600;
+    font-size: 25px;
 }
 
 h4 {
@@ -279,6 +260,7 @@ h5 {
 
 p {
     font-family: "Amiri";
+    font-size: 20px;
 }
 
 .indent {
