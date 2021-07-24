@@ -77,12 +77,12 @@
         <p>So, what are some commonly used activation functions? Below we will list a few widely used activation functions:</p>
         <h3 id="identity">Identity Activation Function</h3>
         <img class="graph" src="Images/identity.jpg">
-        <p class="caption">Figure 3.1 - Graph of Identity Activation Function</p>
+        <p class="caption">Figure 3-1: Graph of Identity Activation Function</p>
         <p>The identity activation function takes the form: \(\sigma(x) = x\), ranging from \(-\infty\) to \(\infty\). The function is linear and its
             derivative takes the form: \(\sigma\,'(x) = 1\), which makes calculations faster due to its simplicity.</p>
         <h3 id="sigmoid">Sigmoid Activation Function</h3>
         <img class="graph" src="Images/sigmoid.jpg">
-        <p class="caption">Figure 3.2 - Graph of Sigmoid Activation Function</p>
+        <p class="caption">Figure 3-2: Graph of Sigmoid Activation Function</p>
         <p>The sigmoid activation function takes the form: \(\displaystyle\sigma(x) = {{1}\over{1\ +\ e^{-x}}}\). The range of the function is between
             0 and 1, reaching 0.9 and 0.1 at approximately 2.125 and -2.125 respectively. The sigmoid function is nonlinear and its
             derivative takes the form: \(\sigma'(x) = \sigma(x)(1 - \sigma(x))\), which is important when using various other learning
@@ -90,7 +90,7 @@
             into a probabilistic output, since its values range from 0 to 1, from uncertain to definite.</p>
         <h3 id="tanh">TanH Activation Function</h3>
         <img class="graph" src="Images/tanh.jpg">
-        <p class="caption">Figure 3.3 - Graph of Tanh Activation Function</p>
+        <p class="caption">Figure 3-3: Graph of Tanh Activation Function</p>
         <p>The tanh activation function takes the form: \(\displaystyle\sigma(x) = {e^{x}\ -\ e^{-x}\over{e^{x}\ +\ e^{-x}}}\). You may notice
             that it looks quite similar to the sigmoid activation function because it is actually just a squished version of it: another
             way you can write the tanh activation is: \(\sigma(x) = 2S(2x) - 1\), where \(S(x)\) is the sigmoid function. The derivative
@@ -100,7 +100,7 @@
             result of the tanh activation function.</p>
         <h3 id="relu">ReLU Activation Function</h3>
         <img class="graph" src="Images/relu.jpg">
-        <p class="caption">Figure 3.4 - Graph of ReLU Activation Function</p>
+        <p class="caption">Figure 3-4: Graph of ReLU Activation Function</p>
         <p>By far the least computationally expensive, the ReLU activation function takes the form: \(\sigma(x) = \left\{\begin{array}{l} x,\ x > 0 \\ 0,\ x ≤ 0 \end{array} \right.\).
             What the equation means is, that if the input \(x\) is less than or equal to 0, the function returns 0, otherwise, it returns \(x\) itself.
             This is arguably the simplest activation function by far and is linear. The derivative for the ReLU activation function is really similar
@@ -108,7 +108,7 @@
             derivative of all as well.</p>
         <h3 id="leak-relu">Leaky ReLU Activation Function</h3>
         <img class="graph" src="Images/leaky-relu.jpg">
-        <p class="caption">Figure 3.5 - Graph of Leaky ReLU Activation Function with \(\left\{\begin{array}{l} x,\ x > 0 \\ 0.3x,\ x ≤ 0 \end{array} \right.\)</p>
+        <p class="caption">Figure 3-5: Graph of Leaky ReLU Activation Function with \(\left\{\begin{array}{l} x,\ x > 0 \\ 0.3x,\ x ≤ 0 \end{array} \right.\)</p>
         <p>Another alternative to the ReLU activation function is the Leaky ReLU. In the graph above, I used
            \(\left\{\begin{array}{l} x,\ x > 0 \\ 0.3x,\ x ≤ 0 \end{array} \right.\) to better illustrate its difference from the ReLU activation function. Usually,
             any input less than or equal to 0 is not “leaked” as much as the version I chose above. A popular form of the Leaky ReLU
@@ -117,7 +117,7 @@
             this chapter.</p>
         <h3 id="softplus">SoftPlus Activation Function</h3>
         <img class="graph" src="Images/softplus.jpg">
-        <p class="caption">Figure 3.6 - Graph of SoftPlus Activation Function</p>
+        <p class="caption">Figure 3-6: Graph of SoftPlus Activation Function</p>
         <p>The SoftPlus activation function is another commonly used activation function. Usually, it takes the form: \(\sigma(x) = \ln(1 + e^{x})\) where \(\ln(x)\)
             refers to the natural logarithm(logarithm base e) of input \(x\). The derivative of the SoftPlus activation function is actually just the sigmoid activation
             function: \(\displaystyle\sigma\,'(x) = {1\over{1\ +\ e^{-x}}}\). This activation function once again is nonlinear(particularly exponential growth, not linear).</p>
@@ -139,6 +139,7 @@
             same, this will therefore give the slope of a function at the single point. By connecting the two points, we are given a line with a slope
             of \(\displaystyle{\Delta y\over\Delta x}\). \(y\) can also be expressed as \(f(x)\) (function output with input of \(x\)), therefore we can rewrite the points as
             \((x, f(x))\) and \((x + \Delta x, f(x + \Delta x))\) (note that \(y +\Delta y=f(x+\Delta x)\)). To find the slope, we can use the slope formula (traditionally, rise over run): $$\displaystyle{\Delta y\over{\Delta x}} = {{f(x +\Delta x)-f(x)}\over{x+\Delta x - x}}={{f(x+\Delta x)- f(x)}\over{\Delta x}}$$
+            Or alternatively: $${{\Delta y}\over{\Delta x}} = {{f(a) - f(b)}\over{a-b}}$$
             We use the slope formula because <em>differentiation</em> requires
             finding the limit of the slope formula, as \(\Delta x\) approaches 0. Expressed mathematically, find: $$\displaystyle\lim_{\Delta x\ \to\ 0}{{f(x\ + \Delta x) - f(x)}\over{\Delta x}}$$
             We cannot directly substitute 0 as \(\Delta x\) because this gives: \(\displaystyle{{f(x\ +\ 0)\ -\ f(x)}\over{0}} = {{f(0)}\over{0}}\), which is undefined (divide by 0).

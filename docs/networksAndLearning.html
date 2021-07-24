@@ -56,7 +56,7 @@
     <p>We have introduced most of the components in a neural network including the neuron,
         weights or connections, biases, layer terminology and activation functions. So now
         it is time to introduce learning rates and algorithms.</p>
-    <p>The perceptron –which is a common neuron paradigm used– consists of several variables:
+    <p>The perceptron–which is a common neuron paradigm used–consists of several variables:
         the weights, the biases, and the threshold value. We need to know how to initialize
         them, and how to find the most suitable values for them. To do this, we need to first
         pass through the network once, the process of which is called <em>forward propagation</em>.
@@ -68,7 +68,7 @@
         Gaussian distribution(sometimes called normal distribution) or assigned a value of 0.
         Here is a diagram of what gaussian distribution does:</p>
     <img src="Images/gaussianDistribution.jpg">
-    <p class="caption">Figure 4.1 - Gaussian Distribution Chart</p>
+    <p class="caption">Figure 4-1: Gaussian Distribution Chart</p>
     <p>It distributes a series of values with the most common values being the ones closest
         to a middle value, and having values further away from the middle value appears less.
         Usually, the middle value is 0 for initializing weights and biases. The reason that this
@@ -76,43 +76,198 @@
         values so that you can start at a different location each time, perhaps altering the
         accuracy of the network. People tend to stick to the initialization with 0s when trying
         to compare different models with each other.</p>
-    <p>These values are then adjusted using a learning algorithm called the delta rule.
-        The delta rule is expressed mathematically as:</p>
+    <p>These values are then adjusted using a learning algorithm called the delta rule. Now,
+        before I show the entire formula for the delta rule, let’s try derive it!</p>
+    <p>Neural networks are structures that perform <em>generalization</em> well, meaning that
+        these networks learn by finding <em>patterns</em> in a given dataset and applying these
+        patterns onto a set of input data. At first, parameters like <em>weights</em> and <em>biases</em>
+        are initialized randomly, so the network isn’t able to perform the desired task well. To
+        <em>improve</em>, networks then <em>compare</em> their initial outputs after <em>forward propagation</em>
+        and see how much it <em>differs</em> from the target (or desired) output. This notion of <em>differing</em>
+        is usually referred to as <em>error</em> or <em>loss</em>. It can be as simple as calculating the difference
+        between a desired output and the network’s predicted output, although we usually use a function called the
+        <em>mean squared error</em>, which simply just squares the difference between a target and predicted output
+        pair: $$C(t,y)=(t-y)^2$$
+        Where \(y\) refers to the predicted output (result of forward propagating through the network) and \(t\) refers
+        to the target or desired output of the network for a specific input pair that was inputted into the network.
+        MSE (mean squared error) usually takes the form: $${1\over{n}}\sum_{i\,=\,1}^{n}{(t_i-y_i)^2}$$
+    </p>
+    <p>Where we calculate the average <em>error</em> of the network when given \(n\) input samples and their target
+        output samples. MSE is usually referred to as a <em>cost function</em> (and thus \(C\)) because it performs
+        an averaging of \(n\) <em>error values</em> instead of just calculating the error of a single input sample.
+        Note now that given an error function able to measure the difference between an expected output and an actual
+        output, we can adjust our parameters based on this calculated error such that in the next iteration, the network
+        has a <em>lower</em> error value than before on the same input sample(s). This process is called <em>minimization</em>
+        or more generally, <em>optimization</em>. Furthermore, to lower an error value by adjusting parameters, we need to know
+        how adjusting each parameter affects that error value. Sounds familiar? Well, it is! Remember that derivatives are the
+        measure of how <em>sensitive</em> a function is to changes to its input! So we can use derivatives to find how <em>sensitive</em>
+        our error function is to changes to particular parameters. Then, adjusting our parameters is just as simple as
+        increasing or decreasing their values such that the error can be decreased. For example, if the predicted
+        output is greater than the expected output, then say, all weights (and their respective neurons) that are
+        activated by the given input sample should be decreased, and vice versa (assuming inputs are positive values).
+        But before we try to apply derivatives, there are a few rules that will come in handy:
+    </p>
+    <ol>
+        <li>
+            Given \(z=xy\), \(\displaystyle{{d z}\over{d x}}=y\). This makes sense as the value of \(z\) would change by \(y\)
+            for every unit of change to \(x\). For example:    <br>
+            \(z=xy\)<br>
+            \(z_n=(x+1)y=xy+y\)<br>
+            \(z_n-z=xy+y-xy=y\)<br>
+            See that by increasing \(x\) by 1, we increased \(z\) by \(y\).
+            Likewise, \(\displaystyle{{d z}\over{d y}}=x\).
+        </li><br>
+        <li>
+            Given \(y=x^a\), \(\displaystyle{{d y}\over{d x}}=ax^{a\,-\,1}\). This one is harder to prove and involves concepts
+            like the Binomial Theorem, so I won’t go explicitly into its proof.
+            <a target="_blank" href="https://tutorial.math.lamar.edu/classes/calci/DerivativeProofs.aspx" rel="noopener noreferrer">Here</a>
+            is a good resource that proves this rule (known as the power rule).
+        </li><br>
+        <li>
+            \(\displaystyle{{d e^x}\over{d x}}=e^x\)
+        </li><br>
+        <li>
+            The chain rule: \(\displaystyle{{df(g(x))}\over{dx}}=f'(g(x))\cdot g'(x)\) or
+            \(\displaystyle{{df(g(x))}\over{dx}}={{df}\over{dg}}{{dg}\over{dx}}\).
+        </li>
+    </ol>
+    <p>Note that we will deal with some partial derivatives, which are quite similar to
+        derivatives. Partial derivatives is deriving how a multivariable function changes
+        with respect to a single variable. In this case, you can just leave other variables as-is,
+        and only derive the targeted variable. That’s pretty much all you’ll need for now, let’s get started!</p>
+    <h3 id="example">A Simple Network Example</h3>
+    <p>Let’s assume that our network as 1 input neuron and 1 output neuron. The task is for the network to be
+        able to double an input value and return it in the output neuron. Here is a diagram of the network:</p>
+    <img src="Images/two-neurons.png">
+    <p class="caption">Figure 4-2: A diagram of a 1-1 neural network.</p>
+    <p>Here, \(i\) refers to the input, \(w\) a weight value, \(o\) the output of the network, \(t\) the target
+        output of the network, and \(E\) the error of the network (calculated based on the target and actual
+        output). We won’t include a bias in the network for more simplicity and also because it isn’t necessary
+        (doubling values doesn’t have a correlation with an added constant). We’ll use the identity activation
+        function for simplicity and also because we aren’t fitting our values into a certain range (but we’ll
+        assume there might be a different activation function). Let’s write the relationships between these
+        variables.</p>
+    <p class="equations">
+        \(o=\sigma(wi)\)<br>
+        \(C(t, o)=\displaystyle{1\over{2}}(t-o)^2\)
+    </p>
+    <p>Note that the cost function \(C\) is a slightly modified version of the mean squared error such that the
+        error is halved after being squared. </p>
+    <p>Also, let’s have \((i, t)\) be either \((1,\,2)\), \((2.5,\,5)\), or \((2,\,4)\) and have \(w\) be initialized as 0.</p>
+    <p>Note that:</p>
     <div class="equations">
-        <p>\(\Delta w = \alpha(t - y)\sigma\,'(h)x\)</p>
-        <p>\(w_{t} = w_{t\ -\ 1} + \Delta w\)</p>
+        <p>\(\displaystyle{{\partial C(t, o)}\over{\partial w}}={{\partial C(t,o)}\over{\partial o}}{{\partial o}\over{\partial wi}}{{\partial wi}\over{\partial w}}\)</p>
+        <p>\(\displaystyle{{\partial C(t,o)}\over{\partial o}}={{\partial{1\over{2}}(t-o)^2}\over{\partial o}}={{1}\over{2}}[2(t-o)^{2\,-\,1}\cdot(-1)]=-(t-o)\)</p>
+        <p>\(\displaystyle{{\partial o}\over{\partial wi}} = {{\partial \sigma(wi)}\over{\partial wi}}\)</p>
     </div>
-    <p>In the first equation above, \(\Delta w\) signifies the change calculated for each of the
-        individual weights or biases in the network. \(\alpha\) refers to the learning rate,
-        which is a constant that is multiplied with the other values. The learning rate helps
-        to increase or decrease the change in weights or biases depending on whether it is bigger
-        than 1 or smaller. This can be thought of as the length of step you take as you try to run
-        down a valley. Your goal is to get to the bottom, so you cannot take massive steps, or
-        else you will never reach that minimum point. You cannot take tiny steps either because
-        it will take you an unimaginably long time to get to the lowest point in the valley. The
-        reason why I use a valley as an analogy for the learning rate instead of a mountain is
-        that data scientists like to think of machine learning as a method that leads you to the
-        lowest point on a function(“valley”) or the minima of the graph, which best fits the
-        appropriate case, giving the best result. Some functions may also have several “peaks”(also
-        called maxima) and “valleys”(minima), so the highest “peak” is usually called the global
-        maximum, and the deepest “valley” is called the global minimum. Here is an example of what
-        I mean:</p>
+    <p>In our case, \(\sigma(wi)=wi\), so: \(\displaystyle{{dwi}\over{dwi}}=1\). And \(\displaystyle{{\partial wi}\over{\partial w}}=i\), so all in all, we get:</p>
+    <div class="equations">
+        <p>\(\displaystyle{{\partial C(t, o)}\over{\partial w}}=-(t-o)\cdot i\)</p>
+    </div>
+    <p>Note that this derivative tells us the gradient (amount of change) of \(C\) based on changes to \(w\). It also tells us which direction to adjust \(w\)
+        (i.e., increase or decrease): a negative slope indicates that there is a lower cost at some bigger \(w\) and a positive slope tells us there is a lower
+        cost  at some smaller \(w\). Notice that to lower our cost, we need to move in the direction <em>opposite</em> that of the gradient value. Thus:</p>
+    <div class="equations">
+        <p>\(\Delta w=-(o-t)i\)</p>
+        <p>\(w_n=w+\Delta w\)</p>
+    </div>
+    <p>We can rewrite this slightly as:</p>
+    <div class="equations">
+        <p>\(\Delta w=(o-t)i\)</p>
+        <p>\(w_n=w-\Delta w\)</p>
+    </div>
+    <p>From now, I’ll use this updated version (where \(w_n=w-\Delta w\) and \(\Delta w=(o-t)i\) instead of \(w_n=w+\Delta w\) and \(\Delta w=-(o-t)i\)).
+        This \(\Delta w\) value is usually called the <em>gradient</em>. For the general case (where the activation function may not be the identity
+        activation function, and there may be multiple inputs):</p>
+    <div class="equations">
+        <p>\(\Delta w = \sigma'(wi)(o-t)i\)</p>
+        <p>\(w_n=w-\Delta w\)</p>
+    </div>
+    <p>Usually another constant (often denoted as \(\alpha\) or \(\eta\)) is multiplied to \(\Delta w\) in order to make weight updates smaller and prevent
+        “overstepping”, so let’s just set this constant at 0.1 for now. More on this constant value and “overstepping” will be discussed later. For now, let’s
+        try manually calculate a few iterations with our delta rule for the two-neuron example! We’ll iterate through each of the three examples once and then
+        test it on \(i=1\) to see whether there is any improvement.</p>
+    <ol>
+        <li>
+            \((i,t)=(1,\,2)\), \(w=0\) and \(\alpha=0.1\)<br>
+            \(o=iw=1\cdot 0=0\)<br>
+            \(\displaystyle{C(t, o)={1\over{2}}(t-o)^2={{1}\over{2}}(2-0)^2=2}\)<br>
+            \(\Delta w=\alpha(o-t)i=0.1(0-2)1=-0.2\)<br>
+            \(w_n=w-\Delta w=0-(-0.2)=0.2\)
+        </li><br>
+        <li>
+            \((i,t)=(2.5,\,5)\), \(w=0.2\) and \(\alpha=0.1\)<br>
+            \(o=iw=2.5\cdot 0.2=0.5\)<br>
+            \(\displaystyle{C(t, o)={1\over{2}}(t-o)^2={{1}\over{2}}(5-0.5)^2=10.125}\)<br>
+            \(\Delta w=\alpha(o-t)i=0.1(0.5-5)2.5=-1.125\)<br>
+            \(w_n=w-\Delta w=0.2-(-1.125)=1.325\)
+        </li><br>
+        <li>
+            \((i,t)=(2,\,4)\), \(w=1.325\) and \(\alpha=0.1\)<br>
+            \(o=iw=2\cdot 1.325=2.65\)<br>
+            \(\displaystyle{C(t, o)={1\over{2}}(t-o)^2={{1}\over{2}}(4-2.65)^2=0.91125}\)<br>
+            \(\Delta w=\alpha(o-t)i=0.1(2.65-4)2=-0.27\)<br>
+            \(w_n=w-\Delta w=1.325-(-0.27)=1.595\)
+        </li>
+    </ol>
+    <p>To achieve better results, more iterations of training would be needed (we only cycled through the
+        data once), but you can see that the weight value increased from 1 to 1.595, which is closer to
+        the most optimal value of 2. To actually be able to say our network has improved, we need to compare
+        the error value of our updated network with that of our original network on the same input (ideally,
+        you should compare networks by their average error per sample, but it is simpler to just compare one
+        particular sample’s error for this demonstration):</p>
+    <div class="indent">
+        <p>\((i,t)=(1,\,2)\), \(w=0\)</p>
+        <p>\(o=iw=1\cdot 0=0\)</p>
+        <p>\(\displaystyle{C(t, o)={1\over{2}}(t-o)^2={{1}\over{2}}(2-0)^2=2}\)</p>
+        <br>
+        <p>\((i,t)=(1,\,2)\), \(w=1.595\)</p>
+        <p>\(o=iw=1\cdot 1.595=1.595\)</p>
+        <p>\(\displaystyle{C(t, o)={1\over{2}}(t-o)^2={{1}\over{2}}(2-1.595)^2=0.0820125}\)</p>
+    </div>
+    <p>As you can see, the error of our updated network is lower than our original network, so our network
+        improved! Note that the entire notion of updating parameters in this manner is called <em>gradient descent</em>.
+        Normally in gradient descent, an entire set of inputs are used to calculate an average error, which is then
+        used to perform one single weight update. Our version of gradient descent (where we perform updates after
+        calculating the error for each example) is called <em>stochastic gradient descent</em>, whereas there is also
+        <em>mini-batch gradient descent</em> (where updates are performed after an averaged error over a batch of inputs).</p>
+
+    <p>Now, let’s review the delta rule and interpret it in another perspective. As a reminder, the general delta rule is expressed mathematically as:</p>
+    <div class="equations">
+        <p>$$\Delta w = \alpha(t - y)\sigma\,'(h)x$$</p>
+        <p>$$w_{t} = w_{t\ -\ 1} + \Delta w$$</p>
+    </div>
+    <p>In the first equation above, \(\Delta w\) signifies the change calculated for each of
+        the individual weights or biases in the network. \(a\) refers to the <em>learning rate</em>,
+        which is a constant that is multiplied with the other values. The
+        learning rate helps to increase or decrease the change in weights or biases depending on
+        whether it is bigger than 1 or smaller. This can be thought of as the length of step you
+        take as you try to run down a valley. Your goal is to get to the bottom, so you cannot take
+        massive steps, or else you will never reach that minimum point (you’ll keep overrunning
+        and end up on the opposite sloping side). You cannot take tiny steps either because it will
+        take you an unimaginably long time to get to the lowest point in the valley. The reason why
+        I use a valley as an analogy for the learning rate instead of a mountain is that data scientists
+        like to think of machine learning as a method that leads you to the lowest point on a function
+        (“valley”) or the minima of the graph, which best fits the appropriate case, giving the best
+        result. Some functions may also have several “peaks” (also called maxima) and “valleys” (minima),
+        so the highest “peak” is usually called the global maximum, and the deepest “valley” is called
+        the global minimum. Here is an example of what I mean: </p>
 
     <div style="overflow-x: scroll;">
         <img src="Images/graph1.png">
-        <p class="caption">Figure 4.2 - Multivariable Graph Result for the equation:</p>
-        <p class="equations">\(\displaystyle{z = 0.5 + {{\cos(\sin(|y^{2}\ -\ x^{2}|))^{2}\ -\ 0.5}\over{[1\ +\ 0.001(y^{2}\ +\ x^{2})]^{2}}}}
-            + 0.2 \times \cos(xy)^{2}\)</p>
+        <p class="caption">Figure 4-3: Multivariable Graph Result for the equation:</p>
+        <p class="equations">$$\displaystyle{z = 0.5 + {{\cos(\sin(|y^{2}\ -\ x^{2}|))^{2}\ -\ 0.5}\over{[1\ +\ 0.001(y^{2}\ +\ x^{2})]^{2}}}}
+            + 0.2 \times \cos(xy)^{2}$$</p>
     </div>
 
     <p>Any other “peaks” or “valleys” that are not the highest and lowest respectively are called local maximums and minimums respectively.
         The \(t\) and \(y\) variables in the equation stand for the target value or expected value and predicted value (the output of the
         network) and their difference is usually referred to as the <em>training error</em>. \(\sigma\,'(h)\) stands for the derivative
         of the activation function on a particular value \(h\) which is the weighted sum of inputs. Finally, \(x\) stands for the single
-        input at the current index. The second equation shows that the next generation or iterations’ weights should be the sum of the
-        previous weight and the change in the weight calculated above. The delta rule is sometimes
-        simplified when the activation function is linear(<em>not</em> non-linear) as:</p>
-    <p class="equations">\(\Delta w = a(t - y)x\).</p>
+        input at the current index. The second equation shows that the next generation or iterations’ weights should be the difference between the
+        previous weight and the change in the weight calculated in the first equation. The delta rule is sometimes
+        simplified when the activation function is the identity activation function (linear) as:</p>
+    <p class="equations">$$\Delta w = a(t - y)x$$</p>
     <p>So, here are the steps in machine learning:</p>
     <ol>
         <li><em>Initialization</em>: The step where all weights, biases are initialized using
@@ -171,7 +326,12 @@
                 neural networks, the <em>delta rule</em> is commonly used, which takes the
                 product of the training error of the current input set, a learning rate,
                 and input at the current index.</li>
-        </ul>
+        </ul><br>
+        <li> In gradient descent, an entire set of inputs are used to calculate an average error,
+            which is then used to perform one single weight update. Another version of gradient
+            descent (where we perform updates after calculating the error for each example) is
+            called stochastic gradient descent. There is also mini-batch gradient descent
+            (where updates are performed after an averaged error over a batch of inputs).</li>
     </ol>
     <br>
     <button onclick="location.href = 'activation.html';">Previous Chapter</button>

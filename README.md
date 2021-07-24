@@ -20,6 +20,15 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+24 July 2021
+
+- Revised Chapter 3 - Neural Networks and Learning
+  - Now includes extensive guide to the delta rule
+  - More into derivatives (i.e., Chain Rule)
+  - Step by step guide to deriving the delta rule.
+- Renamed "Optimization" chapter to "Optimizers"
+- Fixed some figure naming inconsistencies.
+
 19 July 2021
 
 - Finished Chapter 7 Data Preprocessing & Augmentation. 🙂
