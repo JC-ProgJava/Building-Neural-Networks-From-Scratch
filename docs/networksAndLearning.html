@@ -234,8 +234,8 @@
 
     <p>Now, let’s review the delta rule and interpret it in another perspective. As a reminder, the general delta rule is expressed mathematically as:</p>
     <div class="equations">
-        <p>$$\Delta w = \alpha(t - y)\sigma\,'(h)x$$</p>
-        <p>$$w_{t} = w_{t\ -\ 1} + \Delta w$$</p>
+        <p>$$\Delta w = \alpha(y - t)\sigma\,'(h)x$$</p>
+        <p>$$w_{t} = w_{t\ -\ 1} - \Delta w$$</p>
     </div>
     <p>In the first equation above, \(\Delta w\) signifies the change calculated for each of
         the individual weights or biases in the network. \(\alpha\) refers to the <em>learning rate</em>,
@@ -267,7 +267,7 @@
         input at the current index. The second equation shows that the next generation or iterations’ weights should be the difference between the
         previous weight and the change in the weight calculated in the first equation. The delta rule is sometimes
         simplified when the activation function is the identity activation function (linear) as:</p>
-    <p class="equations">$$\Delta w = a(t - y)x$$</p>
+    <p class="equations">$$\Delta w = \alpha(t - y)x$$</p>
     <p>So, here are the steps in machine learning:</p>
     <ol>
         <li><em>Initialization</em>: The step where all weights, biases are initialized using
