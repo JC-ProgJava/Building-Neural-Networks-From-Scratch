@@ -28,11 +28,13 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
   - Step by step guide to deriving the delta rule.
 - Renamed "Optimization" chapter to "Optimizers"
 - Fixed some figure naming inconsistencies.
+- Adjust spacing of ordered list in Data Preprocessing and Augmentation chapter.
 
 19 July 2021
 
 - Finished Chapter 7 Data Preprocessing & Augmentation. 🙂
 - Pushed Chapter 7 to the web. 🚀
+- Added "Data_Preprocessing_Augmentation" code folder to Github.
 
 9 May 2021
 

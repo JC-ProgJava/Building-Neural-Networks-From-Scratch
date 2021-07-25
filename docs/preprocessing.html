@@ -140,12 +140,12 @@
                 pixels around an image to resize the overall image. Also, images can be ‘cropped’,
                 which is also a form of resizing. Shrinking large images is often better than
                 stretching small images when training networks on image data. Image resizing can
-                occur during both preprocessing and data augmenting stages.</li>
+                occur during both preprocessing and data augmenting stages.</li><br>
             <li>Rotation<br> Rotation refers to a transformation where an object is rotated in a
                 certain direction (clockwise or anti-clockwise/counter-clockwise) by a certain
                 number of degrees. In data augmentation, rotation is used to make slight changes
                 to an image in order to expand a dataset. This requires that the image data is
-                allowed to be rotated. For example, handwritten digits.</li>
+                allowed to be rotated. For example, handwritten digits.</li><br>
             <li>Greyscale conversion <br>A greyscale conversion converts an image from a range of
                 colors into a range of blacks and whites. This is usually done to reduce the
                 <em>dimensionality</em> of data features (by reducing information about the image such as color).
@@ -155,20 +155,20 @@
                 identify various features in a dataset. For example, in classification tasks like object
                 classification or animal classification (e.g., cats and tigers look similar but can be
                 distinguished through the color of their fur [usually, although sometimes cat fur may be
-                orange]).</li>
+                orange]).</li><br>
             <li>Reflection<br> Reflection is a transformation where an object is reflected across an axis such
                 that its mirror image and the original image is perfectly equidistant to the axis of
                 reflection. This technique is useful in data augmentation as it can help increase dataset
                 size whilst still creating relevant new data examples for a machine learning model to train
-                on.</li>
+                on.</li><br>
             <li>Exposure <br>This technique adjusts the brightness of images. It is mainly used in data
                 augmentation to enlarge a dataset, although it can be used as a data preprocessing
                 technique (e.g., identifying the brightness of an image and adjusting it so that model
-                performance is improved).</li>
+                performance is improved).</li><br>
             <li>Adding Noise<br>This technique adds noise into images in the form of black or white
                 pixels. Although this may seem to be an odd processing technique, it can help prevent
                 the model identifies patterns in irrelevant features in images, and thus overfitting
-                as a whole.</li>
+                as a whole.</li><br>
             <li>Skewing <br>This is a technique used to ‘center’ images that are slanted. This process
                 can be done on multiple occasions (e.g., turning a parallelogram into a rectangle
                 involves skewing) and is useful during the image preprocessing stage as it can help
