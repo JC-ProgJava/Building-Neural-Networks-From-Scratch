@@ -20,6 +20,10 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+26 July 2021
+- Fixed inconsistencies between print and web version.
+- Renamed and added new chapter ideas to web. 🚀
+
 24 July 2021
 
 - Revised Chapter 3 - Neural Networks and Learning
