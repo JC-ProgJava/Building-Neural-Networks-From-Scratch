@@ -114,16 +114,16 @@
 <canvas height="28" id="tempcanvas" width="28"></canvas>
 
 <span id="output">
-    <span class="whitespace"><div></div>0</span>
-    <span class="whitespace"><div></div>1</span>
-    <span class="whitespace"><div></div>2</span>
-    <span class="whitespace"><div></div>3</span>
-    <span class="whitespace"><div></div>4</span>
-    <span class="whitespace"><div></div>5</span>
-    <span class="whitespace"><div></div>6</span>
-    <span class="whitespace"><div></div>7</span>
-    <span class="whitespace"><div></div>8</span>
-    <span class="whitespace"><div></div>9</span>
+    <span class="whitespace"><div class="decision"></div>0</span>
+    <span class="whitespace"><div class="decision"></div>1</span>
+    <span class="whitespace"><div class="decision"></div>2</span>
+    <span class="whitespace"><div class="decision"></div>3</span>
+    <span class="whitespace"><div class="decision"></div>4</span>
+    <span class="whitespace"><div class="decision"></div>5</span>
+    <span class="whitespace"><div class="decision"></div>6</span>
+    <span class="whitespace"><div class="decision"></div>7</span>
+    <span class="whitespace"><div class="decision"></div>8</span>
+    <span class="whitespace"><div class="decision"></div>9</span>
 </span>
 <img alt="Brush pattern needed! Error: 404" id="brush" src="Images/brush.png" style="visibility: hidden;">
 <img alt="Display digit as PNG (portable network graphics)" id="canvasimg" src="">
@@ -515,8 +515,8 @@ canvas.addEventListener('mousemove', e => {
     }
     let outpercent = importedNetwork.test(data);
     for (let i = 0; i <= 9; i++) {
-        document.getElementsByTagName("div")[i].style.height = (Math.round(outpercent[i] * 100.0 * 100.0) / 100.0) + "px";
-        document.getElementsByTagName("div")[i].style.marginTop = (100 - (Math.round(outpercent[i] * 100.0 * 100.0) / 100.0)) + "px";
+        document.getElementsByClassName("decision")[i].style.height = (Math.round(outpercent[i] * 100.0 * 100.0) / 100.0) + "px";
+        document.getElementsByClassName("decision")[i].style.marginTop = (100 - (Math.round(outpercent[i] * 100.0 * 100.0) / 100.0)) + "px";
     }
 });
 
