@@ -20,6 +20,13 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+10 August 2021
+- Minor fixes and improvements.
+
+[](https://github.com/JC-ProgJava/Building-Neural-Networks-From-Scratch/blob/main/resources/Demo.mov?raw=true)
+
+- [Demos](https://jc-progjava.github.io/Building-Neural-Networks-From-Scratch/demos.html) webpage! 🚀
+
 26 July 2021
 - Fixed inconsistencies between print and web version.
 - Renamed and added new chapter ideas to web. 🚀
