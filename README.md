@@ -23,7 +23,7 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 10 August 2021
 - Minor fixes and improvements.
 
-[](https://github.com/JC-ProgJava/Building-Neural-Networks-From-Scratch/blob/main/resources/Demo.mov?raw=true)
+https://user-images.githubusercontent.com/61588096/128802272-0052b94a-cf16-4a7f-9ce7-17b50c6a24c5.mov
 
 - [Demos](https://jc-progjava.github.io/Building-Neural-Networks-From-Scratch/demos.html) webpage! 🚀
 
