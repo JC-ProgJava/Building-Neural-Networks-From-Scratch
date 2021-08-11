@@ -324,4 +324,12 @@ nav, button {
 
 @page {
     margin: 2cm;
+
+    @top-center {
+      content: "https://jc-progjava.github.io/Building-Neural-Networks-From-Scratch";
+      display: block;
+      text-align: center;
+      font-style: italic;
+      font-family: "Amiri";
+    }
 }

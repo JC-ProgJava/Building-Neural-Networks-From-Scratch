@@ -20,6 +20,9 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+11 August 2021
+- Finished ~40% of Chapter 8 - Backpropagation. Get ready for a push sometime in September!
+
 10 August 2021
 - Minor fixes and improvements.
 
