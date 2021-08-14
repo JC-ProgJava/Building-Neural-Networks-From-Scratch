@@ -20,6 +20,9 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+12 August 2021
+- Hit 30K words! 🙂
+
 11 August 2021
 - Finished ~40% of Chapter 8 - Backpropagation. Get ready for a push sometime in September!
 

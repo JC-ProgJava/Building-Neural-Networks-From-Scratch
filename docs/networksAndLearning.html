@@ -267,7 +267,7 @@
         input at the current index. The second equation shows that the next generation or iterations’ weights should be the difference between the
         previous weight and the change in the weight calculated in the first equation. The delta rule is sometimes
         simplified when the activation function is the identity activation function (linear) as:</p>
-    <p class="equations">$$\Delta w = \alpha(t - y)x$$</p>
+    <p class="equations">$$\Delta w = \alpha(y - t)x$$</p>
     <p>So, here are the steps in machine learning:</p>
     <ol>
         <li><em>Initialization</em>: The step where all weights, biases are initialized using
@@ -295,7 +295,7 @@
             a value of 0 to compare different models against each other in terms of training and
             learning efficiency.</li><br>
         <li>The delta rule is used for single-layer neural networks to learn.
-            Equation: \(\Delta w = \alpha(t - y)\sigma\,'(h)x\). \(\Delta w\) signifies the change
+            Equation: \(\Delta w = \alpha(y - t)\sigma\,'(h)x\). \(\Delta w\) signifies the change
             for the current weight, \(\alpha\) represents the learning rate, \(t\) and \(y\) represent
             the target and predicted value respectively, \(\sigma\,'(h)\) represents the derivative
             of the function at \(h\), and \(x\) is the input value to the neuron.</li><br>
