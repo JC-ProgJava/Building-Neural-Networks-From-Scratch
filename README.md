@@ -20,6 +20,9 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+15 August 2021
+- 🚀 Dark mode!
+
 12 August 2021
 - Hit 30K words! 🙂
 

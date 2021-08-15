@@ -94,12 +94,10 @@ class Parser {
       "#e6c07b",
     ];
     this.style = style;
-  }
-
-  parse() {
-    this.stylesheet = `code {
+      this.stylesheet = `code {
                            display: block;
                            background-color: %s;
+                           transition: background-color 200ms;
                          }
 
                          span {
@@ -109,76 +107,97 @@ class Parser {
 
                          .keyword {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .identifier {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .number {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .string {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .space {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .newline {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .tab {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .importname {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .headdatatype {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .otherpunctuation {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .constant {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .javadoc {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .annotation {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .methodname {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .comment {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .datatype {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .literal {
                            color: %s;
+                           transition: color 200ms;
                          }
 
                          .classname {
                            color: %s;
+                           transition: color 200ms;
                          }
                        `;
+  }
+
+  parse() {
     for (let index = 0; index < this.styles[this.style].length; index++) {
       this.stylesheet = this.stylesheet.replace(
         "%s",
@@ -876,4 +895,21 @@ function highlight(theme) {
   } else {
     style.appendChild(document.createTextNode(css));
   }
+}
+
+function setTheme(theme) {
+    let styles = new Parser(null, null).styles[theme];
+    let stylesheet = new Parser(null, null).stylesheet;
+    for (let index = 0; index < styles.length; index++) {
+      stylesheet = stylesheet.replace(
+        "%s",
+        styles[index]
+      );
+    }
+
+    if (style.styleSheet) {
+      style.styleSheet.cssText = stylesheet;
+    } else {
+      style.appendChild(document.createTextNode(stylesheet));
+    }
 }
