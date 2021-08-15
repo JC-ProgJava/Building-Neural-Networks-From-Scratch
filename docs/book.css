@@ -7,17 +7,25 @@
     --definition-aside-background: rgb(250, 250, 250);
     --icon: url("dark-mode-black.svg");
     --image-filter: none;
+    --function-blue: #00627A;
+    --globalVar: #871094;
+    --selection: #fcd6a5;
+    --error: #F50000;
 }
 
 html[data-theme = 'dark'] {
     --font-color: rgb(240, 240, 240);
     --background-color: rgb(40, 40, 40);
-    --border-color: black;
+    --border-color: rgb(240, 240, 240);
     --quote-color: rgb(210, 210, 210);
-    --code-background: inherit;
+    --code-background: #282c34;
     --definition-aside-background: #3e3e3e;
     --icon: url("dark-mode-white.svg");
     --image-filter: invert(80%) hue-rotate(180deg) brightness(120%) contrast(150%);
+    --function-blue: #87bcca;
+    --globalVar: #a446af;
+    --selection: #815b2a;
+    --error: #b10000;
 }
 
 @font-face {
@@ -131,6 +139,8 @@ html[data-theme = 'dark'] {
 
     div span {
         font-size: 20px;
+        color: var(--font-color);
+        transition: color 500ms;
     }
 
     h3 {
@@ -213,6 +223,8 @@ html[data-theme = 'dark'] {
 
     ol, ul, li, div span {
         font-size: 16px;
+        color: var(--font-color);
+        transition: color 500ms;
     }
 
     code {
@@ -456,7 +468,7 @@ h5 {
     margin-block-end: 0.8em;
 }
 
-p {
+em, p {
     font-family: "Amiri";
     color: var(--font-color);
     transition: color 500ms;
@@ -482,7 +494,7 @@ p {
 .functionBlue {
     font-family: "Source Code Pro";
     display: inline;
-    color: #00627A;
+    color: var(--function-blue);
 }
 
 div.explanation:first-line {
@@ -490,16 +502,20 @@ div.explanation:first-line {
     line-height: 0px;
 }
 
+.explanation {
+    overflow-x: scroll;
+}
+
 .error {
     font-family: "Source Code Pro";
-    color: #F50000;
+    color: var(--error);
     display: inline;
 }
 
 .globalVar {
     font-style: italic;
     font-family: "Source Code Pro";
-    color: #871094;
+    color: var(--globalVar);
     display: inline;
 }
 
@@ -508,7 +524,7 @@ div.explanation:first-line {
   display: inline;
 }
 
-.identifer {
+.identifier {
   display: inline;
 }
 
@@ -518,7 +534,7 @@ div.explanation:first-line {
 }
 
 ::selection {
-    background: #fcd6a5;
+    background-color: var(--selection);
 }
 
 body {
