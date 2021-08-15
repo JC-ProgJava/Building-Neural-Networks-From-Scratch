@@ -543,7 +543,7 @@ body {
     color: var(--font-color);
     transition: color 200ms, background-color 400ms;
     cursor: pointer;
-    padding: 5px 5px;
+    padding: 5px;
     width: 25px;
     height: 25px;
     background-image: var(--icon);
