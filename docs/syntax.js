@@ -13,20 +13,184 @@ const TokenType = Object.freeze({
   OTHERPUNCTUATION: "OTHERPUNCTUATION",
   JAVADOC: "JAVADOC",
   ANNOTATION: "ANNOTATION",
+  METHODNAME: "METHODNAME",
+  COMMENT: "COMMENT",
+  CLASSNAME: "CLASSNAME",
+  DATATYPE: "DATATYPE",
+  LITERAL: "LITERAL",
 });
 
 class Parser {
-  constructor(tokens) {
+  tokens = [];
+  outCodeHTML = "";
+  stylesheet = "";
+  outPlain = "";
+  styles = {};
+  style;
+
+  constructor(tokens, style) {
     this.tokens = tokens;
-    this.outCodeHTML = "";
-    this.outPlain = "";
+    this.styles["Normal"] = [
+      "inherit",
+      "#003399; font-weight: bold",
+      "black",
+      "#1740E6",
+      "#106B10",
+      "black",
+      "black",
+      "black",
+      "#006699",
+      "#034524",
+      "black",
+      "#660E7A",
+      "#bf8f1d",
+      "#808000",
+      "black",
+      "#106B10",
+      "black",
+      "#003399; font-weight: bold",
+      "black",
+    ];
+    this.styles["Exotic"] = [
+      "inherit",
+      "#136F75; font-weight: bold",
+      "#C3301E",
+      "#1F5D15",
+      "#8A2428",
+      "black",
+      "black",
+      "black",
+      "#2E690A",
+      "#BF005C",
+      "#940066",
+      "#2E690A",
+      "#8A2428",
+      "#8A2428",
+      "#8A07B3",
+      "#8A2428",
+      "#C3301E",
+      "#136F75; font-weight: bold",
+      "#C3301E",
+    ];
+    this.styles["AtomOneDark"] = [
+      "#282C34; font-family: 'Consolas', monospace",
+      "#C678DD;",
+      "#abb2bf",
+      "#d19a66",
+      "#98c379",
+      "#abb2bf",
+      "#abb2bf",
+      "#abb2bf",
+      "#C678DD",
+      "#abb2bf",
+      "#abb2bf",
+      "#d19a66",
+      "#5c6370; font-style: italic",
+      "#c678dd",
+      "#61aeee",
+      "#5c6370; font-style: italic",
+      "#d19a66",
+      "#56b6c2",
+      "#e6c07b",
+    ];
+    this.style = style;
   }
 
   parse() {
+    this.stylesheet = `code {
+                           display: block;
+                           background-color: %s;
+                         }
+
+                         span {
+                           display: inline;
+                           white-space: pre;
+                         }
+
+                         .keyword {
+                           color: %s;
+                         }
+
+                         .identifier {
+                           color: %s;
+                         }
+
+                         .number {
+                           color: %s;
+                         }
+
+                         .string {
+                           color: %s;
+                         }
+
+                         .space {
+                           color: %s;
+                         }
+
+                         .newline {
+                           color: %s;
+                         }
+
+                         .tab {
+                           color: %s;
+                         }
+
+                         .importname {
+                           color: %s;
+                         }
+
+                         .headdatatype {
+                           color: %s;
+                         }
+
+                         .otherpunctuation {
+                           color: %s;
+                         }
+
+                         .constant {
+                           color: %s;
+                         }
+
+                         .javadoc {
+                           color: %s;
+                         }
+
+                         .annotation {
+                           color: %s;
+                         }
+
+                         .methodname {
+                           color: %s;
+                         }
+
+                         .comment {
+                           color: %s;
+                         }
+
+                         .datatype {
+                           color: %s;
+                         }
+
+                         .literal {
+                           color: %s;
+                         }
+
+                         .classname {
+                           color: %s;
+                         }
+                       `;
+    for (let index = 0; index < this.styles[this.style].length; index++) {
+      this.stylesheet = this.stylesheet.replace(
+        "%s",
+        this.styles[this.style][index]
+      );
+    }
+
     for (let index = 0; index < this.tokens.length; index++) {
-      switch (String(this.tokens[index].type)) {
-        case "KEYWORD":
+      var token = this.tokens[index];
+      switch (token.type) {
         case "IDENTIFIER":
+        case "KEYWORD":
         case "NUMBER":
         case "STRING":
         case "IMPORTNAME":
@@ -35,50 +199,52 @@ class Parser {
         case "JAVADOC":
         case "ANNOTATION":
         case "CONSTANT":
+        case "METHODNAME":
+        case "COMMENT":
+        case "DATATYPE":
+        case "LITERAL":
+        case "CLASSNAME":
           this.outCodeHTML +=
             '<span class="' +
-            String(this.tokens[index].type).toLowerCase() +
+            String(token.type).toLowerCase() +
             '">' +
-            this.cleanse(this.tokens[index].text) +
+            this.cleanse(token.text) +
             "</span>";
-          this.outPlain += this.tokens[index].text;
+          this.outPlain += token.text;
           break;
         case "NEWLINE":
           this.outCodeHTML +=
             '<span class="' +
-            String(this.tokens[index].type).toLowerCase() +
+            String(token.type).toLowerCase() +
             '"><br /></span>';
           this.outPlain += "\n";
           break;
         case "TAB":
           this.outCodeHTML +=
             '<span class="' +
-            String(this.tokens[index].type).toLowerCase() +
+            String(token.type).toLowerCase() +
             '">    </span>';
           this.outPlain += "\t";
           break;
         case "SPACE":
           this.outCodeHTML +=
-            '<span class="' +
-            String(this.tokens[index].type).toLowerCase() +
-            '"> </span>';
+            '<span class="' + String(token.type).toLowerCase() + '"> </span>';
           this.outPlain += " ";
           break;
         default:
-          console.log("Unknown token: " + String(this.tokens[index].type));
-          break;
+          console.log("Unexpected enum: " + String(token.type));
       }
     }
-    return this.outCodeHTML;
+    return [this.outCodeHTML, this.stylesheet, this.outPlain];
   }
 
   cleanse(text) {
     return text
-      .replaceAll("[&]", "&amp;")
-      .replaceAll("[ ]", "&nbsp;")
-      .replaceAll("[{]", "&lbrace;")
-      .replaceAll("[<]", "&lt;")
-      .replaceAll("[>]", "&gt;");
+      .replaceAll("&", "&amp;")
+      .replaceAll(" ", "&nbsp;")
+      .replaceAll("{", "&lbrace;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;");
   }
 }
 
@@ -92,233 +258,186 @@ class Token {
 }
 
 class Tokenizer {
-  constructor() {
-    this.line = 1;
-    this.col = 0;
-    this.start = 0;
-    this.current = 0;
-    this.tokens = [];
-    this.sourceCode = "";
-    this.keywords = [];
-    this.keywords.push("abstract");
-    this.keywords.push("assert");
-    this.keywords.push("boolean");
-    this.keywords.push("break");
-    this.keywords.push("byte");
-    this.keywords.push("case");
-    this.keywords.push("catch");
-    this.keywords.push("char");
-    this.keywords.push("class");
-    this.keywords.push("continue");
-    this.keywords.push("const");
-    this.keywords.push("default");
-    this.keywords.push("do");
-    this.keywords.push("double");
-    this.keywords.push("else");
-    this.keywords.push("enum");
-    this.keywords.push("exports");
-    this.keywords.push("extends");
-    this.keywords.push("final");
-    this.keywords.push("finally");
-    this.keywords.push("float");
-    this.keywords.push("for");
-    this.keywords.push("goto");
-    this.keywords.push("if");
-    this.keywords.push("implements");
-    this.keywords.push("import");
-    this.keywords.push("instanceof");
-    this.keywords.push("int");
-    this.keywords.push("interface");
-    this.keywords.push("long");
-    this.keywords.push("module");
-    this.keywords.push("native");
-    this.keywords.push("new");
-    this.keywords.push("non-sealed");
-    this.keywords.push("package");
-    this.keywords.push("private");
-    this.keywords.push("protected");
-    this.keywords.push("public");
-    this.keywords.push("requires");
-    this.keywords.push("return");
-    this.keywords.push("short");
-    this.keywords.push("static");
-    this.keywords.push("strictfp");
-    this.keywords.push("super");
-    this.keywords.push("switch");
-    this.keywords.push("synchronized");
-    this.keywords.push("this");
-    this.keywords.push("throw");
-    this.keywords.push("throws");
-    this.keywords.push("transient");
-    this.keywords.push("try");
-    this.keywords.push("var");
-    this.keywords.push("void");
-    this.keywords.push("volatile");
-    this.keywords.push("while");
-    this.keywords.push("yield");
-    this.keywords.push("sealed");
-    this.keywords.push("record");
-    this.keywords.push("permits");
+  tokens = [];
+  keywords = [];
+  literals = [];
+  dataTypes = [];
+  classKeywords = [];
+  line = 1;
+  col = 1;
+  start = 0;
+  current = 0;
+  sourceCode = "";
 
-    // literals
-    this.keywords.push("true");
-    this.keywords.push("false");
-    this.keywords.push("null");
-    this.keywords.push("System");
+  constructor() {
+    let keys = [
+      "abstract",
+      "assert",
+      "boolean",
+      "break",
+      "byte",
+      "case",
+      "catch",
+      "char",
+      "class",
+      "continue",
+      "const",
+      "default",
+      "do",
+      "double",
+      "else",
+      "enum",
+      "exports",
+      "extends",
+      "final",
+      "finally",
+      "float",
+      "for",
+      "goto",
+      "if",
+      "implements",
+      "import",
+      "instanceof",
+      "int",
+      "interface",
+      "long",
+      "module",
+      "native",
+      "new",
+      "non-sealed",
+      "package",
+      "private",
+      "protected",
+      "public",
+      "requires",
+      "return",
+      "short",
+      "static",
+      "strictfp",
+      "super",
+      "switch",
+      "synchronized",
+      "this",
+      "throw",
+      "throws",
+      "transient",
+      "try",
+      "var",
+      "void",
+      "volatile",
+      "while",
+      "yield",
+      "sealed",
+      "record",
+      "permits",
+      "System",
+    ];
+    this.keywords = keys;
+
+    let lit = ["true", "false", "null"];
+    this.literals = lit;
+
+    let dataType = [
+      "Byte",
+      "Short",
+      "Integer",
+      "Long",
+      "Float",
+      "Double",
+      "Boolean",
+      "Character",
+    ];
+    this.dataTypes = dataType;
+
+    let classKeys = ["class", "interface", "enum", "extends", "implements"];
+    this.classKeywords = classKeys;
   }
 
   peek() {
-    return this.sourceCode.charAt(this.current + 1);
+    if (this.current + 1 < this.sourceCode.length) {
+      return this.sourceCode.charAt(this.current + 1);
+    } else {
+      return "\0";
+    }
   }
 
   isAlphabet(currentChar) {
-    return (
-      String(currentChar).match(new RegExp("[a-zA-Z_$]")) !=
-      null
-    );
+    return String(currentChar).match(new RegExp("[a-zA-Z_$]")) != null;
   }
 
   isIdentifierEnding(currentChar) {
-    return (
-      String(currentChar).match(new RegExp("[a-zA-Z_$0-9]")) !=
-      null
-    );
+    return String(currentChar).match(new RegExp("[a-zA-Z_$0-9]")) != null;
   }
 
-  isAtEnd() {
-    return this.current >= this.sourceCode.length;
-  }
-
-  annotation() {
-    while (!this.isAtEnd()) {
-      if (this.peek() == " ") {
-        break;
-      } else if (this.peek() == "\n") {
-        this.line++;
-        break;
-      }
-      this.col++;
-      this.current++;
-    }
-  }
-
-  multilineString() {
-    while (!this.isAtEnd()) {
-      if (
-        this.sourceCode.charAt(this.current) == '"' &&
-        this.peek() == '"' &&
-        this.peekNext() == '"'
-      ) {
-        if (
-          (this.current - 1 >= 0 &&
-           this.sourceCode.charAt(this.current - 1) != '\\') ||
-          this.current == 0
-        ) {
-          break;
-        }
-      } else if (this.peek() == "\n") {
-        this.line++;
-      }
-      this.col++;
-      this.current++;
-    }
-    this.col++;
-    this.current++;
-  }
-
-  multilineComment() {
-    while (!this.isAtEnd()) {
-      if (this.peek() == "*" && this.peekNext() == "/") {
-        break;
-      } else if (this.peek() == "\n") {
-        this.line++;
-      }
-      this.col++;
-      this.current++;
-    }
-    this.col++;
-    this.current++;
-  }
-
-  peekNext() {
-    return this.sourceCode.charAt(this.current + 2);
-  }
-
-  isUppercase(text) {
-    return text.match(new RegExp("^[A-Z_$][A-Z_$0-9]*$")) != null;
-  }
-
-  comment() {
-    while (!this.isAtEnd() && this.peek() != "\n") {
-      this.col++;
-      this.current++;
-    }
-  }
-
-  character() {
-    while (
-      !this.isAtEnd() &&
-      (this.peek() != "'" ||
-       (this.sourceCode.charAt(this.current) == '\\' && 
-        this.sourceCode.charAt(this.current - 1) != '\\'))
-    ) {
-      this.col++;
-      this.current++;
-    }
-  }
-
-  string() {
-    while (
-      !this.isAtEnd() &&
-      (this.peek() != '"' ||
-       (this.sourceCode.charAt(this.current) == "\\" && 
-        this.sourceCode.charAt(this.current - 1) != '\\'))
-    ) {
-      this.col++;
-      this.current++;
-    }
-  }
-
-  isNumerical(currentChar) {
-    return String(currentChar).match(new RegExp("[0-9]")) != null;
+  notAtEnd() {
+    return this.current < this.sourceCode.length;
   }
 
   tokenize(code) {
     this.sourceCode = code;
-    while (!this.isAtEnd()) {
-      var currentChar = this.sourceCode.charAt(this.current);
-      if (this.isAlphabet(currentChar)) {
-        while (!this.isAtEnd() && this.isIdentifierEnding(this.peek())) {
+    if (this.sourceCode.charAt(this.sourceCode.length - 1) != "\n") {
+      this.sourceCode += "\n";
+    }
+
+    while (this.notAtEnd()) {
+      let currentChar = this.sourceCode.charAt(this.current);
+      if (this.isIdentifierEnding(currentChar)) {
+        while (this.notAtEnd() && this.isIdentifierEnding(this.peek())) {
           this.col++;
           this.current++;
         }
         if (
-          this.keywords.includes(code.substring(this.start, this.current + 1))
+          this.keywords.includes(
+            this.sourceCode.substring(this.start, this.current + 1)
+          )
         ) {
           this.tokens.push(
             new Token(
-              code.substring(this.start, this.current + 1),
+              this.sourceCode.substring(this.start, this.current + 1),
               this.line,
               this.col,
               TokenType.KEYWORD
             )
           );
+        } else if (
+          this.literals.includes(
+            this.sourceCode.substring(this.start, this.current + 1)
+          )
+        ) {
+          this.tokens.push(
+            new Token(
+              this.sourceCode.substring(this.start, this.current + 1),
+              this.line,
+              this.col,
+              TokenType.LITERAL
+            )
+          );
+        } else if (
+          this.dataTypes.includes(
+            this.sourceCode.substring(this.start, this.current + 1)
+          )
+        ) {
+          this.tokens.push(
+            new Token(
+              this.sourceCode.substring(this.start, this.current + 1),
+              this.line,
+              this.col,
+              TokenType.DATATYPE
+            )
+          );
         } else {
           this.tokens.push(
             new Token(
-              code.substring(this.start, this.current + 1),
+              this.sourceCode.substring(this.start, this.current + 1),
               this.line,
               this.col,
               TokenType.IDENTIFIER
             )
           );
         }
-        this.col++;
-        this.current++;
-        this.start = this.current;
       } else {
         if (this.isNumerical(currentChar)) {
-          while (!this.isAtEnd()) {
+          while (this.notAtEnd()) {
             if (this.isNumerical(this.peek()) || this.peek() == ".") {
               this.col++;
               this.current++;
@@ -329,7 +448,7 @@ class Tokenizer {
 
           this.tokens.push(
             new Token(
-              code.substring(this.start, this.current + 1),
+              this.sourceCode.substring(this.start, this.current + 1),
               this.line,
               this.col,
               TokenType.NUMBER
@@ -340,7 +459,7 @@ class Tokenizer {
             case " ":
               this.tokens.push(
                 new Token(
-                  " ",
+                  this.sourceCode.substring(this.start, this.current + 1),
                   this.line,
                   this.col,
                   TokenType.SPACE
@@ -350,19 +469,19 @@ class Tokenizer {
             case "\n":
               this.tokens.push(
                 new Token(
-                  "\n",
+                  this.sourceCode.substring(this.start, this.current + 1),
                   this.line,
                   this.col,
                   TokenType.NEWLINE
                 )
               );
               this.line++;
-              this.col = -1;
+              this.col = 0;
               break;
             case "\t":
               this.tokens.push(
                 new Token(
-                  "    ",
+                  this.sourceCode.substring(this.start, this.current + 1),
                   this.line,
                   this.col,
                   TokenType.TAB
@@ -374,7 +493,7 @@ class Tokenizer {
               this.current++;
               this.tokens.push(
                 new Token(
-                  code.substring(this.start, this.current + 1),
+                  this.sourceCode.substring(this.start, this.current + 1),
                   this.line,
                   this.col,
                   TokenType.ANNOTATION
@@ -392,7 +511,7 @@ class Tokenizer {
               this.current++;
               this.tokens.push(
                 new Token(
-                  code.substring(this.start, this.current + 1),
+                  this.sourceCode.substring(this.start, this.current + 1),
                   this.line,
                   this.col,
                   TokenType.STRING
@@ -404,7 +523,7 @@ class Tokenizer {
               this.current++;
               this.tokens.push(
                 new Token(
-                  code.substring(this.start, this.current + 1),
+                  this.sourceCode.substring(this.start, this.current + 1),
                   this.line,
                   this.col,
                   TokenType.STRING
@@ -417,22 +536,22 @@ class Tokenizer {
                 this.current++;
                 this.tokens.push(
                   new Token(
-                    code.substring(this.start, this.current + 1),
+                    this.sourceCode.substring(this.start, this.current + 1),
                     this.line,
                     this.col,
-                    TokenType.STRING
+                    TokenType.COMMENT
                   )
                 );
               } else if (this.peek() == "*") {
-                if (this.peekNext() != "*") {
+                if (this.peekNext() != "*" || this.peekAfterNext() == "/") {
                   this.multilineComment();
                   this.current++;
                   this.tokens.push(
                     new Token(
-                      code.substring(this.start, this.current + 1),
+                      this.sourceCode.substring(this.start, this.current + 1),
                       this.line,
                       this.col,
-                      TokenType.STRING
+                      TokenType.COMMENT
                     )
                   );
                 } else {
@@ -440,7 +559,7 @@ class Tokenizer {
                   this.current++;
                   this.tokens.push(
                     new Token(
-                      code.substring(this.start, this.current + 1),
+                      this.sourceCode.substring(this.start, this.current + 1),
                       this.line,
                       this.col,
                       TokenType.JAVADOC
@@ -450,7 +569,7 @@ class Tokenizer {
               } else {
                 this.tokens.push(
                   new Token(
-                    code.substring(this.start, this.current + 1),
+                    this.sourceCode.substring(this.start, this.current + 1),
                     this.line,
                     this.col,
                     TokenType.OTHERPUNCTUATION
@@ -483,7 +602,7 @@ class Tokenizer {
             case ".":
               this.tokens.push(
                 new Token(
-                  code.substring(this.start, this.current + 1),
+                  this.sourceCode.substring(this.start, this.current + 1),
                   this.line,
                   this.col,
                   TokenType.OTHERPUNCTUATION
@@ -501,40 +620,38 @@ class Tokenizer {
               break;
           }
         }
-        this.col++;
-        this.current++;
-        this.start = this.current;
       }
+      this.col++;
+      this.current++;
+      this.start = this.current;
     }
 
-    for (var index = 0; index < this.tokens.length; index++) {
+    for (let index = 0; index < this.tokens.length; index++) {
+      this.current = this.tokens[index].col;
       if (
         this.tokens[index].text === "import" ||
         this.tokens[index].text === "package"
       ) {
-        var indexstart = index + 1;
+        let indexstart = index + 1;
         while (this.tokens[indexstart].text !== ";") {
-          var token = this.tokens[indexstart];
+          let token = this.tokens[indexstart];
           this.tokens.splice(
             indexstart,
             0,
-            new Token(
-              token.text,
-              token.line,
-              token.col,
-              TokenType.IMPORTNAME
-            )
+            new Token(token.text, token.line, token.col, TokenType.IMPORTNAME)
           );
           this.tokens.splice(indexstart + 1, 1);
           indexstart++;
         }
       } else if (
         this.tokens[index].type == TokenType.IDENTIFIER ||
-        (this.tokens[index].text.match(/[})\]]/g) != null)
+        this.tokens[index].text.match(/[})\]]/g) != null
       ) {
-        this.current = index;
-        if (!this.isAtEnd() && this.tokens.length > index + 1 && this.tokens[index + 1].text === ".") {
-          var indexstart = index + 1;
+        if (
+          this.tokens.length > index + 1 &&
+          this.tokens[index + 1].text === "."
+        ) {
+          let indexstart = index + 1;
           while (
             this.tokens[indexstart].type != TokenType.OTHERPUNCTUATION ||
             this.tokens[indexstart].text === "."
@@ -543,7 +660,7 @@ class Tokenizer {
               indexstart++;
               continue;
             }
-            var token = this.tokens[indexstart];
+            let token = this.tokens[indexstart];
             this.tokens.splice(
               indexstart,
               0,
@@ -561,11 +678,46 @@ class Tokenizer {
       }
 
       if (
+        this.notAtEnd() &&
+        (this.tokens[index].type == TokenType.IDENTIFIER ||
+          this.tokens[index].type == TokenType.HEADDATATYPE) &&
+        this.tokens[index + 1].text === "("
+      ) {
+        let token = this.tokens[index];
+        this.tokens.splice(
+          index,
+          0,
+          new Token(token.text, token.line, token.col, TokenType.METHODNAME)
+        );
+        this.tokens.splice(index + 1, 1);
+      }
+
+      if (
+        index - 1 > 0 &&
+        this.classKeywords.includes(this.tokens[index - 1].text)
+      ) {
+        while (
+          this.tokens[index].type == TokenType.SPACE ||
+          this.tokens[index].type == TokenType.NEWLINE ||
+          this.tokens[index].type == TokenType.TAB
+        ) {
+          index++;
+        }
+        let token = this.tokens[index];
+        this.tokens.splice(
+          index,
+          0,
+          new Token(token.text, token.line, token.col, TokenType.CLASSNAME)
+        );
+        this.tokens.splice(index + 1, 1);
+      }
+
+      if (
         this.isUppercase(this.tokens[index].text) &&
         (this.tokens[index].type == TokenType.HEADDATATYPE ||
           this.tokens[index].type == TokenType.IDENTIFIER)
       ) {
-        var token = this.tokens[index];
+        let token = this.tokens[index];
         this.tokens.splice(
           index,
           0,
@@ -577,87 +729,149 @@ class Tokenizer {
 
     return this.tokens;
   }
+
+  peekAfterNext() {
+    if (this.current + 3 < this.sourceCode.length) {
+      return this.sourceCode.charAt(this.current + 3);
+    } else {
+      return "\0";
+    }
+  }
+
+  annotation() {
+    while (this.notAtEnd()) {
+      if (this.peek() == " ") {
+        break;
+      } else if (this.peek() == "\n") {
+        this.line++;
+        this.col = 1;
+        break;
+      }
+      this.col++;
+      this.current++;
+    }
+  }
+
+  multilineString() {
+    while (this.notAtEnd()) {
+      if (
+        this.sourceCode.charAt(this.current) == '"' &&
+        this.peek() == '"' &&
+        this.peekNext() == '"'
+      ) {
+        if (
+          (this.current - 1 >= 0 &&
+            this.sourceCode.charAt(this.current - 1) != "\\") ||
+          this.current == 0
+        ) {
+          break;
+        }
+      } else if (this.peek() == "\n") {
+        this.line++;
+        this.col = 1;
+      }
+      this.col++;
+      this.current++;
+    }
+    this.col++;
+    this.current++;
+  }
+
+  multilineComment() {
+    while (this.notAtEnd()) {
+      if (this.peek() == "*" && this.peekNext() == "/") {
+        break;
+      } else if (this.peek() == "\n") {
+        this.line++;
+        this.col = 1;
+      }
+      this.col++;
+      this.current++;
+    }
+    this.col++;
+    this.current++;
+  }
+
+  peekNext() {
+    if (this.current + 2 < this.sourceCode.length) {
+      return this.sourceCode.charAt(this.current + 2);
+    } else {
+      return "\0";
+    }
+  }
+
+  isUppercase(text) {
+    return text.match(new RegExp("^[A-Z_$][A-Z_$0-9]*$")) != null;
+  }
+
+  comment() {
+    while (this.notAtEnd() && this.peek() != "\n") {
+      this.col++;
+      this.current++;
+    }
+  }
+
+  character() {
+    while (
+      this.notAtEnd() &&
+      (this.peek() != "'" || this.sourceCode.charAt(this.current) == "\\")
+    ) {
+      if (this.sourceCode.charAt(this.current) == "\\") {
+        this.col++;
+        this.current++;
+        if (this.peek() == "'") {
+          break;
+        }
+        continue;
+      }
+      this.col++;
+      this.current++;
+    }
+  }
+
+  string() {
+    while (
+      this.notAtEnd() &&
+      (this.peek() != '"' || this.sourceCode.charAt(this.current) == "\\")
+    ) {
+      if (this.sourceCode.charAt(this.current) == "\\") {
+        this.col++;
+        this.current++;
+        if (this.peek() == '"') {
+          break;
+        }
+        continue;
+      }
+      this.col++;
+      this.current++;
+    }
+  }
+
+  isNumerical(currentChar) {
+    return String(currentChar).match(new RegExp("[0-9]")) != null;
+  }
 }
 
-// Highlighting configuration below ------
-var css = `
-    code span {
-      display: inline;
-      white-space: pre;
-    }
-
-    .keyword {
-      color: #003399;
-      font-weight: bold;
-    }
-
-    .identifer {
-      color: black;
-    }
-
-    .number {
-      color: #1740E6;
-    }
-
-    .string {
-      color: #106B10;
-    }
-
-    .space {
-      color: black;
-    }
-
-    .newline {
-      color: black;
-    }
-
-    .tab {
-      color: black;
-    }
-
-    .importname {
-      color: #006699;
-    }
-
-    .headdatatype {
-      color: #034524;
-    }
-
-    .otherpunctuation {
-      color: black;
-    }
-
-    .constant {
-      color: #660E7A;
-    }
-
-    .javadoc {
-      color: #bf8f1d;
-    }
-
-    .annotation {
-      color: #808000;
-    }
-`;
-// ----------
-
-var head = document.head || document.getElementsByTagName('head')[0];
-var style = document.createElement('style');
+var head = document.head || document.getElementsByTagName("head")[0];
+var style = document.createElement("style");
 
 head.appendChild(style);
+style.type = "text/css";
 
-style.type = 'text/css';
-if (style.styleSheet){
-  style.styleSheet.cssText = css;
-} else {
-  style.appendChild(document.createTextNode(css));
-}
+function highlight(theme) {
+  let code = document.getElementsByTagName("code");
+  let css;
+  for (let i = 0; i < 7; i++) {
+    let tokensList = new Tokenizer().tokenize(code[i].innerText);
+    let parser = new Parser(tokensList, theme);
+    let output = parser.parse();
+    css = output[1];
+    code[i].innerHTML = output[0];
+  }
 
-
-var code = document.getElementsByTagName("code");
-for (var i = 0; i < code.length; i++) {
-  var tokensList = new Tokenizer().tokenize(code[i].innerText);
-  var parser = new Parser(tokensList);
-  var output = parser.parse();
-  code[i].innerHTML = output;
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
 }
