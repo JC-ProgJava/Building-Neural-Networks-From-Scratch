@@ -20,6 +20,9 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+16 August 2021
+- Added new chapter idea 'Generative Adversarial Networks'
+
 15 August 2021
 - 🚀 Dark mode!
 
