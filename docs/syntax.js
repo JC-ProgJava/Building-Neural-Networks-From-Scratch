@@ -881,7 +881,9 @@ var style = document.createElement("style");
 head.appendChild(style);
 style.type = "text/css";
 
-highlight("Normal");
+window.addEventListener('load', function() {
+    highlight("Normal");
+});
 
 function highlight(theme) {
   let code = document.getElementsByTagName("code");

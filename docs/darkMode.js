@@ -1,12 +1,16 @@
 var currentMode = "";
 
+if (localStorage.hasOwnProperty('darkMode')) {
+    currentMode = localStorage.getItem('darkMode') === "true" ? "light" : "dark";
+    toggleDarkMode();
+} else {
+    currentMode = "light";
+    localStorage.setItem('darkMode', false);
+}
+
 window.addEventListener('load', function() {
-    if (localStorage.hasOwnProperty('darkMode')) {
-        currentMode = localStorage.getItem('darkMode') === "true" ? "light" : "dark";
-        toggleDarkMode();
-    } else {
-        currentMode = "light";
-        localStorage.setItem('darkMode', false);
+    if (currentMode === "dark") {
+        setTheme("AtomOneDark");
     }
 })
 

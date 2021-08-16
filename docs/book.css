@@ -503,7 +503,14 @@ div.explanation:first-line {
 }
 
 .explanation {
-    overflow-x: scroll;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.explanation span {
+    hyphens: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
 .error {
