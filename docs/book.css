@@ -16,7 +16,7 @@
 html[data-theme = 'dark'] {
     --font-color: rgb(240, 240, 240);
     --background-color: rgb(40, 40, 40);
-    --border-color: rgb(240, 240, 240);
+    --border-color: rgb(145, 145, 145);
     --quote-color: rgb(210, 210, 210);
     --code-background: #282c34;
     --definition-aside-background: #3e3e3e;
@@ -141,6 +141,7 @@ html[data-theme = 'dark'] {
         font-size: 20px;
         color: var(--font-color);
         transition: color 500ms;
+        line-height: 1.8;
     }
 
     h3 {
@@ -153,9 +154,9 @@ html[data-theme = 'dark'] {
 
     code {
         font-family: "Source Code Pro";
-        padding: 10px 20px 10px 40px !important;
+        padding: 10px 20px 10px 40px;
         display: block;
-        border-radius: 30px !important;
+        border-radius: 30px;
         background-color: var(--code-background);
         transition: background-color 500ms;
         overflow-x: scroll;
@@ -224,6 +225,7 @@ html[data-theme = 'dark'] {
     ol, ul, li, div span {
         font-size: 16px;
         color: var(--font-color);
+        line-height: 1.8;
         transition: color 500ms;
     }
 
@@ -411,12 +413,13 @@ a {
     transition: color 600ms;
 }
 
-a:hover {
+a:hover, a:visited:hover {
     color: burlywood;
 }
 
 a:visited {
     color: var(--font-color);
+    transition: color 600ms;
 }
 
 h1 {
@@ -505,6 +508,7 @@ div.explanation:first-line {
 .explanation {
     word-wrap: break-word;
     hyphens: auto;
+    white-space: pre-wrap;
 }
 
 .explanation span {
@@ -540,6 +544,15 @@ div.explanation:first-line {
   display: inline;
 }
 
+.inline {
+    font-family: "Source Code Pro";
+    display: contents;
+}
+
+.inline + p, .inline p {
+    display: inline;
+}
+
 ::selection {
     background-color: var(--selection);
 }
@@ -558,6 +571,7 @@ body {
     opacity: 100%;
     font-family: "Amiri";
     height: 30px;
+    width: 30px;
     transition: opacity 200ms;
 }
 

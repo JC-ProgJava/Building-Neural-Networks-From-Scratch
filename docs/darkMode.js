@@ -1,5 +1,15 @@
 var currentMode = "";
 
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    currentMode = "light";
+    toggleDarkMode();
+}
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    const newColorScheme = e.matches ? "light" : "dark";
+    toggleDarkMode();
+});
+
 if (localStorage.hasOwnProperty('darkMode')) {
     currentMode = localStorage.getItem('darkMode') === "true" ? "light" : "dark";
     toggleDarkMode();

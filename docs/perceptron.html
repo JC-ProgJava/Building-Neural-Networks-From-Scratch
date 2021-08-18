@@ -62,7 +62,7 @@
         <p>In mathematical terms, \(t = \displaystyle\sum^{n}_{k\ =\ 1}{w_{k} i_{k}}\),</p>
         <p>output \(\left\{\begin{array}{l} 1,\ b + t > \Theta \\ 0,\ b + t ≤ \Theta \end{array} \right.\).
             In other words, a perceptron is a unit consisting of something called a <em>weight</em>, which was multiplied
-            by the <em>input</em> (sometimes called the <em>activation</em>), and if the product of the two was bigger than a
+            by the <em>input</em> (sometimes called the <em>activation</em>), and if the sum of the products of the two was bigger than a
             number called the threshold, the perceptron would output a 1, or 0 if not.</p>
         <p>Another way to think about this is, the threshold is a value for which classifies all events \(a\) as similar if the
             summation of the product of their inputs and a set of weights with another constant called the <em>bias</em> is higher
@@ -85,7 +85,7 @@
             wasn’t able to predict anything. This led to a misunderstanding which resulted in a decrease in research on the area.
             Minsky actually also wrote in the same book that a network of several layers would have the ability to approximate
             any function, which resulted in the Universal Approximation Theorem, stating that a neural network with multiple layers
-            could approximate any continuous(predictable) function to any degree of accuracy.</p>
+            could approximate any continuous (and predictable) function to any degree of accuracy.</p>
         <p>Given this information, neural networks are just a collection or array of these perceptrons(although they may have a
             different type of neuron instead), connected through multiple layers. Usually, the first layer is called the <em>input
             layer</em>, the middle layers are called the <em>hidden layers</em> and the last layer is called the <em>output layer</em>. Below is a diagram
@@ -95,8 +95,7 @@
         <p>This network can be called a neural network with structure 3-4-2(appears in the layer order from left to right).
             The lines on the diagram show the different connections between neurons in the network, which are represented by
             orange circles. The connections can be referred to as weights, which (if you remember) are multiplied by the <em>input</em>
-            or <em>activation</em>. It is important to note that the number of sets of weights should be one less than the number of layers
-            and that there is only one bias per layer. Usually, there are no connections <em>towards</em> a bias, but biases are connected
+            or <em>activation</em>. It is important to note that there is only one bias in the weighted sum to each neuron in the next layer. Usually, there are no connections <em>towards</em> a bias, but biases are connected
             to the next layer’s neurons. Networks can be called “single-layered networks” when there are only two layers in it(input and output).
             We will talk more about neural networks in Chapter 4.</p>
         <h3 id="summary">Chapter Summary</h3>

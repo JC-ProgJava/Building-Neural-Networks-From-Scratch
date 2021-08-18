@@ -20,6 +20,9 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 # Changelog
 
+17 August 2021
+- Fixed errata and finished Chapter 8 print version.
+
 16 August 2021
 - Added new chapter idea 'Generative Adversarial Networks'
 

@@ -100,7 +100,7 @@ class Parser {
                            transition: background-color 200ms;
                          }
 
-                         span {
+                         code span {
                            display: inline;
                            white-space: pre;
                          }
@@ -400,7 +400,7 @@ class Tokenizer {
 
     while (this.notAtEnd()) {
       let currentChar = this.sourceCode.charAt(this.current);
-      if (this.isIdentifierEnding(currentChar)) {
+      if (this.isAlphabet(currentChar)) {
         while (this.notAtEnd() && this.isIdentifierEnding(this.peek())) {
           this.col++;
           this.current++;
