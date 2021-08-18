@@ -19,6 +19,8 @@ Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 <br>
 
 # Changelog
+18 August 2021
+- Pushed Chapter 8 - Backpropagation to web! 🚀
 
 17 August 2021
 - Fixed errata and finished Chapter 8 print version.
