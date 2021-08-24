@@ -863,6 +863,7 @@ class Layer {
         <p>Then comes the main backpropagation part. Recall that the formula for backpropagation is:</p>
         <p>$$\Delta w_{i,\,j,\,L} = \alpha\cdot2(o_j-t_j)x_i\sigma'(z)$$</p>
         <p>$$\Delta w_{i,\,j,\,L\,-\,1} =\alpha\cdot\sigma'(z_{j,\,L\,-\,1})\cdot x_{i,\,L\,-\,1}\cdot[\sum_{k\,=\,1}^{j}{2(o_{k,\,L}-t_k)}\cdot{\sigma'(z_{k,\,L})}\cdot{w_{i,\,k,\,L}}]$$</p>
+        <p>$$w_{i,\,j,\,l}=w_{i,\,j,\,l}-\Delta w_{i,\,j,\,l}$$</p>
         <p>$$\Delta b_{j,\,L}=\alpha\cdot 2(o_j-t_j)\sigma'(z_{j,\,L})$$</p>
         <p>$$\Delta b_{j,\,L\,-\,1}=\alpha\cdot \sigma'(z_{j,\,L\,-\,1})\cdot[\sum_{k\,=\,1}^{j}{2(o_{k,\,L}-t_k)}\cdot{\sigma'(z_{k,\,L})}\cdot{w_{i,\,k,\,L}}]$$</p>
         <p>$$b_{j,\,l}=b_{j,\,l}-\Delta b_{j,\,l}$$</p>
@@ -1586,6 +1587,7 @@ Accuracy: 94.07%
             <li>Backpropagation rule updates for weights and biases:
                 $$\Delta w_{i,\,j,\,L} = \alpha\cdot2(o_j-t_j)x_i\sigma'(z)$$
                 $$\Delta w_{i,\,j,\,L\,-\,1} =\alpha\cdot\sigma'(z_{j,\,L\,-\,1})\cdot x_{i,\,L\,-\,1}\cdot[\sum_{k\,=\,1}^{j}{2(o_{k,\,L}-t_k)}\cdot{\sigma'(z_{k,\,L})}\cdot{w_{i,\,k,\,L}}]$$
+                $$w_{i,\,j,\,l}=w_{i,\,j,\,l}-\Delta w_{i,\,j,\,l}$$
                 $$\Delta b_{j,\,L}=\alpha\cdot 2(o_j-t_j)\sigma'(z_{j,\,L})$$
                 $$\Delta b_{j,\,L\,-\,1}=\alpha\cdot \sigma'(z_{j,\,L\,-\,1})\cdot[\sum_{k\,=\,1}^{j}{2(o_{k,\,L}-t_k)}\cdot{\sigma'(z_{k,\,L})}\cdot{w_{i,\,k,\,L}}]$$
                 $$b_{j,\,l}=b_{j,\,l}-\Delta b_{j,\,l}$$
