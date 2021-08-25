@@ -42,6 +42,8 @@
             margin-bottom: 20px;
         }
     </style>
+    <link rel="stylesheet" href="form.css" type="text/css">
+    <script src="form.js"></script>
 </head>
 <body>
     <nav>
@@ -52,6 +54,39 @@
             <button onclick="toggleDarkMode();"></button>
         </div>
     </nav>
+    <form name="rate" class="rating" method="post" netlify>
+        <p class="label-form">Rate this book!</p>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="1" />
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="2" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="3" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="4" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="5" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+    </form>
     <div id="visible">
         <h2>Chapter 8 - Backpropagation</h2>
         <h3 class="quote">“It is only with the heart that one can see rightly; what is essential is invisible to the eye.”<br>

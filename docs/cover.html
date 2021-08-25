@@ -128,6 +128,8 @@
             background: #fcd6a5;
         }
     </style>
+    <link rel="stylesheet" href="form.css" type="text/css">
+    <script src="form.js"></script>
 </head>
 <body>
 <nav>
@@ -135,6 +137,39 @@
         <h1>Building Neural Networks from Scratch</h1>
     </a>
 </nav>
+<form name="rate" class="rating" method="post" netlify>
+    <p class="label-form">Rate this book!</p>
+    <label type="submit" onclick="hide();">
+      <input type="radio" name="stars" value="1" />
+      <span class="icon">★</span>
+    </label>
+    <label type="submit" onclick="hide();">
+      <input type="radio" name="stars" value="2" />
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+    </label>
+    <label type="submit" onclick="hide();">
+      <input type="radio" name="stars" value="3" />
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+    </label>
+    <label type="submit" onclick="hide();">
+      <input type="radio" name="stars" value="4" />
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+    </label>
+    <label type="submit" onclick="hide();">
+      <input type="radio" name="stars" value="5" />
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+      <span class="icon">★</span>
+    </label>
+</form>
 <div id="visible">
     <img alt="Image couldn't load." src="cover/Cover.png">
     <br><br>

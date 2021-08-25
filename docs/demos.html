@@ -91,6 +91,8 @@
             border-radius: 10px;
         }
     </style>
+    <link rel="stylesheet" href="form.css" type="text/css">
+    <script src="form.js"></script>
 </head>
 <body onkeypress="erase();">
     <nav>
@@ -98,6 +100,39 @@
             <h1>Building Neural Networks from Scratch</h1>
         </a>
     </nav>
+    <form name="rate" class="rating" method="post" netlify>
+        <p class="label-form">Rate this book!</p>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="1" />
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="2" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="3" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="4" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="5" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+    </form>
     <div id="visible">
         <h2>MNIST Digit Recognizer</h2>
 <p style="font-family: 'Amiri';">Draw a digit in the box below and see what the neural network thinks it is! Clear your

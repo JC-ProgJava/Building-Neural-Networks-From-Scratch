@@ -46,6 +46,8 @@
             margin-left: 30px;
         }
     </style>
+    <link rel="stylesheet" href="form.css" type="text/css">
+    <script src="form.js"></script>
 </head>
 <body>
     <nav>
@@ -56,6 +58,39 @@
             <button onclick="toggleDarkMode();"></button>
         </div>
     </nav>
+    <form name="rate" class="rating" method="post" netlify>
+        <p class="label-form">Rate this book!</p>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="1" />
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="2" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="3" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="4" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+        <label type="submit" onclick="hide();">
+          <input type="radio" name="stars" value="5" />
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+          <span class="icon">★</span>
+        </label>
+    </form>
     <div id="visible">
         <h2>Chapter 3 - Activation Functions and Derivatives</h2>
         <h4 class="quote">“Hoping for the best, prepared for the worst, and unsurprised by anything in between.”<br>— I Know Why the Caged Bird Sings by Maya Angelou</h4>
