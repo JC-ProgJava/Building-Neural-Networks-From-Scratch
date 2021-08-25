@@ -1,5 +1,7 @@
-if (localStorage.hasOwnProperty('hasRated')) {
-    hide();
+window.addEventListener('load', function() {
+    if (localStorage.hasOwnProperty('hasRated')) {
+        hide();
+    }
 }
 
 function hide() {
