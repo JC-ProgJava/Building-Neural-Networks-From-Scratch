@@ -2,7 +2,7 @@ window.addEventListener('load', function() {
     if (localStorage.hasOwnProperty('hasRated')) {
         hide();
     }
-}
+});
 
 function hide() {
     document.getElementsByClassName("rating")[0].style.display = "none";
