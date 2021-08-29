@@ -16,6 +16,10 @@ Feedback: https://forms.gle/P68m2YurzxBecRLv6
 
 Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
+## Paperback/Soft Offline Copy
+
+For readers who want to be able to access this book offline or as a soft copy (PDF), download the book [here](https://github.com/JC-ProgJava/Building-Neural-Networks-From-Scratch/blob/main/Building%20Neural%20Networks%20from%20Scratch.pdf).
+
 <br>
 
 # Changelog
