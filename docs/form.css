@@ -65,7 +65,7 @@ form label p {
 }
 
 .rating {
-  display: block;
+  display: none;
   position: fixed;
   font-size: 20px;
   bottom: 50px;
