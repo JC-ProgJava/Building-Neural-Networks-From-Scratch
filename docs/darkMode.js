@@ -6,7 +6,7 @@ if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').match
 }
 
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    const newColorScheme = e.matches ? "light" : "dark";
+    currentMode = e.matches ? "light" : "dark";
     toggleDarkMode();
 });
 
