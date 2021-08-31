@@ -3,7 +3,7 @@ if (!localStorage.hasOwnProperty('hasRated')) {
 }
 
 window.addEventListener('load', function() {
-    if (localStorage.hasOwnProperty('hasRated') && !localStorage.getItem('hasRated')) {
+    if (localStorage.hasOwnProperty('hasRated') && localStorage.getItem('hasRated') === "false") {
         document.getElementsByClassName("rating")[0].style.display = "block";
     }
     
