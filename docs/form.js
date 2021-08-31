@@ -1,3 +1,7 @@
+if (!localStorage.hasOwnProperty('hasRated')) {
+    localStorage.setItem('hasRated', false);
+}
+
 window.addEventListener('load', function() {
     if (localStorage.hasOwnProperty('hasRated') && !localStorage.getItem('hasRated')) {
         document.getElementsByClassName("rating")[0].style.display = "block";
@@ -9,15 +13,7 @@ window.addEventListener('load', function() {
           document.getElementsByClassName("rating")[0].submit();
         });
     }
-
-    if (localStorage.hasOwnProperty('hasRated') && localStorage.getItem('hasRated')) {
-        hide();
-    }
 });
-
-if (!localStorage.hasOwnProperty('hasRated')) {
-    localStorage.setItem('hasRated', false);
-}
 
 function hide() {
     document.getElementsByClassName("rating")[0].style.display = "none";
