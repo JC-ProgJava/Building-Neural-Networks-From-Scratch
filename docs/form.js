@@ -1,4 +1,8 @@
 window.addEventListener('load', function() {
+    if (localStorage.hasOwnProperty('hasRated') && !localStorage.getItem('hasRated')) {
+        document.getElementsByClassName("rating")[0].style.display = "block";
+    }
+    
     const vals = document.getElementsByClassName("rating")[0].getElementsByTagName("label");
     for (var i = 0; i < vals.length; i++) {
         vals[i].addEventListener("click", function () {
@@ -6,10 +10,14 @@ window.addEventListener('load', function() {
         });
     }
 
-    if (localStorage.hasOwnProperty('hasRated')) {
+    if (localStorage.hasOwnProperty('hasRated') && localStorage.getItem('hasRated')) {
         hide();
     }
 });
+
+if (!localStorage.hasOwnProperty('hasRated')) {
+    localStorage.setItem('hasRated', false);
+}
 
 function hide() {
     document.getElementsByClassName("rating")[0].style.display = "none";
