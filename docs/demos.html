@@ -552,6 +552,18 @@ canvas.addEventListener('mousemove', e => {
         document.getElementsByClassName("decision")[i].style.height = (Math.round(outpercent[i] * 100.0 * 100.0) / 100.0) + "px";
         document.getElementsByClassName("decision")[i].style.marginTop = (100 - (Math.round(outpercent[i] * 100.0 * 100.0) / 100.0)) + "px";
     }
+    var max = 0;
+    var indexMax = 0;
+    for (let i = 0; i <= 9; i++) {
+        if (document.getElementsByClassName("decision")[i].style.height > max) {
+            max = document.getElementsByClassName("decision")[i].style.height;
+            indexMax = i;
+        }
+    }
+    for (let i = 0; i <= 9; i++) {
+        document.getElementsByClassName("decision")[i].style.backgroundColor = "black";
+    }
+    document.getElementsByClassName("decision")[indexMax].style.backgroundColor = "#e6ae67";
 });
 
 function findxy(res, e) {
