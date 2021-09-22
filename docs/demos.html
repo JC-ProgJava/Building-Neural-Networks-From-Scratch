@@ -555,7 +555,8 @@ canvas.addEventListener('mousemove', e => {
     var max = 0;
     var indexMax = 0;
     for (let i = 0; i <= 9; i++) {
-        if (document.getElementsByClassName("decision")[i].style.height > max) {
+        var height = document.getElementsByClassName("decision")[i].style.height;
+        if (parseFloat(height.substring(0, height.length - 2)) > max) {
             max = document.getElementsByClassName("decision")[i].style.height;
             indexMax = i;
         }
