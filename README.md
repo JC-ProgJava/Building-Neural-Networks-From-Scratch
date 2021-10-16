@@ -1,4 +1,4 @@
-# Building-Neural-Networks-From-Scratch
+# Building-Neural-Networks-From-Scratch 
 
 [![CodeFactor](https://www.codefactor.io/repository/github/jc-progjava/building-neural-networks-from-scratch/badge)](https://www.codefactor.io/repository/github/jc-progjava/building-neural-networks-from-scratch)
 
