@@ -23,6 +23,12 @@ For readers who want to be able to access this book offline or as a soft copy (P
 <br>
 
 # Changelog
+4 November 2021
+- Taking a break and exploring Github Copilot.
+- See it help program a driver class that trains a neural network! 🙂
+
+https://user-images.githubusercontent.com/61588096/140303928-ef131a9d-8871-4dbe-b894-83fd28c84f45.mov
+
 18 August 2021
 - Pushed Chapter 8 - Backpropagation to web! 🚀
 
