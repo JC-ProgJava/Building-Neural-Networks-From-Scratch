@@ -9,11 +9,6 @@ import java.nio.file.Path;
 // in the Layer class and ensure an efficient
 // user experience for training networks.
 public class Network {
-  // Improves the speed of our program by allocating more CPU cores to doing the computations.
-  static {
-    System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", (Runtime.getRuntime().availableProcessors() * 4 / 5) + "");
-  }
-  
   // Stores the layers in the network in an array.
   private Layer[] layers;
 
