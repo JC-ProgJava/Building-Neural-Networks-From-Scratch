@@ -3,6 +3,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class Network {
+  static {
+    System.setProperty("java.util.concurrent.ForkJoinPool.common.parallelism", (Runtime.getRuntime().availableProcessors() * 4 / 5) + "");
+  }
+  
   private Layer[] layers;
 
   public Network(Vector config, ActivationFunction[] activationFunctions, Error errorType) {
