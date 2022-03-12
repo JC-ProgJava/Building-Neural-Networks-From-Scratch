@@ -1,6 +1,7 @@
 # Building-Neural-Networks-From-Scratch 
 
 [![CodeFactor](https://www.codefactor.io/repository/github/jc-progjava/building-neural-networks-from-scratch/badge)](https://www.codefactor.io/repository/github/jc-progjava/building-neural-networks-from-scratch)
+![LOC](https://tokei.rs/b1/github/JC-ProgJava/Building-Neural-Networks-From-Scratch)
 
 Building Neural Networks From Scratch book repository.
 
