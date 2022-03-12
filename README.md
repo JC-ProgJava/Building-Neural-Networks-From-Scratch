@@ -24,6 +24,9 @@ For readers who want to be able to access this book offline or as a soft copy (P
 <br>
 
 # Changelog
+12 March 2022
+- Pushed code for Optimizers chapter 🚀
+
 4 November 2021
 - Taking a break and exploring Github Copilot.
 - See it help program a driver class that trains a neural network! 🙂
