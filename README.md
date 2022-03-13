@@ -64,7 +64,7 @@ For readers who want to be able to access this book offline or as a soft copy (P
 | AdaGrad CCE SIGMOID-SIGMOID LR0.01 | 86.05 |
 | Momentum MSE SIGMOID-SIGMOID LR0.01 | 28.56 (beginning to converge) |
 | AdaGrad MSE SIGMOID-SIGMOID LR0.01 | 21.49 (beginning to converge) |
-| AdaDelta MSE SIGMOID-SIGMOID LR1 | 10.32 |
+| AdaDelta MSE SIGMOID-SIGMOID LR1 | 10.32 (Error) |
 | RMSProp CCE LEAKYRELU-SOFTMAX LR0.001 | Error |
 | AdaDelta CCE SIGMOID-SIGMOID LR1 | Error |
 | AdaDelta CCE LEAKYRELU-SOFTMAX LR1 | Error |
