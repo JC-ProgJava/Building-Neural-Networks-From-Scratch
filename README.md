@@ -29,25 +29,25 @@ For readers who want to be able to access this book offline or as a soft copy (P
 - Results comparison below:
 
 | Configuration (784-32-10) | Testing Accuracy (%) | Configuration (784-128-10) Testing Accuracy (%) |
-| -------------- | ------------ | -------------- | ------------ |
-| Adam CCE LEAKYRELU-SOFTMAX LR0.001 | 96.41 |
-| None CCE LEAKYRELU-SOFTMAX LR0.01 | 95.58 |
-| Momentum CCE SIGMOID-SIGMOID LR0.01 | 95.18 |
-| Adam CCE SIGMOID-SIGMOID LR0.001 | 94.60 |
-| Momentum MSE SIGMOID-SIGMOID LR0.01 | 94.19 |
-| Adam MSE SIGMOID-SIGMOID LR0.001 | 93.82 |
-| AdaGrad MSE SIGMOID-SIGMOID LR0.01 | 93.30 |
-| None CCE SIGMOID-SIGMOID LR0.01 | 92.21 |
-| RMSProp CCE LEAKYRELU-SOFTMAX LR0.001 | 91.40 |
-| Momentum CCE LEAKYRELU-SOFTMAX LR0.01 | 90.96 |
-| AdaGrad CCE SIGMOID-SIGMOID LR0.01 | 90.91 |
-| None MSE SIGMOID-SIGMOID LR0.01 | 88.01 |
-| RMSProp MSE SIGMOID-SIGMOID LR0.001 | 36.67 (beginning to converge) |
-| RMSProp CCE SIGMOID-SIGMOID LR0.001 | 30.45 (beginning to converge) |
-| AdaDelta CCE SIGMOID-SIGMOID LR1 | 10.10 (Error) |
-| AdaDelta CCE LEAKYRELU-SOFTMAX LR1 | Error |
-| AdaDelta MSE SIGMOID-SIGMOID LR1 | Error |
-| AdaGrad CCE LEAKYRELU-SOFTMAX LR0.01 | Error |
+| -------------- | ------------ | -------------- |
+| Adam CCE LEAKYRELU-SOFTMAX LR0.001 | 96.41 | |
+| None CCE LEAKYRELU-SOFTMAX LR0.01 | 95.58 | |
+| Momentum CCE SIGMOID-SIGMOID LR0.01 | 95.18 | |
+| Adam CCE SIGMOID-SIGMOID LR0.001 | 94.60 | |
+| Momentum MSE SIGMOID-SIGMOID LR0.01 | 94.19 | |
+| Adam MSE SIGMOID-SIGMOID LR0.001 | 93.82 | |
+| AdaGrad MSE SIGMOID-SIGMOID LR0.01 | 93.30 | |
+| None CCE SIGMOID-SIGMOID LR0.01 | 92.21 | |
+| RMSProp CCE LEAKYRELU-SOFTMAX LR0.001 | 91.40 | |
+| Momentum CCE LEAKYRELU-SOFTMAX LR0.01 | 90.96 | |
+| AdaGrad CCE SIGMOID-SIGMOID LR0.01 | 90.91 | |
+| None MSE SIGMOID-SIGMOID LR0.01 | 88.01 | |
+| RMSProp MSE SIGMOID-SIGMOID LR0.001 | 36.67 (beginning to converge) | |
+| RMSProp CCE SIGMOID-SIGMOID LR0.001 | 30.45 (beginning to converge) | |
+| AdaDelta CCE SIGMOID-SIGMOID LR1 | 10.10 (Error) | |
+| AdaDelta CCE LEAKYRELU-SOFTMAX LR1 | Error | |
+| AdaDelta MSE SIGMOID-SIGMOID LR1 | Error | |
+| AdaGrad CCE LEAKYRELU-SOFTMAX LR0.01 | Error | |
 
 Info:
 - All networks are
