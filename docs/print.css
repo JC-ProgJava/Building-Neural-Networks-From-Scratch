@@ -323,7 +323,7 @@ nav, button {
 }
 
 .rating {
-    display: none;
+    display: none !important;
 }
 
 @page {
