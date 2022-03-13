@@ -322,6 +322,10 @@ nav, button {
     display: none;
 }
 
+.rating {
+    display: none;
+}
+
 @page {
     margin: 2cm;
 
