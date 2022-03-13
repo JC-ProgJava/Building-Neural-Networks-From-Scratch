@@ -1,5 +1,11 @@
 var currentMode = "";
 
+window.onbeforeprint = function(event) {
+    if (currentMode === "dark") {
+        toggleDarkMode();
+    }
+};
+
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
     currentMode = "light";
     toggleDarkMode();
