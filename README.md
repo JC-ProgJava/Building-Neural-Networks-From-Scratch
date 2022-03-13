@@ -25,7 +25,7 @@ For readers who want to be able to access this book offline or as a soft copy (P
 
 # Changelog
 13 March 2022
-- Take a peek into the result of the Optimizers chapter. In this chapter, you will be implmenting: `Momenutum`, `Adam`, `AdaGrad`, `AdaDelta`, and `RMSPROP` optimizers.
+- Take a peek into the result of the Optimizers chapter. In this chapter, you will be implmenting: `Momentum`, `Adam`, `AdaGrad`, `AdaDelta`, and `RMSPROP` optimizers.
 - Results comparison below:
 
 | Configuration (784-32-10) | Testing Accuracy (%) | Configuration (784-128-10) Testing Accuracy (%) |
