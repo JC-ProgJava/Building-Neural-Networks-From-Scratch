@@ -157,6 +157,10 @@ public class Network {
         System.exit(-1);
       }
 
+      for (Layer layer : this.layers) {
+        layer.clearCache();
+      }
+
       int corrects = 0;
       for (int i = 0; i < 60000; i++) {
         int x = getMax(this.test(testInputs[i]));

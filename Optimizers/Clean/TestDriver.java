@@ -15,9 +15,9 @@ public class TestDriver {
     // Initialize network object
     Vector config = new Vector(new double[]{784, 32, 10});
     ActivationFunction[] activationFunctions = new ActivationFunction[]{
-      ActivationFunction.SIGMOID, ActivationFunction.SIGMOID
+      ActivationFunction.LEAKY_RELU, ActivationFunction.SOFTMAX
     };
-    Network network = new Network(config, activationFunctions, Error.MEAN_SQUARED).fromCustomGaussianDistribution(0.0, 0.1);
+    Network network = new Network(config, activationFunctions, Error.CATEGORICAL_CROSS_ENTROPY).fromCustomGaussianDistribution(0.0, 0.05);
 //    Network network = new Network("network.ser");
 
     // Obtain training data from serialized file
