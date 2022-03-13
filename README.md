@@ -28,42 +28,64 @@ For readers who want to be able to access this book offline or as a soft copy (P
 - Take a peek into the result of the Optimizers chapter. In this chapter, you will be implmenting: `Momentum`, `Adam`, `AdaGrad`, `AdaDelta`, and `RMSPROP` optimizers.
 - Results comparison below:
 
-| Configuration (784-32-10) | Testing Accuracy (%) | Configuration (784-128-10) Testing Accuracy (%) |
-| -------------- | ------------ | -------------- |
-| Adam CCE LEAKYRELU-SOFTMAX LR0.001 | 96.41 | |
-| None CCE LEAKYRELU-SOFTMAX LR0.01 | 95.58 | |
-| Momentum CCE SIGMOID-SIGMOID LR0.01 | 95.18 | |
-| Adam CCE SIGMOID-SIGMOID LR0.001 | 94.60 | |
-| Momentum MSE SIGMOID-SIGMOID LR0.01 | 94.19 | |
-| Adam MSE SIGMOID-SIGMOID LR0.001 | 93.82 | |
-| AdaGrad MSE SIGMOID-SIGMOID LR0.01 | 93.30 | |
-| None CCE SIGMOID-SIGMOID LR0.01 | 92.21 | |
-| RMSProp CCE LEAKYRELU-SOFTMAX LR0.001 | 91.40 | |
-| Momentum CCE LEAKYRELU-SOFTMAX LR0.01 | 90.96 | |
-| AdaGrad CCE SIGMOID-SIGMOID LR0.01 | 90.91 | |
-| None MSE SIGMOID-SIGMOID LR0.01 | 88.01 | |
-| RMSProp MSE SIGMOID-SIGMOID LR0.001 | 36.67 (beginning to converge) | |
-| RMSProp CCE SIGMOID-SIGMOID LR0.001 | 30.45 (beginning to converge) | |
-| AdaDelta CCE SIGMOID-SIGMOID LR1 | 10.10 (Error) | |
-| AdaDelta CCE LEAKYRELU-SOFTMAX LR1 | Error | |
-| AdaDelta MSE SIGMOID-SIGMOID LR1 | Error | |
-| AdaGrad CCE LEAKYRELU-SOFTMAX LR0.01 | Error | |
+| Configuration (784-32-10) | Testing Accuracy (%) |
+| -------------- | ------------ |
+| Adam CCE LEAKYRELU-SOFTMAX LR0.001 | 96.41 |
+| None CCE LEAKYRELU-SOFTMAX LR0.01 | 95.58 |
+| Momentum CCE SIGMOID-SIGMOID LR0.01 | 95.18 |
+| Adam CCE SIGMOID-SIGMOID LR0.001 | 94.60 |
+| Momentum MSE SIGMOID-SIGMOID LR0.01 | 94.19 |
+| Adam MSE SIGMOID-SIGMOID LR0.001 | 93.82 |
+| AdaGrad MSE SIGMOID-SIGMOID LR0.01 | 93.30 |
+| None CCE SIGMOID-SIGMOID LR0.01 | 92.21 |
+| RMSProp CCE LEAKYRELU-SOFTMAX LR0.001 | 91.40 |
+| Momentum CCE LEAKYRELU-SOFTMAX LR0.01 | 90.96 |
+| AdaGrad CCE SIGMOID-SIGMOID LR0.01 | 90.91 |
+| None MSE SIGMOID-SIGMOID LR0.01 | 88.01 |
+| RMSProp MSE SIGMOID-SIGMOID LR0.001 | 36.67 (beginning to converge) |
+| RMSProp CCE SIGMOID-SIGMOID LR0.001 | 30.45 (beginning to converge) |
+| AdaDelta CCE SIGMOID-SIGMOID LR1 | 10.10 (Error) |
+| AdaDelta CCE LEAKYRELU-SOFTMAX LR1 | Error |
+| AdaDelta MSE SIGMOID-SIGMOID LR1 | Error |
+| AdaGrad CCE LEAKYRELU-SOFTMAX LR0.01 | Error |
+
+| Configuration (784-128-10) | Testing Accuracy (%) |
+| -------------- | ------------ |
+| Adam CCE LEAKYRELU-SOFTMAX LR0.001 | 97.40 |
+| None CCE LEAKYRELU-SOFTMAX LR0.01 | 97.31 |
+| Adam CCE SIGMOID-SIGMOID LR0.001 | 97.01 |
+| Adam MSE SIGMOID-SIGMOID LR0.001 | 96.94 |
+| None CCE SIGMOID-SIGMOID LR0.01 | 96.70 |
+| RMSProp CCE SIGMOID-SIGMOID LR0.001 | 95.04 |
+| RMSProp MSE SIGMOID-SIGMOID LR0.001 | 94.62 |
+| Momentum CCE SIGMOID-SIGMOID LR0.01 | 94.56 |
+| None MSE SIGMOID-SIGMOID LR0.01 | 93.61 |
+| Momentum CCE LEAKYRELU-SOFTMAX LR0.01 | 92.75 |
+| AdaGrad CCE SIGMOID-SIGMOID LR0.01 | 86.05 |
+| Momentum MSE SIGMOID-SIGMOID LR0.01 | 28.56 (beginning to converge) |
+| AdaGrad MSE SIGMOID-SIGMOID LR0.01 | 21.49 (beginning to converge) |
+| AdaDelta MSE SIGMOID-SIGMOID LR1 | 10.32 |
+| RMSProp CCE LEAKYRELU-SOFTMAX LR0.001 | Error |
+| AdaDelta CCE SIGMOID-SIGMOID LR1 | Error |
+| AdaDelta CCE LEAKYRELU-SOFTMAX LR1 | Error |
+| AdaGrad CCE LEAKYRELU-SOFTMAX LR0.01 | Error |
 
 Info:
-- All networks are
-  - `784-32-10`
-  - All weights initialized with 0.05 (avoid no learning).
+- All networks are:
+  - `784-32-10` and `784-128-10`
+  - All weights initialized with 0.05 for `784-32-10` networks (avoid no learning and exploding) and 0.01 for `784-128-10` networks.
   - Trained for 5 epochs with batch size 10
   - Use their optimal LRs (suggested by publications)
 - `CCE`: Categorical Cross Entropy
 - `MSE`: Mean Squared Error
 
 Observations:
+- Adam performs quite well.
 - Adam optimizer works well with a learning rate of 0.001. It also seems to work only with Cross Entropy.
 - Sigmoid-Sigmoid configurations shouldn't be initialized with such small numbers (because the output is scaled to between 0 and 1, and too small inputs result in values close to 0 as output)
 - LeakyRELU-Softmax does not work well with MSE
-- Adam performs quite well.
-- The networks were in general a bit small, they all ended up overfitting slightly (which is expected).
+- The `784-32-10` networks were in general a bit small, they all ended up overfitting slightly (which is expected).
+- Vanilla SDG and Momentum work quite well despite being very simplistic in comparison with the other optimizers.
 
 Take a look at the training process:
 
