@@ -88,12 +88,7 @@ public class Network {
     return this;
   }
 
-  void train(double[][] input, double[][] target, int epoch, double alpha, int BATCH_SIZE, Optimizer optimizer)
-    throws IOException, ClassNotFoundException {
-    ObjectInputStream ois = new ObjectInputStream(new FileInputStream("input.ser"));
-    ObjectInputStream oiss = new ObjectInputStream(new FileInputStream("target.ser"));
-    double[][] testInputs = (double[][]) ois.readObject();
-    double[][] testTargets = (double[][]) oiss.readObject();
+  void train(double[][] input, double[][] target, int epoch, double alpha, int BATCH_SIZE, Optimizer optimizer) {
 
     if (input.length != target.length) {
       throw new IllegalArgumentException("train(): Input and target (expected) indices must have the same number of examples.");
@@ -162,39 +157,24 @@ public class Network {
       }
 
       int corrects = 0;
-      for (int i = 0; i < 60000; i++) {
-        int x = getMax(test(testInputs[i]));
+      for (int i = 0; i < input.length; i++) {
+        int x = getMax(test(input[i]));
         int actual = -1;
-        for (int j = 0; j < testTargets[i].length; j++) {
-          if (testTargets[i][j] == 1) {
+        for (int j = 0; j < target[i].length; j++) {
+          if (target[i][j] == 1) {
             actual = j;
             break;
           }
         }
         corrects += x == actual ? 1 : 0;
       }
-      double accuracyTrain = 100.0 * (double) corrects / 60000.0;
-
-      corrects = 0;
-      for (int i = 60000; i < 70000; i++) {
-        int x = getMax(test(testInputs[i]));
-        int actual = -1;
-        for (int j = 0; j < testTargets[i].length; j++) {
-          if (testTargets[i][j] == 1) {
-            actual = j;
-            break;
-          }
-        }
-        corrects += x == actual ? 1 : 0;
-      }
-      double accuracyTest = 100.0 * (double) corrects / 10000.0;
+      double accuracyTrain = 100.0 * (double) corrects / input.length;
 
       String str =
         "\rEpoch: " + iter + " Error: " + layers[layers.length - 1].getDisplayError().total() / (input.length) + " Time: " + ((System.currentTimeMillis() - start) / 1000.0) + " seconds.";
       System.out.print(str);
       System.out.println();
       System.out.printf("\tTrain Acc. (%%): %.2f\n", accuracyTrain);
-      System.out.printf("\tTest Acc. (%%): %.2f\n", accuracyTest);
     }
   }
 

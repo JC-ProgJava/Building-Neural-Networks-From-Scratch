@@ -17,7 +17,7 @@ public class TestDriver {
     ActivationFunction[] activationFunctions = new ActivationFunction[]{
       ActivationFunction.LEAKY_RELU, ActivationFunction.SOFTMAX
     };
-    Network network = new Network(config, activationFunctions, Error.CATEGORICAL_CROSS_ENTROPY).fromCustomGaussianDistribution(0.05, 0.0);
+    Network network = new Network(config, activationFunctions, Error.CATEGORICAL_CROSS_ENTROPY).fromCustomGaussianDistribution(0.0, 0.1);
 //    Network network = new Network("network.ser");
 
     // Obtain training data from serialized file
