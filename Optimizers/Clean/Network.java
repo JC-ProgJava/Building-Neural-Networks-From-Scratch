@@ -1,9 +1,13 @@
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Random;
 
 public class Network {
+  private final Random random = new Random();
   private Layer[] layers;
+  private double dropoutProbability = 0.0;
+
 
   public Network(Vector config, ActivationFunction[] activationFunctions, Error errorType) {
     if ((config.length() - 1) != activationFunctions.length) {
@@ -21,6 +25,7 @@ public class Network {
       }
     }
   }
+
 
   public Network(String filepath) {
     if (!Files.exists(Path.of(filepath))) {
@@ -72,9 +77,25 @@ public class Network {
     return index;
   }
 
+  private Vector dropoutEncode(int size) {
+    Vector ret = new Vector(size);
+    for (int i = 0; i < size; i++) {
+      ret.set(i, random.nextDouble() >= dropoutProbability ? 1.0 : 0.0);
+    }
+    return ret;
+  }
+
   Network fromCustomGaussianDistribution(double average, double deviation) {
     for (Layer layer : layers) {
       layer.fillGaussian(average, deviation);
+    }
+
+    return this;
+  }
+
+  Network fromXavierInitialization() {
+    for (Layer layer : layers) {
+      layer.fillGaussian(0, 1.0 / (Math.sqrt(layer.vectors[0].length())));
     }
 
     return this;
@@ -89,7 +110,6 @@ public class Network {
   }
 
   void train(double[][] input, double[][] target, int epoch, double alpha, int BATCH_SIZE, Optimizer optimizer) {
-
     if (input.length != target.length) {
       throw new IllegalArgumentException("train(): Input and target (expected) indices must have the same number of examples.");
     }
@@ -107,10 +127,10 @@ public class Network {
     {
       long start = System.currentTimeMillis();
       for (int i = 0; i < 1000; i++) {
-        layers[0].feed(new Vector(input[i]));
+        layers[0].feed(new Vector(input[i]), false);
         int size = layers.length;
         for (int indice = 1; indice < size; indice++) {
-          layers[indice].feed(layers[indice - 1].getOutput());
+          layers[indice].feed(layers[indice - 1].getOutput(), false);
         }
 
         layers[layers.length - 1].learn(new Vector(target[i]), null, alpha, optimizer);
@@ -132,9 +152,9 @@ public class Network {
     for (int iter = 1; iter <= epoch; iter++) {
       long start = System.currentTimeMillis();
       for (int index = 0; index < input.length; index++) {
-        layers[0].feed(new Vector(input[index]));
+        layers[0].feed(new Vector(input[index]), true);
         for (int indice = 1; indice < layers.length; indice++) {
-          layers[indice].feed(layers[indice - 1].getOutput());
+          layers[indice].feed(layers[indice - 1].getOutput(), true);
         }
 
         layers[layers.length - 1].learn(new Vector(target[index]), null, alpha, optimizer);
@@ -156,6 +176,11 @@ public class Network {
         layer.clearCache();
       }
 
+      String str =
+        "\rEpoch: " + iter + " Error: " + layers[layers.length - 1].getDisplayError().total() / (input.length) + " Time: " + ((System.currentTimeMillis() - start) / 1000.0) + " seconds.";
+      System.out.print(str);
+      System.out.println();
+
       int corrects = 0;
       for (int i = 0; i < input.length; i++) {
         int x = getMax(test(input[i]));
@@ -169,13 +194,13 @@ public class Network {
         corrects += x == actual ? 1 : 0;
       }
       double accuracyTrain = 100.0 * (double) corrects / input.length;
-
-      String str =
-        "\rEpoch: " + iter + " Error: " + layers[layers.length - 1].getDisplayError().total() / (input.length) + " Time: " + ((System.currentTimeMillis() - start) / 1000.0) + " seconds.";
-      System.out.print(str);
-      System.out.println();
       System.out.printf("\tTrain Acc. (%%): %.2f\n", accuracyTrain);
     }
+  }
+
+  Network setDropout(double probability) {
+    dropoutProbability = probability;
+    return this;
   }
 
   void export(String name) {
@@ -205,9 +230,9 @@ public class Network {
   }
 
   public Vector test(double[] input) {
-    Vector out = layers[0].test(new Vector(input));
+    Vector out = layers[0].test(new Vector(input), false);
     for (int index = 1; index < layers.length; index++) {
-      out = layers[index].test(out);
+      out = layers[index].test(out, false);
     }
     return out;
   }
