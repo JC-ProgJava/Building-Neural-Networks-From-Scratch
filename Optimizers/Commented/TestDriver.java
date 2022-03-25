@@ -17,7 +17,9 @@ public class TestDriver {
     ActivationFunction[] activationFunctions = new ActivationFunction[]{
       ActivationFunction.LEAKY_RELU, ActivationFunction.SOFTMAX
     };
-    Network network = new Network(config, activationFunctions, Error.CATEGORICAL_CROSS_ENTROPY).fromCustomGaussianDistribution(0.0, 0.1);
+    Network network = new Network(config, activationFunctions, Error.CATEGORICAL_CROSS_ENTROPY)
+      .fromCustomGaussianDistribution(0.0, 0.05)
+      .setDropout(0.0);
 //    Network network = new Network("network.ser");
 
     // Obtain training data from serialized file
@@ -39,7 +41,7 @@ public class TestDriver {
     // Take first 60,000 labels for training
     target = Arrays.copyOfRange(target, 0, 60000);
 
-    network.train(input, target, 5, 0.002, 10, Optimizer.ADAMAX);
+    network.train(input, target, 5, 0.001, 10, Optimizer.ADAM);
     network.export("network.ser");
   }
 }

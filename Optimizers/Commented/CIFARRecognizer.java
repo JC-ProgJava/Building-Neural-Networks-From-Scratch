@@ -12,12 +12,13 @@ import java.io.ObjectInputStream;
 public class CIFARRecognizer {
   public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
     // Initialize network object
-    Vector config = new Vector(new double[]{1024, 128, 10});
+    Vector config = new Vector(new double[]{3072, 64, 10});
     ActivationFunction[] activationFunctions = new ActivationFunction[]{
-      ActivationFunction.SIGMOID, ActivationFunction.SIGMOID
+      ActivationFunction.RELU, ActivationFunction.SOFTMAX
     };
-//    Network network = new Network(config, activationFunctions, Error.CATEGORICAL_CROSS_ENTROPY).fromCustomGaussianDistribution(0.0, 0.1);
-    Network network = new Network("network-cifar.ser");
+    Network network =
+      new Network(config, activationFunctions, Error.CATEGORICAL_CROSS_ENTROPY).fromCustomGaussianDistribution(0.0, 0.01).setDropout(0.0);
+//    Network network = new Network("network-cifar.ser");
 
     // Obtain training data from serialized file
     // Serialized data is stored in 'input.ser', labels are stored in 'target.ser'
@@ -32,7 +33,7 @@ public class CIFARRecognizer {
     double[][] target = (double[][]) objectInputStream.readObject();
     objectInputStream.close();
 
-    network.train(input, target, 5, 0.001, 100, Optimizer.ADAM);
+    network.train(input, target, 3, 0.001, 10, Optimizer.ADAM);
     network.export("network-cifar.ser");
   }
 }

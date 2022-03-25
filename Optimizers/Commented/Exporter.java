@@ -46,7 +46,6 @@ public class Exporter {
     objectOutputStream = new ObjectOutputStream(new FileOutputStream("target-cifar10.ser"));
     objectOutputStream.writeObject(target);
     objectOutputStream.close();
-
   }
 
   private static double[] getPixels(BufferedImage bufferedImage) {

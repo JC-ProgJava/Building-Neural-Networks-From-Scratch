@@ -2,163 +2,227 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class Vector {
+  private static final Random rand = new Random();
   private final double[] vector;
-  private final Random rand = new Random();
 
   Vector(int length) {
-    this.vector = new double[length];
+    vector = new double[length];
   }
 
   Vector(double[] values) {
-    this.vector = values;
+    vector = values;
   }
 
   Vector(int[] values) {
-    this.vector = new double[values.length];
+    vector = new double[values.length];
     for (int i = 0; i < values.length; i++) {
-      this.vector[i] = values[i];
+      vector[i] = values[i];
+    }
+  }
+
+  static Vector add(Vector vector, Vector anotherVector) {
+    if (anotherVector.length() != vector.length()) {
+      throw new IllegalArgumentException("add(): Vectors not of same size: {" + vector.length() + ", " + anotherVector.length() + "}.");
+    }
+
+    Vector output = new Vector(vector.length());
+    for (int i = 0; i < output.length(); i++) {
+      output.vector[i] = vector.vector[i] + anotherVector.vector[i];
+    }
+
+    return output;
+  }
+
+  static Vector div(Vector vector, Vector anotherVector) {
+    if (anotherVector.length() != vector.length()) {
+      throw new IllegalArgumentException("div(): Vectors not of same size: {" + vector.length() + ", " + anotherVector.length() + "}.");
+    }
+
+    Vector output = new Vector(vector.length());
+    for (int i = 0; i < output.length(); i++) {
+      output.vector[i] = vector.vector[i] / anotherVector.vector[i];
+    }
+
+    return output;
+  }
+
+  static Vector mult(Vector vector, double value) {
+    Vector output = new Vector(vector.length());
+    for (int i = 0; i < output.length(); i++) {
+      output.vector[i] = vector.vector[i] * value;
+    }
+
+    return output;
+  }
+
+  static Vector add(Vector vector, double value) {
+    Vector output = new Vector(vector.length());
+    for (int i = 0; i < output.length(); i++) {
+      output.vector[i] = vector.vector[i] + value;
+    }
+    return output;
+  }
+
+  static Vector subtract(Vector vector, Vector anotherVector) {
+    if (anotherVector.length() != vector.length()) {
+      throw new IllegalArgumentException("subtract(): Vectors not of same size: {" + vector.length() + ", " + anotherVector.length() + "}.");
+    }
+
+    Vector output = new Vector(vector.length());
+    for (int i = 0; i < output.length(); i++) {
+      output.vector[i] = vector.vector[i] - anotherVector.vector[i];
+    }
+
+    return output;
+  }
+
+  static Vector log(Vector vector) {
+    Vector out = new Vector(vector.length());
+    for (int i = 0; i < vector.length(); i++) {
+      out.set(i, Math.log(vector.vector[i]));
+    }
+    return out;
+  }
+
+  static Vector sqrt(Vector vector) {
+    Vector out = new Vector(vector.length());
+    for (int i = 0; i < vector.length(); i++) {
+      out.set(i, Math.sqrt(vector.vector[i]));
+    }
+    return out;
+  }
+
+  static Vector mult(Vector vector, Vector anotherVector) {
+    if (anotherVector.length() != vector.length()) {
+      throw new IllegalArgumentException("mult(): Vectors not of same size: {" + vector.length() + ", " + anotherVector.length() + "}.");
+    }
+
+    Vector output = new Vector(vector.length());
+    for (int i = 0; i < output.length(); i++) {
+      output.vector[i] = vector.vector[i] * anotherVector.vector[i];
+    }
+
+    return output;
+  }
+
+  void add(Vector anotherVector) {
+    if (anotherVector.length() != length()) {
+      throw new IllegalArgumentException("add(): Vectors not of same size: {" + length() + ", " + anotherVector.length() + "}.");
+    }
+
+    for (int i = 0; i < length(); i++) {
+      vector[i] += anotherVector.vector[i];
+    }
+  }
+
+  void div(Vector anotherVector) {
+    if (anotherVector.length() != length()) {
+      throw new IllegalArgumentException("add(): Vectors not of same size: {" + length() + ", " + anotherVector.length() + "}.");
+    }
+
+    for (int i = 0; i < length(); i++) {
+      vector[i] /= anotherVector.vector[i];
+    }
+  }
+
+  void mult(double value) {
+    for (int i = 0; i < length(); i++) {
+      vector[i] *= value;
+    }
+  }
+
+  void add(double value) {
+    for (int i = 0; i < length(); i++) {
+      vector[i] += value;
+    }
+  }
+
+  void subtract(Vector anotherVector) {
+    if (anotherVector.length() != length()) {
+      throw new IllegalArgumentException("add(): Vectors not of same size: {" + length() + ", " + anotherVector.length() + "}.");
+    }
+
+    for (int i = 0; i < length(); i++) {
+      vector[i] -= anotherVector.vector[i];
+    }
+  }
+
+  void log() {
+    for (int i = 0; i < length(); i++) {
+      vector[i] = Math.log(vector[i]);
+    }
+  }
+
+  void sqrt() {
+    for (int i = 0; i < length(); i++) {
+      vector[i] = Math.sqrt(vector[i]);
     }
   }
 
   int length() {
-    return this.vector.length;
+    return vector.length;
   }
 
   double[] values() {
-    return this.vector;
+    return vector;
   }
 
   double get(int index) {
-    return this.vector[index];
+    return vector[index];
   }
 
   void set(int index, double value) {
-    this.vector[index] = value;
+    vector[index] = value;
   }
 
   double total() {
     double sum = 0;
-    for (double val : this.vector) {
+    for (double val : vector) {
       sum += val;
     }
     return sum;
   }
 
-  Vector add(Vector anotherVector) {
-    if (anotherVector.length() != this.length()) {
-      throw new IllegalArgumentException("add(): Vectors not of same size: {" + this.length() + ", " + anotherVector.length() + "}.");
+  void mult(Vector anotherVector) {
+    if (anotherVector.length() != length()) {
+      throw new IllegalArgumentException("mult(): Vectors not of same size: {" + length() + ", " + anotherVector.length() + "}.");
     }
 
-    Vector output = new Vector(this.length());
-    for (int i = 0; i < output.length(); i++) {
-      output.vector[i] = this.vector[i] + anotherVector.vector[i];
+    for (int i = 0; i < length(); i++) {
+      vector[i] *= anotherVector.vector[i];
     }
-
-    return output;
-  }
-
-  Vector mult(Vector anotherVector) {
-    if (anotherVector.length() != this.length()) {
-      throw new IllegalArgumentException("mult(): Vectors not of same size: {" + this.length() + ", " + anotherVector.length() + "}.");
-    }
-
-    Vector output = new Vector(this.length());
-    for (int i = 0; i < output.length(); i++) {
-      output.vector[i] = this.vector[i] * anotherVector.vector[i];
-    }
-
-    return output;
-  }
-
-  Vector div(Vector anotherVector) {
-    if (anotherVector.length() != this.length()) {
-      throw new IllegalArgumentException("div(): Vectors not of same size: {" + this.length() + ", " + anotherVector.length() + "}.");
-    }
-
-    Vector output = new Vector(this.length());
-    for (int i = 0; i < output.length(); i++) {
-      output.vector[i] = this.vector[i] / anotherVector.vector[i];
-    }
-
-    return output;
-  }
-
-  Vector mult(double value) {
-    Vector output = new Vector(this.length());
-    for (int i = 0; i < output.length(); i++) {
-      output.vector[i] = this.vector[i] * value;
-    }
-
-    return output;
-  }
-
-  Vector add(double value) {
-    Vector output = new Vector(this.length());
-    for (int i = 0; i < output.length(); i++) {
-      output.vector[i] = this.vector[i] + value;
-    }
-    return output;
-  }
-
-  Vector subtract(Vector anotherVector) {
-    if (anotherVector.length() != this.length()) {
-      throw new IllegalArgumentException("subtract(): Vectors not of same size: {" + this.length() + ", " + anotherVector.length() + "}.");
-    }
-
-    Vector output = new Vector(this.length());
-    for (int i = 0; i < output.length(); i++) {
-      output.vector[i] = this.vector[i] - anotherVector.vector[i];
-    }
-
-    return output;
   }
 
   Vector fill(double value) {
-    for (int i = 0; i < this.length(); i++) {
-      this.vector[i] = value;
+    for (int i = 0; i < length(); i++) {
+      vector[i] = value;
     }
     return this;
   }
 
   Vector fillGaussian() {
-    for (int i = 0; i < this.length(); i++) {
-      this.vector[i] = this.rand.nextGaussian();
+    for (int i = 0; i < length(); i++) {
+      vector[i] = rand.nextGaussian();
     }
     return this;
   }
 
   Vector fillGaussian(double average, double deviation) {
-    for (int i = 0; i < this.length(); i++) {
-      this.vector[i] = this.rand.nextGaussian() * deviation + average;
+    for (int i = 0; i < length(); i++) {
+      vector[i] = rand.nextGaussian() * deviation + average;
     }
     return this;
   }
 
   Vector fillRandom() {
-    for (int i = 0; i < this.length(); i++) {
-      this.vector[i] = this.rand.nextDouble();
+    for (int i = 0; i < length(); i++) {
+      vector[i] = rand.nextDouble();
     }
     return this;
   }
 
-  Vector log() {
-    Vector out = new Vector(this.length());
-    for (int i = 0; i < this.length(); i++) {
-      out.set(i, Math.log(this.vector[i]));
-    }
-    return out;
-  }
-
-  Vector sqrt() {
-    Vector out = new Vector(this.length());
-    for (int i = 0; i < this.length(); i++) {
-      out.set(i, Math.sqrt(this.vector[i]));
-    }
-    return out;
-  }
-
   @Override
   public String toString() {
-    return Arrays.toString(this.vector);
+    return Arrays.toString(vector);
   }
 }

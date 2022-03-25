@@ -8,24 +8,18 @@ public class Layer {
   Vector bias;
   private Vector error;
   private Vector displayError;
-
   private int BATCH_SIZE = 1;
   private int currentInputBatchId = 0;
-
   private Vector input;
   private Vector output;
-
   private Vector[] deltas;
   private Vector deltaBias;
-
   private Vector weightedSum;
-
   private Optimizer optimizer;
   private Vector[] prevUpdate;
   private Vector[] adaptDelta;
   private double beta1;
   private double beta2;
-
 
   Layer(boolean isOutputLayer, ActivationFunction activationFunction, Error error) {
     this.isOutputLayer = isOutputLayer;
@@ -39,15 +33,19 @@ public class Layer {
     this.isOutputLayer = isOutputLayer;
     this.activationFunction = activationFunction;
     errorType = error;
-    initDeltaArray();
+    initVariables();
   }
 
   private static Vector softmax(Vector val) {
+    double max = 0;
+    for (double v : val.values()) {
+      max = Math.max(v, max);
+    }
     Vector out = new Vector(val.length());
-    double total = 0;
+    double total = 1e-7;
 
     for (double v : val.values()) {
-      total += Math.exp(v);
+      total += Math.exp(v - max);
     }
 
     if (total == 0.0) {
@@ -62,7 +60,7 @@ public class Layer {
     }
 
     for (int i = 0; i < val.length(); i++) {
-      out.set(i, Math.exp(val.get(i)) / total);
+      out.set(i, Math.exp(val.get(i) - max) / total);
     }
 
     return out;
@@ -109,8 +107,9 @@ public class Layer {
     }
   }
 
-  private void initDeltaArray() {
+  private void initVariables() {
     deltas = new Vector[vectors.length];
+    output = new Vector(vectors.length);
     for (int i = 0; i < vectors.length; i++) {
       deltas[i] = new Vector(vectors[i].length());
     }
@@ -142,7 +141,7 @@ public class Layer {
     if (displayError == null) {
       return;
     }
-    displayError = displayError.mult(0);
+    displayError.mult(0);
   }
 
   Vector getOutput() {
@@ -166,26 +165,30 @@ public class Layer {
     return activationFunction;
   }
 
-  void feed(Vector input) {
+  void feed(Vector input, boolean isTraining) {
     this.input = input;
-    output = test(input);
+    output = test(input, isTraining);
   }
 
-  Vector test(Vector input) {
+  Vector test(Vector input, boolean isTraining) {
     if (input.length() != vectors[0].length()) {
       throw new IllegalArgumentException("test(Vector): Input vector not the same size as weight vectors.");
     }
 
-    Vector output = new Vector(vectors.length);
-    for (int i = 0; i < vectors.length; i++) {
-      output.set(i, vectors[i].mult(input).total());
+    if (isTraining) {
+      for (int i = 0; i < vectors.length; i++) {
+        output.set(i, Vector.mult(vectors[i], input).total());
+      }
+    } else {
+      for (int i = 0; i < vectors.length; i++) {
+        output.set(i, Vector.mult(vectors[i], input).total());
+      }
     }
 
-    output = output.add(bias);
+    output.add(bias);
     weightedSum = output;
 
     output = activation(weightedSum);
-
     return output;
   }
 
@@ -247,7 +250,7 @@ public class Layer {
         return returnVector;
       }
       case SIGMOID:
-        return output.mult(output.mult(-1.0).add(1.0));
+        return Vector.mult(output, Vector.add(Vector.mult(output, -1.0), 1.0));
       case SOFTMAX: {
         for (int i = 0; i < outLength; i++) {
           if (i == index) {
@@ -298,20 +301,20 @@ public class Layer {
       if (isOutputLayer) {
         Vector[] errorCalc = calcError(output, targetOutput, index);
         error = errorCalc[0];
-        displayError = displayError.add(errorCalc[1]);
+        displayError.add(errorCalc[1]);
       } else {
         error = new Vector(vectors.length);
         for (int indice = 0; indice < nextLayer.vectors.length; indice++) {
           error.set(index, error.get(index) + nextLayer.vectors[indice].get(index) * nextLayer.getError().get(indice));
         }
-        error = error.mult(derivative(index));
+        error.mult(derivative(index));
       }
       this.error = error;
 
-      Vector delta = input.mult(this.error.get(index));
+      Vector delta = Vector.mult(input, this.error.get(index));
       delta = applyOptimizer(delta, index, alpha);
 
-      deltas[index] = deltas[index].add(delta);
+      deltas[index].add(delta);
       deltaBias.set(index, deltaBias.get(index) + error.get(index) * alpha);
     });
 
@@ -320,32 +323,31 @@ public class Layer {
     if (currentInputBatchId == BATCH_SIZE) {
       currentInputBatchId = 0;
       for (int index = 0; index < vectors.length; index++) {
-        vectors[index] = vectors[index].subtract(deltas[index]);
-        deltas[index] = deltas[index].mult(0.0);
+        vectors[index].subtract(deltas[index]);
+        deltas[index].mult(0.0);
       }
-      bias = bias.subtract(deltaBias);
-      deltaBias = deltaBias.mult(0.0);
+      deltaBias.mult(0.0);
     }
   }
 
 
   private Vector applyOptimizer(Vector delta, int index, double alpha) {
     switch (optimizer) {
-      case MOMENTUM:
-        delta = delta.mult(alpha).add(prevUpdate[index].mult(0.9));
+      case MOMENTUM -> {
+        delta.mult(alpha);
+        delta.add(Vector.mult(prevUpdate[index], 0.9));
         prevUpdate[index] = delta;
-        break;
-      case ADAGRAD: {
+      }
+      case ADAGRAD -> {
         final double epsilon = 1e-4;
         Vector finalAlpha = new Vector(vectors[index].length());
         for (int i = 0; i < vectors[index].length(); i++) {
           finalAlpha.set(i, alpha / Math.sqrt(prevUpdate[index].get(i) + epsilon));
           prevUpdate[index].set(i, prevUpdate[index].get(i) + delta.get(i) * delta.get(i));
         }
-        delta = delta.mult(finalAlpha);
-        break;
+        delta.mult(finalAlpha);
       }
-      case RMSPROP: {
+      case RMSPROP -> {
         final double epsilon = 1e-4;
         beta1 = 0.9;
         Vector finalAlpha = new Vector(vectors[index].length());
@@ -353,10 +355,9 @@ public class Layer {
           finalAlpha.set(i, alpha / Math.sqrt(prevUpdate[index].get(i) + epsilon));
           prevUpdate[index].set(i, prevUpdate[index].get(i) * beta1 + (1.0 - beta1) * delta.get(i) * delta.get(i));
         }
-        delta = delta.mult(finalAlpha);
-        break;
+        delta.mult(finalAlpha);
       }
-      case ADADELTA: {
+      case ADADELTA -> {
         final double epsilon = 1e-6;
         beta1 = 0.95;
         Vector finalAlpha = new Vector(vectors[index].length());
@@ -366,10 +367,9 @@ public class Layer {
           double adaptD = delta.get(i) * -finalAlpha.get(i);
           adaptDelta[index].set(i, adaptDelta[index].get(i) * beta1 + (1.0 - beta1) * adaptD * adaptD);
         }
-        delta = delta.mult(finalAlpha);
-        break;
+        delta.mult(finalAlpha);
       }
-      case ADAM: {
+      case ADAM -> {
         final double epsilon = 1e-7;
         Vector finalAlpha = new Vector(vectors[index].length());
         for (int i = 0; i < vectors[index].length(); i++) {
@@ -377,45 +377,39 @@ public class Layer {
           adaptDelta[index].set(i, adaptDelta[index].get(i) * beta2 + (1.0 - beta2) * delta.get(i) * delta.get(i));
           finalAlpha.set(i, alpha / (Math.sqrt((adaptDelta[index].get(i)) / (1.0 - beta2)) + epsilon));
         }
-        delta = prevUpdate[index].mult(1.0 / (1.0 - beta1)).mult(finalAlpha);
-        break;
+        delta = Vector.mult(Vector.mult(prevUpdate[index], 1.0 / (1.0 - beta1)), finalAlpha);
       }
-      case ADAMAX: {
+      case ADAMAX -> {
         final double epsilon = 1e-7;
         for (int i = 0; i < vectors[index].length(); i++) {
           prevUpdate[index].set(i, prevUpdate[index].get(i) * beta1 + (1.0 - beta1) * delta.get(i));
           adaptDelta[index].set(i, Math.max(beta2 * adaptDelta[index].get(i), Math.abs(delta.get(i))));
         }
-        delta = prevUpdate[index].mult(alpha / (1.0 - beta1)).div(adaptDelta[index].add(epsilon));
-        break;
+        delta = Vector.div(Vector.mult(prevUpdate[index], alpha / (1.0 - beta1 + epsilon)), Vector.add(adaptDelta[index], epsilon));
       }
-      default: {
-        delta = delta.mult(alpha);
-        break;
-      }
+      default -> delta.mult(alpha);
+
     }
     return delta;
   }
 
   private Vector[] calcError(Vector output, Vector targetOutput, int index) {
     switch (errorType) {
-      case MEAN_SQUARED: {
-        Vector err = (output.subtract(targetOutput));
-        return new Vector[]{err.mult(2).mult(derivative(index)), err.mult(err)};
+      case MEAN_SQUARED -> {
+        Vector err = (Vector.subtract(output, targetOutput));
+        return new Vector[]{Vector.mult(Vector.mult(err, 2), derivative(index)), Vector.mult(err, err)};
       }
-
-      case BINARY_CROSS_ENTROPY: {
-        Vector display = (targetOutput.mult(output.log()).add((targetOutput.mult(-1.0).add(1.0))).mult(output.mult(-1.0).add(1.0).log())).mult(-1.0);
-        return new Vector[]{(output.subtract(targetOutput)).div(output.mult(output.mult(-1.0).add(1.0))), display};
+      case BINARY_CROSS_ENTROPY -> {
+        Vector display = Vector.mult((Vector.mult(Vector.add(Vector.mult(targetOutput, Vector.log(output)), (Vector.add(Vector.mult(targetOutput,
+          -1.0), 1.0))), Vector.log(Vector.add(Vector.mult(output, -1.0), 1.0)))), -1.0);
+        return new Vector[]{Vector.div((Vector.subtract(output, targetOutput)), Vector.mult(output, Vector.add(Vector.mult(output, -1.0), 1.0))),
+          display};
       }
-
-      case CATEGORICAL_CROSS_ENTROPY: {
-        Vector display = targetOutput.mult(output.log()).mult(-1.0);
-        return new Vector[]{output.subtract(targetOutput), display};
+      case CATEGORICAL_CROSS_ENTROPY -> {
+        Vector display = Vector.mult(Vector.mult(targetOutput, Vector.log(output)), -1.0);
+        return new Vector[]{Vector.subtract(output, targetOutput), display};
       }
-
-      default:
-        throw new IllegalArgumentException("calcError(): Error type " + errorType + " unknown.");
+      default -> throw new IllegalArgumentException("calcError(): Error type " + errorType + " unknown.");
     }
   }
 
@@ -426,7 +420,7 @@ public class Layer {
     }
 
     bias = new Vector(numVectors).fillGaussian();
-    initDeltaArray();
+    initVariables();
 
     return this;
   }
@@ -441,7 +435,7 @@ public class Layer {
     bias = new Vector(vectors.length).fillGaussian(average, deviation);
 
     vectors = replaceVect;
-    initDeltaArray();
+    initVariables();
   }
 
   void fillRandom(int size, int numVectors) {
@@ -451,6 +445,6 @@ public class Layer {
     }
 
     bias = new Vector(numVectors).fillRandom();
-    initDeltaArray();
+    initVariables();
   }
 }
