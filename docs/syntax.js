@@ -381,7 +381,7 @@ class Tokenizer {
     }
 
     isIdentifierEnding(currentChar) {
-        return String(currentChar).match(new RegExp("[a-zA-Z_$0-9]")) != null;
+        return String(currentChar).match(new RegExp("[a-zA-Z_$\d]")) != null;
     }
 
     notAtEnd() {
@@ -805,7 +805,7 @@ class Tokenizer {
     }
 
     isUppercase(text) {
-        return text.match(new RegExp("^[A-Z_$][A-Z_$0-9]*$")) != null;
+        return text.match(new RegExp("^[A-Z_$][A-Z_$\d]*$")) != null;
     }
 
     comment() {
@@ -852,7 +852,7 @@ class Tokenizer {
     }
 
     isNumerical(currentChar) {
-        return String(currentChar).match(new RegExp("[0-9]")) != null;
+        return String(currentChar).match(new RegExp("[\d ]")) != null;
     }
 }
 
