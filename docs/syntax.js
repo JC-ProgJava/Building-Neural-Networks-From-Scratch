@@ -100,7 +100,7 @@ class Parser {
                            transition: background-color 200ms;
                          }
 
-                         span {
+                         code span {
                            display: inline;
                            white-space: pre;
                          }
