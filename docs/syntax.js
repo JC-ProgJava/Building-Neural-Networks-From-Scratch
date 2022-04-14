@@ -396,7 +396,25 @@ class Tokenizer {
 
         while (this.notAtEnd()) {
             let currentChar = this.sourceCode.charAt(this.current);
-            if (this.isIdentifierEnding(currentChar)) {
+            if (this.isNumerical(currentChar)) {
+                while (this.notAtEnd()) {
+                    if (this.isNumerical(this.peek()) || this.peek() === ".") {
+                        this.col++;
+                        this.current++;
+                    } else {
+                        break;
+                    }
+                }
+
+                this.tokens.push(
+                    new Token(
+                        this.sourceCode.substring(this.start, this.current + 1),
+                        this.line,
+                        this.col,
+                        TokenType.NUMBER
+                    )
+                );
+            } else if (this.isIdentifierEnding(currentChar)) {
                 while (this.notAtEnd() && this.isIdentifierEnding(this.peek())) {
                     this.col++;
                     this.current++;
@@ -451,88 +469,81 @@ class Tokenizer {
                     );
                 }
             } else {
-                if (this.isNumerical(currentChar)) {
-                    while (this.notAtEnd()) {
-                        if (this.isNumerical(this.peek()) || this.peek() === ".") {
-                            this.col++;
-                            this.current++;
+                switch (currentChar) {
+                    case " ":
+                    case "\t":
+                        this.col++;
+                        this.current++;
+                        continue;
+                    case "\n":
+                        this.tokens.push(
+                            new Token(
+                                this.sourceCode.substring(this.start, this.current + 1),
+                                this.line,
+                                this.col,
+                                TokenType.NEWLINE
+                            )
+                        );
+                        this.line++;
+                        this.col = 0;
+                        break;
+                    case "@":
+                        this.annotation();
+                        this.current++;
+                        this.tokens.push(
+                            new Token(
+                                this.sourceCode.substring(this.start, this.current + 1),
+                                this.line,
+                                this.col,
+                                TokenType.ANNOTATION
+                            )
+                        );
+                        break;
+                    case '"':
+                        // Supports multiline strings
+                        if (this.peek() === '"' && this.peekNext() === '"') {
+                            this.current += 2;
+                            this.multilineString();
                         } else {
-                            break;
+                            this.string();
                         }
-                    }
-
-                    this.tokens.push(
-                        new Token(
-                            this.sourceCode.substring(this.start, this.current + 1),
-                            this.line,
-                            this.col,
-                            TokenType.NUMBER
-                        )
-                    );
-                } else {
-                    switch (currentChar) {
-                        case " ":
-                        case "\t":
-                            this.col++;
-                            this.current++;
-                            continue;
-                        case "\n":
-                            this.tokens.push(
-                                new Token(
-                                    this.sourceCode.substring(this.start, this.current + 1),
-                                    this.line,
-                                    this.col,
-                                    TokenType.NEWLINE
-                                )
-                            );
-                            this.line++;
-                            this.col = 0;
-                            break;
-                        case "@":
-                            this.annotation();
+                        this.current++;
+                        this.tokens.push(
+                            new Token(
+                                this.sourceCode.substring(this.start, this.current + 1),
+                                this.line,
+                                this.col,
+                                TokenType.STRING
+                            )
+                        );
+                        break;
+                    case "'":
+                        this.character();
+                        this.current++;
+                        this.tokens.push(
+                            new Token(
+                                this.sourceCode.substring(this.start, this.current + 1),
+                                this.line,
+                                this.col,
+                                TokenType.STRING
+                            )
+                        );
+                        break;
+                    case "/":
+                        if (this.peek() === "/") {
+                            this.comment();
                             this.current++;
                             this.tokens.push(
                                 new Token(
                                     this.sourceCode.substring(this.start, this.current + 1),
                                     this.line,
                                     this.col,
-                                    TokenType.ANNOTATION
+                                    TokenType.COMMENT
                                 )
                             );
-                            break;
-                        case '"':
-                            // Supports multiline strings
-                            if (this.peek() === '"' && this.peekNext() === '"') {
-                                this.current += 2;
-                                this.multilineString();
-                            } else {
-                                this.string();
-                            }
-                            this.current++;
-                            this.tokens.push(
-                                new Token(
-                                    this.sourceCode.substring(this.start, this.current + 1),
-                                    this.line,
-                                    this.col,
-                                    TokenType.STRING
-                                )
-                            );
-                            break;
-                        case "'":
-                            this.character();
-                            this.current++;
-                            this.tokens.push(
-                                new Token(
-                                    this.sourceCode.substring(this.start, this.current + 1),
-                                    this.line,
-                                    this.col,
-                                    TokenType.STRING
-                                )
-                            );
-                            break;
-                        case "/":
-                            if (this.peek() === "/") {
-                                this.comment();
+                        } else if (this.peek() === "*") {
+                            if (this.peekNext() !== "*" || this.peekAfterNext() === "/") {
+                                this.multilineComment();
                                 this.current++;
                                 this.tokens.push(
                                     new Token(
@@ -542,64 +553,19 @@ class Tokenizer {
                                         TokenType.COMMENT
                                     )
                                 );
-                            } else if (this.peek() === "*") {
-                                if (this.peekNext() !== "*" || this.peekAfterNext() === "/") {
-                                    this.multilineComment();
-                                    this.current++;
-                                    this.tokens.push(
-                                        new Token(
-                                            this.sourceCode.substring(this.start, this.current + 1),
-                                            this.line,
-                                            this.col,
-                                            TokenType.COMMENT
-                                        )
-                                    );
-                                } else {
-                                    this.multilineComment();
-                                    this.current++;
-                                    this.tokens.push(
-                                        new Token(
-                                            this.sourceCode.substring(this.start, this.current + 1),
-                                            this.line,
-                                            this.col,
-                                            TokenType.JAVADOC
-                                        )
-                                    );
-                                }
                             } else {
+                                this.multilineComment();
+                                this.current++;
                                 this.tokens.push(
                                     new Token(
                                         this.sourceCode.substring(this.start, this.current + 1),
                                         this.line,
                                         this.col,
-                                        TokenType.OTHERPUNCTUATION
+                                        TokenType.JAVADOC
                                     )
                                 );
                             }
-                            break;
-                        case ";":
-                        case "(":
-                        case ")":
-                        case "{":
-                        case "}":
-                        case "<":
-                        case ">":
-                        case "[":
-                        case "]":
-                        case ",":
-                        case "*":
-                        case "=":
-                        case "+":
-                        case "-":
-                        case "%":
-                        case "!":
-                        case "~":
-                        case "&":
-                        case "|":
-                        case "?":
-                        case ":":
-                        case "^":
-                        case ".":
+                        } else {
                             this.tokens.push(
                                 new Token(
                                     this.sourceCode.substring(this.start, this.current + 1),
@@ -608,17 +574,49 @@ class Tokenizer {
                                     TokenType.OTHERPUNCTUATION
                                 )
                             );
-                            break;
-                        default:
-                            console.log(
-                                "Could not interpret character: '" +
-                                currentChar +
-                                "'. [ln: " +
-                                this.line +
-                                "]"
-                            );
-                            break;
-                    }
+                        }
+                        break;
+                    case ";":
+                    case "(":
+                    case ")":
+                    case "{":
+                    case "}":
+                    case "<":
+                    case ">":
+                    case "[":
+                    case "]":
+                    case ",":
+                    case "*":
+                    case "=":
+                    case "+":
+                    case "-":
+                    case "%":
+                    case "!":
+                    case "~":
+                    case "&":
+                    case "|":
+                    case "?":
+                    case ":":
+                    case "^":
+                    case ".":
+                        this.tokens.push(
+                            new Token(
+                                this.sourceCode.substring(this.start, this.current + 1),
+                                this.line,
+                                this.col,
+                                TokenType.OTHERPUNCTUATION
+                            )
+                        );
+                        break;
+                    default:
+                        console.log(
+                            "Could not interpret character: '" +
+                            currentChar +
+                            "'. [ln: " +
+                            this.line +
+                            "]"
+                        );
+                        break;
                 }
             }
             this.col++;
