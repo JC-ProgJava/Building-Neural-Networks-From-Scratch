@@ -1,25 +1,17 @@
 # Building-Neural-Networks-From-Scratch 
 
-[![CodeFactor](https://www.codefactor.io/repository/github/jc-progjava/building-neural-networks-from-scratch/badge)](https://www.codefactor.io/repository/github/jc-progjava/building-neural-networks-from-scratch)
-![LOC](https://tokei.rs/b1/github/JC-ProgJava/Building-Neural-Networks-From-Scratch)
-
 Building Neural Networks From Scratch book repository.
 
-You can start reading the book at https://jc-progjava.github.io/Building-Neural-Networks-From-Scratch/.
+Read the text [here](https://chjus.github.io/Building-Neural-Networks-From-Scratch/).
 
-A license for the code and book is provided at https://jc-progjava.github.io/Building-Neural-Networks-From-Scratch/preface.html#license.
+A license for the code and text is provided at https://chjus.github.io/Building-Neural-Networks-From-Scratch/preface.html#license.
 
 Code can be found in this repository organized by chapter name/number.
 
-Do provide feedback or tips & thanks through their respective forms! 🙂
-
-Feedback: https://forms.gle/P68m2YurzxBecRLv6
-
-Tips & Thanks: https://forms.gle/kEAdNtnJquAsuSGj7
 
 ## Paperback/Soft Offline Copy
 
-For readers who want to be able to access this book offline or as a soft copy (PDF), download the book [here](https://github.com/JC-ProgJava/Building-Neural-Networks-From-Scratch/blob/main/Building%20Neural%20Networks%20from%20Scratch.pdf).
+For readers who want to be able to access this book offline or as a soft copy (PDF), download the book [here](https://github.com/ChJus/Building-Neural-Networks-From-Scratch/blob/main/Building%20Neural%20Networks%20from%20Scratch.pdf).
 
 <br>
 
@@ -123,7 +115,7 @@ https://user-images.githubusercontent.com/61588096/140303928-ef131a9d-8871-4dbe-
 
 https://user-images.githubusercontent.com/61588096/128802272-0052b94a-cf16-4a7f-9ce7-17b50c6a24c5.mov
 
-- [Demos](https://jc-progjava.github.io/Building-Neural-Networks-From-Scratch/demos.html) webpage! 🚀
+- [Demos](https://chjus.github.io/Building-Neural-Networks-From-Scratch/demos.html) webpage! 🚀
 
 26 July 2021
 - Fixed inconsistencies between print and web version.
@@ -157,7 +149,7 @@ https://user-images.githubusercontent.com/61588096/128802272-0052b94a-cf16-4a7f-
 - Reworked syntax highlighting scheme in web version.
 - Header on web version now collapses after scrolling to enhance reading experience. The header appears once users scroll up slightly.
 - New chapter idea (Chapter 11 - Convolutional Neural Networks)
-- Changed syntax highlighting architecture to [this](https://github.com/JC-ProgJava/SyntaxHighlighter) (made by me! 🙂).
+- Changed syntax highlighting architecture to [this](https://github.com/ChJus/SyntaxHighlighter) (made by me! 🙂).
 - Fixed #14, #17, #19, #23, #24.
 - Modified font size in mobile viewports.
 - Added support for printing chapters.
