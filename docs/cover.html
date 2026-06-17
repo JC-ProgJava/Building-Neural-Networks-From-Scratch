@@ -1,195 +1,147 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="Description" content="Building neural networks from scratch using Java.">
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Description" content="Building neural networks from scratch using Java.">
+  <title>Cover</title>
+  <style>
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+    }
 
-   ym(79958107, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/79958107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Italic.ttf") format("truetype");
+      font-weight: normal;
+      font-style: italic;
+    }
 
-    <title>Cover</title>
-    <style>
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Regular.ttf") format("truetype");
-          font-weight: normal;
-          font-style: normal;
-        }
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Bold.ttf") format("truetype");
+      font-weight: bold;
+      font-style: normal;
+    }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Italic.ttf") format("truetype");
-          font-weight: normal;
-          font-style: italic;
-        }
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-BoldItalic.ttf") format("truetype");
+      font-weight: bold;
+      font-style: italic;
+    }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Bold.ttf") format("truetype");
-          font-weight: bold;
-          font-style: normal;
-        }
+    @media only screen and (max-width: 550px) {
+      body {
+        overflow-x: hidden;
+      }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-BoldItalic.ttf") format("truetype");
-          font-weight: bold;
-          font-style: italic;
-        }
+      #visible {
+        width: 90% !important;
+        padding: 0 20px !important;
+      }
+    }
 
-        @media only screen and (max-width: 550px) {
-            body {
-                overflow-x: hidden;
-            }
+    nav {
+      position: sticky;
+      display: block;
+      background-color: white;
+      width: 100%;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      top: 0;
+      z-index: 1000;
+      transition: top 0.3s;
+    }
 
-            #visible {
-                width: 90% !important;
-                padding: 0 20px !important;
-            }
-        }
+    img {
+      width: 100% !important;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-        nav {
-            position: sticky;
-            display: block;
-            background-color: white;
-            width: 100%;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            top: 0;
-            z-index: 1000;
-            transition: top 0.3s;
-        }
+    button {
+      margin-left: auto;
+      margin-right: auto;
+      width: 150px;
+      height: 50px;
+      font-size: 15px;
+      text-align: center;
+    }
 
-        img {
-            width: 100% !important;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    #visible {
+      margin-bottom: 80px;
+      width: 70%;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: white;
+      padding: 0 40px 20px;
+      border-radius: 20px;
+    }
 
-        button {
-            margin-left: auto;
-            margin-right: auto;
-            width: 150px;
-            height: 50px;
-            font-size: 15px;
-            text-align: center;
-        }
+    nav h1 {
+      text-align: center;
+      font-family: "Amiri";
+      font-size: 30px;
+    }
 
-        #visible {
-            margin-bottom: 80px;
-            width: 70%;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: white;
-            padding: 0 40px 20px;
-            border-radius: 20px;
-        }
+    a {
+      color: black;
+      text-decoration: underline;
+      text-decoration-color: burlywood;
+      overflow-wrap: anywhere;
+      transition: color 800ms;
+    }
 
-        nav h1 {
-            text-align: center;
-            font-family: "Amiri";
-            font-size: 30px;
-        }
+    a:hover {
+      color: burlywood !important;
+    }
 
-        a {
-            color: black;
-            text-decoration: underline;
-            text-decoration-color: burlywood;
-            overflow-wrap: anywhere;
-            transition: color 800ms;
-        }
+    a:visited {
+      color: black;
+    }
 
-        a:hover {
-            color: burlywood !important;
-        }
+    h1 {
+      font-family: "Amiri";
+      font-weight: 600;
+    }
 
-        a:visited {
-            color: black;
-        }
-
-        h1 {
-            font-family: "Amiri";
-            font-weight: 600;
-        }
-
-        ::selection {
-            background: #fcd6a5;
-        }
-    </style>
-    <link rel="stylesheet" href="form.css" type="text/css">
-    <script src="form.js"></script>
+    ::selection {
+      background: #fcd6a5;
+    }
+  </style>
 </head>
 <body>
 <nav>
-    <a href="index.html">
-        <h1>Building Neural Networks from Scratch</h1>
-    </a>
+  <a href="index.html">
+    <h1>Building Neural Networks from Scratch</h1>
+  </a>
 </nav>
-<form name="rate" class="rating" method="post" netlify>
-    <p class="label-form">Rate this book!</p>
-    <label type="submit" onclick="hide();">
-      <input type="radio" name="stars" value="1" />
-      <span class="icon">★</span>
-    </label>
-    <label type="submit" onclick="hide();">
-      <input type="radio" name="stars" value="2" />
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-    </label>
-    <label type="submit" onclick="hide();">
-      <input type="radio" name="stars" value="3" />
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-    </label>
-    <label type="submit" onclick="hide();">
-      <input type="radio" name="stars" value="4" />
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-    </label>
-    <label type="submit" onclick="hide();">
-      <input type="radio" name="stars" value="5" />
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-      <span class="icon">★</span>
-    </label>
-</form>
+
 <div id="visible">
-    <img alt="Image couldn't load." src="cover/Cover.png">
-    <br><br>
-    <button onclick="location.href = 'preface.html';">Next</button>
+  <img alt="Image couldn't load." src="cover/Cover.png">
+  <br><br>
+  <button onclick="location.href = 'preface.html';">Next</button>
 </div>
 </body>
 <script>
-// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
-var prevScrollpos = window.pageYOffset;
-window.onscroll = function() {
-  var currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementsByTagName("nav")[0].style.top = "0";
-  } else {
-    document.getElementsByTagName("nav")[0].style.top = -document.getElementsByTagName("nav")[0].offsetHeight + "px";
+  // Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+  var prevScrollpos = window.pageYOffset;
+  window.onscroll = function () {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+      document.getElementsByTagName("nav")[0].style.top = "0";
+    } else {
+      document.getElementsByTagName("nav")[0].style.top = -document.getElementsByTagName("nav")[0].offsetHeight + "px";
+    }
+    prevScrollpos = currentScrollPos;
   }
-  prevScrollpos = currentScrollPos;
-}
-// Code borrowed, please look at the link for the tutorial to make collapsible sections
-// Code was modified for suitability purposes
-// END W3SCHOOL CODE
+  // Code borrowed, please look at the link for the tutorial to make collapsible sections
+  // Code was modified for suitability purposes
+  // END W3SCHOOL CODE
 </script>
 </html>

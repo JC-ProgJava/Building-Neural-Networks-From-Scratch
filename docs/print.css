@@ -63,146 +63,146 @@
 }
 
 .quote {
-    margin-left: 30px;
-    margin-right: 30px;
-    color: rgb(80, 80, 80);
-    font-size: 27px;
-    font-style: italic;
-    font-weight: 400;
+  margin-left: 30px;
+  margin-right: 30px;
+  color: rgb(80, 80, 80);
+  font-size: 27px;
+  font-style: italic;
+  font-weight: 400;
 }
 
 td, th {
-    padding: 10px 20px;
+  padding: 10px 20px;
 }
 
 #visible {
-    margin-bottom: 20px;
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    padding: 0;
-    border-radius: 20px;
+  margin-bottom: 20px;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  padding: 0;
+  border-radius: 20px;
 }
 
 tbody {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 div span {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 code {
-    font-family: "Source Code Pro";
-    white-space: pre-wrap !important;
-    padding: 10px 20px!important;
-    display: block;
-    border-radius: 20px !important;
-    background: white;
-    border: rgb(244, 242, 240) 2px solid;
-    overflow-wrap: break-word !important;
-    overflow-x: auto;
-    font-size: 15px !important;
-    line-height: 1.5;
+  font-family: "Source Code Pro";
+  white-space: pre-wrap !important;
+  padding: 10px 20px !important;
+  display: block;
+  border-radius: 20px !important;
+  background: white;
+  border: rgb(244, 242, 240) 2px solid;
+  overflow-wrap: break-word !important;
+  overflow-x: auto;
+  font-size: 15px !important;
+  line-height: 1.5;
 }
 
 code p {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 code span {
-    white-space: pre-wrap !important;
-    font-size: 15px;
-    overflow-wrap: break-word !important;
-    overflow-x: auto;
-    padding-top: 4px;
-    padding-bottom: 4px;
+  white-space: pre-wrap !important;
+  font-size: 15px;
+  overflow-wrap: break-word !important;
+  overflow-x: auto;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 code pre {
-    white-space: pre-wrap !important;
-    font-size: 15px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+  white-space: pre-wrap !important;
+  font-size: 15px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .definition {
-    margin-left: 20px;
-    margin-right: 20px;
-    padding: 20px 20px 30px 30px;
-    line-height: 1.8;
-    font-size: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    border: rgb(230, 230, 230) solid 2px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 20px 20px 30px 30px;
+  line-height: 1.8;
+  font-size: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: rgb(230, 230, 230) solid 2px;
 }
 
 .definition .title {
-    text-align: center;
-    border: none;
-    font-size: 24px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0;
+  text-align: center;
+  border: none;
+  font-size: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
 }
 
 .katex, .katex span {
-    font-size: 1em;
+  font-size: 1em;
 }
 
 table, td, th {
-    border: 1px solid black;
-    break-inside: avoid;
-    border-collapse: collapse;
-    font-weight: normal;
-    font-family: "Amiri";
-    text-align: center;
-    margin: auto;
-    line-height: 1.8;
+  border: 1px solid black;
+  break-inside: avoid;
+  border-collapse: collapse;
+  font-weight: normal;
+  font-family: "Amiri";
+  text-align: center;
+  margin: auto;
+  line-height: 1.8;
 }
 
 img {
-    display: block;
-    margin-left: auto;
-    break-inside: avoid;
-    break-before: avoid;
-    margin-right: auto;
-    width: 80%;
-    border: 3px black solid;
+  display: block;
+  margin-left: auto;
+  break-inside: avoid;
+  break-before: avoid;
+  margin-right: auto;
+  width: 80%;
+  border: 3px black solid;
 }
 
 .caption {
-    font-style: italic;
-    break-before: avoid;
-    text-align: center;
+  font-style: italic;
+  break-before: avoid;
+  text-align: center;
 }
 
 button {
-    margin-left: auto;
-    margin-right: auto;
-    width: 150px;
-    height: 50px;
-    font-size: 15px;
-    text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 150px;
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
 }
 
 aside {
-    line-height: 1.8;
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    border: rgb(230, 230, 230) solid 2px;
+  line-height: 1.8;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: rgb(230, 230, 230) solid 2px;
 }
 
 a {
-    color: black;
-    text-decoration: underline;
-    text-decoration-color: burlywood;
-    overflow-wrap: anywhere;
-    transition: color 800ms;
+  color: black;
+  text-decoration: underline;
+  text-decoration-color: burlywood;
+  overflow-wrap: anywhere;
+  transition: color 800ms;
 }
 
 a::after {
@@ -210,98 +210,98 @@ a::after {
 }
 
 a:visited {
-    color: black;
+  color: black;
 }
 
 h1 {
-    font-family: "Amiri";
-    break-after: avoid;
-    font-weight: 600;
-    font-size: 30px;
+  font-family: "Amiri";
+  break-after: avoid;
+  font-weight: 600;
+  font-size: 30px;
 }
 
 h2 {
-    font-family: "Amiri";
-    break-after: avoid;
-    font-weight: 600;
-    font-size: 28px;
+  font-family: "Amiri";
+  break-after: avoid;
+  font-weight: 600;
+  font-size: 28px;
 }
 
 .center {
-    text-align: center;
+  text-align: center;
 }
 
 ul, ol {
-    font-family: "Amiri";
-    font-size: 20px;
-    padding-inline-start: 40px;
+  font-family: "Amiri";
+  font-size: 20px;
+  padding-inline-start: 40px;
 }
 
 h3 {
-    font-family: "Amiri";
-    break-after: avoid;
-    font-weight: 600;
-    font-size: 25px;
+  font-family: "Amiri";
+  break-after: avoid;
+  font-weight: 600;
+  font-size: 25px;
 }
 
 h4 {
-    font-family: "Amiri";
-    font-size: 25px;
+  font-family: "Amiri";
+  font-size: 25px;
 }
 
 h5 {
-    font-family: "Amiri";
-    font-style: normal;
-    font-weight: 300;
-    font-size: 25px;
-    margin-block-start: 0.8em;
-    margin-block-end: 0.8em;
+  font-family: "Amiri";
+  font-style: normal;
+  font-weight: 300;
+  font-size: 25px;
+  margin-block-start: 0.8em;
+  margin-block-end: 0.8em;
 }
 
 p {
-    font-family: "Amiri";
-    font-size: 20px;
+  font-family: "Amiri";
+  font-size: 20px;
 }
 
 .indent {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .italic {
-    font-style: italic;
+  font-style: italic;
 }
 
 .bold {
-    font-style: bold;
+  font-style: bold;
 }
 
 .codeword {
-    font-family: "Source Code Pro";
-    display: inline;
+  font-family: "Source Code Pro";
+  display: inline;
 }
 
 .functionBlue {
-    font-family: "Source Code Pro";
-    display: inline;
-    color: #00627A;
+  font-family: "Source Code Pro";
+  display: inline;
+  color: #00627A;
 }
 
 div.explanation:first-line {
-    margin-top: -1em;
-    line-height: 0px;
+  margin-top: -1em;
+  line-height: 0px;
 }
 
 .error {
-    font-family: "Source Code Pro";
-    color: #F50000;
-    display: inline;
+  font-family: "Source Code Pro";
+  color: #F50000;
+  display: inline;
 }
 
 .globalVar {
-    font-style: italic;
-    font-family: "Source Code Pro";
-    color: #871094;
-    display: inline;
+  font-style: italic;
+  font-family: "Source Code Pro";
+  color: #871094;
+  display: inline;
 }
 
 .keyword {
@@ -319,21 +319,21 @@ div.explanation:first-line {
 }
 
 nav, button {
-    display: none;
+  display: none;
 }
 
 .rating {
-    display: none !important;
+  display: none !important;
 }
 
 @page {
-    margin: 2cm;
+  margin: 2cm;
 
-    @top-center {
-      content: "https://jc-progjava.github.io/Building-Neural-Networks-From-Scratch";
-      display: block;
-      text-align: center;
-      font-style: italic;
-      font-family: "Amiri";
-    }
+  @top-center {
+    content: "https://chjus.github.io/Building-Neural-Networks-From-Scratch";
+    display: block;
+    text-align: center;
+    font-style: italic;
+    font-family: "Amiri";
+  }
 }

@@ -1,640 +1,589 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="Description" content="Building neural networks from scratch using Java.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Description" content="Building neural networks from scratch using Java.">
 
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  <title>Contents</title>
+  <style>
+    @media only screen and (max-width: 800px) {
+      p, ol, ul, li {
+        font-size: 24px;
+      }
 
-   ym(79958107, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/79958107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+      ol, ul, li {
+        margin-left: 5px !important;
+        font-family: "Amiri";
+        line-height: 1.8;
+      }
+    }
 
-    <title>Contents</title>
-    <style>
-        @media only screen and (max-width: 800px) {
-            #stat {
-                display: block;
-                width: 85% !important;
-                right: auto !important;
-                margin-left: auto !important;
-                margin-right: auto !important;
-                font-size: 30px;
-                position: static !important;
-            }
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
 
-            p, ol, ul, li {
-                font-size: 24px;
-            }
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Italic.ttf") format("truetype");
+      font-weight: normal;
+      font-style: italic;
+      font-display: swap;
+    }
 
-            ol, ul, li {
-                margin-left: 5px !important;
-                font-family: "Amiri";
-                line-height: 1.8;
-            }
-        }
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Bold.ttf") format("truetype");
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Regular.ttf") format("truetype");
-          font-weight: normal;
-          font-style: normal;
-          font-display: swap;
-        }
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-BoldItalic.ttf") format("truetype");
+      font-weight: bold;
+      font-style: italic;
+      font-display: swap;
+    }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Italic.ttf") format("truetype");
-          font-weight: normal;
-          font-style: italic;
-          font-display: swap;
-        }
+    @font-face {
+      font-family: "Source Code Pro";
+      src: url("fonts/SourceCodePro/SourceCodePro-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Bold.ttf") format("truetype");
-          font-weight: bold;
-          font-style: normal;
-          font-display: swap;
-        }
+    @font-face {
+      font-family: "Source Code Pro";
+      src: url("fonts/SourceCodePro/SourceCodePro-Italic.ttf") format("truetype");
+      font-weight: normal;
+      font-style: italic;
+      font-display: swap;
+    }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-BoldItalic.ttf") format("truetype");
-          font-weight: bold;
-          font-style: italic;
-          font-display: swap;
-        }
+    @font-face {
+      font-family: "Source Code Pro";
+      src: url("fonts/SourceCodePro/SourceCodePro-Bold.ttf") format("truetype");
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
 
-        @font-face {
-          font-family: "Source Code Pro";
-          src: url("fonts/SourceCodePro/SourceCodePro-Regular.ttf") format("truetype");
-          font-weight: normal;
-          font-style: normal;
-          font-display: swap;
-        }
+    @font-face {
+      font-family: "Source Code Pro";
+      src: url("fonts/SourceCodePro/SourceCodePro-BoldItalic.ttf") format("truetype");
+      font-weight: bold;
+      font-style: italic;
+      font-display: swap;
+    }
 
-        @font-face {
-          font-family: "Source Code Pro";
-          src: url("fonts/SourceCodePro/SourceCodePro-Italic.ttf") format("truetype");
-          font-weight: normal;
-          font-style: italic;
-          font-display: swap;
-        }
+    nav {
+      position: sticky;
+      display: block;
+      background-color: white;
+      width: 100%;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      top: 0;
+      z-index: 1000;
+      transition: top 0.3s;
+    }
 
-        @font-face {
-          font-family: "Source Code Pro";
-          src: url("fonts/SourceCodePro/SourceCodePro-Bold.ttf") format("truetype");
-          font-weight: bold;
-          font-style: normal;
-          font-display: swap;
-        }
+    nav a {
+      text-align: center;
+      font-family: "Amiri";
+    }
 
-        @font-face {
-          font-family: "Source Code Pro";
-          src: url("fonts/SourceCodePro/SourceCodePro-BoldItalic.ttf") format("truetype");
-          font-weight: bold;
-          font-style: italic;
-          font-display: swap;
-        }
+    a {
+      color: black;
+      text-decoration: underline;
+      text-decoration-color: burlywood;
+      overflow-wrap: anywhere;
+      transition: color 800ms, text-decoration-color 800ms;
+    }
 
-        nav {
-            position: sticky;
-            display: block;
-            background-color: white;
-            width: 100%;
-            padding-top: 2px;
-            padding-bottom: 2px;
-            top: 0;
-            z-index: 1000;
-            transition: top 0.3s;
-        }
+    a:hover {
+      text-decoration-color: rgb(242, 204, 155);
+      color: burlywood !important;
+    }
 
-        nav a {
-            text-align: center;
-            font-family: "Amiri";
-        }
+    a:visited {
+      color: black;
+    }
 
-        a {
-            color: black;
-            text-decoration: underline;
-            text-decoration-color: burlywood;
-            overflow-wrap: anywhere;
-            transition: color 800ms, text-decoration-color 800ms;
-        }
+    ol, ul, li {
+      overflow-wrap: anywhere;
+      margin-left: 40px;
+      font-family: "Amiri";
+      line-height: 2.5;
+      font-size: 20px;
+    }
 
-        a:hover {
-            text-decoration-color: rgb(242, 204, 155);
-            color: burlywood !important;
-        }
+    li {
+      padding: 18px;
+    }
 
-        a:visited {
-            color: black;
-        }
+    ol ul li {
+      font-weight: 500;
+      padding: 0;
+    }
 
-        ol, ul, li {
-            overflow-wrap: anywhere;
-            margin-left: 40px;
-            font-family: "Amiri";
-            line-height: 2.5;
-            font-size: 20px;
-        }
+    ol ul {
+      padding: 0;
+    }
 
-        li {
-            padding: 18px;
-        }
+    ol li {
+      font-weight: 600;
+    }
 
-        ol ul li {
-            font-weight: 500;
-            padding: 0;
-        }
+    #viewText {
+      color: black;
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-        ol ul {
-            padding: 0;
-        }
+    #count {
+      background-color: rgb(240, 240, 240);
+      border-radius: 20px;
+      padding: 5px;
+      font-family: "Source Code Pro";
+      font-size: 20px;
+    }
 
-        ol li {
-            font-weight: 600;
-        }
+    h1 {
+      font-family: "Amiri";
+      font-weight: 600;
+      font-size: 30px;
+    }
 
-        #stat {
-            font-family: "Amiri";
-            background: rgb(2,0,36);
-            background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(231,236,139,1) 0%, rgba(255,166,0,1) 100%);
-            border-radius: 20px;
-            padding: 10px 20px;
-            width: 150px;
-            position: fixed;
-            right: 30px;
-            text-align: center;
-        }
+    /* https://www.w3schools.com/howto/howto_js_collapsible.asp */
+    .collapsible {
+      color: #444;
+      cursor: pointer;
+      width: 90%;
+      border: none;
+      text-align: left;
+      outline: none;
+      transition: background-color .8s;
+    }
 
-        #viewText {
-            color: black;
-            font-size: 20px;
-            font-weight: bold;
-        }
+    .active, .collapsible:hover {
+      background-color: #eee;
+    }
 
-        #count {
-            background-color: rgb(240, 240, 240);
-            border-radius: 20px;
-            padding: 5px;
-            font-family: "Source Code Pro";
-            font-size: 20px;
-        }
+    .content {
+      padding: 0 18px;
+      background-color: white;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+    }
 
-        h1 {
-            font-family: "Amiri";
-            font-weight: 600;
-            font-size: 30px;
-        }
+    /* END https://www.w3schools.com/howto/howto_js_collapsible.asp */
 
-        /* https://www.w3schools.com/howto/howto_js_collapsible.asp */
-        .collapsible {
-          color: #444;
-          cursor: pointer;
-          width: 90%;
-          border: none;
-          text-align: left;
-          outline: none;
-          transition: background-color .8s;
-        }
-
-        .active, .collapsible:hover {
-          background-color: #eee;
-        }
-
-        .content {
-          padding: 0 18px;
-          background-color: white;
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.2s ease-out;
-        }
-        /* END https://www.w3schools.com/howto/howto_js_collapsible.asp */
-
-        ::selection {
-            background: #fcd6a5;
-        }
-    </style>
+    ::selection {
+      background: #fcd6a5;
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <a href="index.html">
-            <h1>Building Neural Networks from Scratch</h1>
-        </a>
-    </nav>
+<nav>
+  <a href="index.html">
+    <h1>Building Neural Networks from Scratch</h1>
+  </a>
+</nav>
+<ol>
+  <li>
+    <a href="index.html">Homepage</a>
+  </li>
 
-    <div id="stat">
-        <p id="viewText">View count</p>
-        <p id="count">-----</p>
-    </div>
-    <ol>
+  <ul class="content">
+    <li>
+      <a href="index.html#thanks">Tips & Thanks</a>
+    </li>
+  </ul>
+
+  <li>
+    <a href="demos.html">Demos - ✨ New ✨</a>
+  </li>
+
+  <li>
+    <a href="cover.html">Cover</a>
+  </li>
+  <li class="collapsible">
+    <a href="preface.html">Preface</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="preface.html#citation">Citation</a>
+    </li>
+    <li>
+      <a href="preface.html#license">License Notice</a>
+    </li>
+    <li>
+      <a href="preface.html#contact">Contact</a>
+    </li>
+    <li>
+      <a href="preface.html#foreword">Foreword - Motivation</a>
+    </li>
+  </ul>
+
+  <li class="collapsible">
+    <a href="intro.html">Introduction</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="intro.html#def-machine-learning">What is machine learning?</a>
+    </li>
+    <li>
+      <a href="intro.html#works">How does machine learning work?</a>
+    </li>
+    <li>
+      <a href="intro.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
+
+  <li class="collapsible">
+    <a href="perceptron.html">The Perceptron</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="perceptron.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
+
+  <li class="collapsible">
+    <a href="activation.html">Activation Functions and Derivatives</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="activation.html#identity">Identity Activation Function</a>
+    </li>
+    <li>
+      <a href="activation.html#sigmoid">Sigmoid Activation Function</a>
+    </li>
+    <li>
+      <a href="activation.html#tanh">TanH Activation Function</a>
+    </li>
+    <li>
+      <a href="activation.html#relu">ReLU Activation Function</a>
+    </li>
+    <li>
+      <a href="activation.html#leak-relu">Leaky ReLU Activation Function</a>
+    </li>
+    <li>
+      <a href="activation.html#softplus">SoftPlus Activation Function</a>
+    </li>
+    <li>
+      <a href="activation.html#notation">Notation</a>
+    </li>
+    <li>
+      <a href="activation.html#derivatives">Derivatives</a>
+    </li>
+    <li>
+      <a href="activation.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
+
+  <li class="collapsible">
+    <a href="networksAndLearning.html">Neural Networks and Learning ✨ Updated ✨</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="networksAndLearning.html#single-layer-learning">Single-layer Neural Network Initialization and
+        Learning</a>
+    </li>
+    <li>
+      <a href="networksAndLearning.html#example">A Simple Network Example</a>
+    </li>
+    <li>
+      <a href="networksAndLearning.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
+
+  <li class="collapsible">
+    <a href="task1.html">Task 1: Recognizing Digits</a>
+  </li>
+
+  <ul class="content">
+    <li>
+      <a href="task1.html#description">Task Description</a>
+    </li>
+    <ul>
+      <li>
+        <a href="task1.html#goal">Goal</a>
+      </li>
+      <li>
+        <a href="task1.html#background">Background</a>
+      </li>
+      <li>
+        <a href="task1.html#descript">Description</a>
+      </li>
+    </ul>
+    <li>
+      <a href="task1.html#steps">Steps to Take</a>
+    </li>
+    <li>
+      <a href="task1.html#solution">Solution</a>
+    </li>
+    <ul>
+      <li>
+        <a href="task1.html#layer-java">Layer.java</a>
+      </li>
+      <li>
+        <a href="task1.html#neuron-java">Neuron.java</a>
+      </li>
+      <li>
+        <a href="task1.html#test2-java">test2.java</a>
+      </li>
+    </ul>
+    <li>
+      <a href="task1.html#questions">Common Questions</a>
+    </li>
+    <ul>
+      <li>
+        <a href="task1.html#modelSaving">Saving Models</a>
+      </li>
+      <li>
+        <a href="task1.html#differentInputLengths">Feeding Networks Different Input Lengths</a>
+      </li>
+      <li>
+        <a href="task1.html#findingDatasets">Finding Datasets For Model Training</a>
+      </li>
+    </ul>
+    <li>
+      <a href="task1.html#challenge">Challenge: A Real-World Application of Digit Recognition</a>
+    </li>
+    <ul>
+      <li>
+        <a href="task1.html#challenge-description">Task Description</a>
+      </li>
+      <ul>
         <li>
-            <a href="index.html">Homepage</a>
+          <a href="task1.html#challenge-goal">Goal</a>
         </li>
-
-        <ul class="content">
-            <li>
-                <a href="index.html#thanks">Tips & Thanks</a>
-            </li>
-        </ul>
-
         <li>
-            <a href="demos.html">Demos - ✨ New ✨</a>
+          <a href="task1.html#challenge-background">Background</a>
         </li>
-
         <li>
-            <a href="cover.html">Cover</a>
+          <a href="task1.html#challenge-descript">Description</a>
         </li>
-        <li class="collapsible">
-            <a href="preface.html">Preface</a>
+      </ul>
+      <li>
+        <a href="task1.html#challenge-steps">Steps to Take</a>
+      </li>
+      <li>
+        <a href="task1.html#challenge-estimation">Estimating Computational Time</a>
+      </li>
+      <li>
+        <a href="task1.html#challenge-solution">Solution</a>
+      </li>
+      <ul>
+        <li>
+          <a href="task1.html#challenge-layer-java">Layer.java</a>
         </li>
-        <ul class="content">
-            <li>
-                <a href="preface.html#citation">Citation</a>
-            </li>
-            <li>
-                <a href="preface.html#license">License Notice</a>
-            </li>
-            <li>
-                <a href="preface.html#contact">Contact</a>
-            </li>
-            <li>
-                <a href="preface.html#foreword">Foreword - Motivation</a>
-            </li>
-        </ul>
-
-        <li class="collapsible">
-            <a href="intro.html">Introduction</a>
+        <li>
+          <a href="task1.html#challenge-neuron-java">Neuron.java</a>
         </li>
-        <ul class="content">
-            <li>
-                <a href="intro.html#def-machine-learning">What is machine learning?</a>
-            </li>
-            <li>
-                <a href="intro.html#works">How does machine learning work?</a>
-            </li>
-            <li>
-                <a href="intro.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
-
-        <li class="collapsible">
-            <a href="perceptron.html">The Perceptron</a>
+        <li>
+          <a href="task1.html#challenge-initarray-java">initArray.java</a>
         </li>
-        <ul class="content">
-            <li>
-                <a href="perceptron.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
-
-        <li class="collapsible">
-            <a href="activation.html">Activation Functions and Derivatives</a>
+        <li>
+          <a href="task1.html#challenge-application-java">application.java</a>
         </li>
-        <ul class="content">
-            <li>
-                <a href="activation.html#identity">Identity Activation Function</a>
-            </li>
-            <li>
-                <a href="activation.html#sigmoid">Sigmoid Activation Function</a>
-            </li>
-            <li>
-                <a href="activation.html#tanh">TanH Activation Function</a>
-            </li>
-            <li>
-                <a href="activation.html#relu">ReLU Activation Function</a>
-            </li>
-            <li>
-                <a href="activation.html#leak-relu">Leaky ReLU Activation Function</a>
-            </li>
-            <li>
-                <a href="activation.html#softplus">SoftPlus Activation Function</a>
-            </li>
-            <li>
-                <a href="activation.html#notation">Notation</a>
-            </li>
-            <li>
-                <a href="activation.html#derivatives">Derivatives</a>
-            </li>
-            <li>
-                <a href="activation.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
-
-        <li class="collapsible">
-            <a href="networksAndLearning.html">Neural Networks and Learning ✨ Updated ✨</a>
+        <li>
+          <a href="task1.html#challenge-test3-java">test3.java</a>
         </li>
-        <ul class="content">
-            <li>
-                <a href="networksAndLearning.html#single-layer-learning">Single-layer Neural Network Initialization and Learning</a>
-            </li>
-            <li>
-                <a href="networksAndLearning.html#example">A Simple Network Example</a>
-            </li>
-            <li>
-                <a href="networksAndLearning.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
-
-        <li class="collapsible">
-            <a href="task1.html">Task 1: Recognizing Digits</a>
+      </ul>
+      <li>
+        <a href="task1.html#visualizing">Visualizing Weights</a>
+      </li>
+      <ul>
+        <li>
+          <a href="task1.html#challenge-visualize-java">visualize.java</a>
         </li>
+      </ul>
+    </ul>
+    <li>
+      <a href="task1.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
 
-        <ul class="content">
-            <li>
-                <a href="task1.html#description">Task Description</a>
-            </li>
-            <ul>
-                <li>
-                    <a href="task1.html#goal">Goal</a>
-                </li>
-                <li>
-                    <a href="task1.html#background">Background</a>
-                </li>
-                <li>
-                    <a href="task1.html#descript">Description</a>
-                </li>
-            </ul>
-            <li>
-                <a href="task1.html#steps">Steps to Take</a>
-            </li>
-            <li>
-                <a href="task1.html#solution">Solution</a>
-            </li>
-            <ul>
-                <li>
-                    <a href="task1.html#layer-java">Layer.java</a>
-                </li>
-                <li>
-                    <a href="task1.html#neuron-java">Neuron.java</a>
-                </li>
-                <li>
-                    <a href="task1.html#test2-java">test2.java</a>
-                </li>
-            </ul>
-            <li>
-                <a href="task1.html#questions">Common Questions</a>
-            </li>
-            <ul>
-                <li>
-                    <a href="task1.html#modelSaving">Saving Models</a>
-                </li>
-                <li>
-                    <a href="task1.html#differentInputLengths">Feeding Networks Different Input Lengths</a>
-                </li>
-                <li>
-                    <a href="task1.html#findingDatasets">Finding Datasets For Model Training</a>
-                </li>
-            </ul>
-            <li>
-                <a href="task1.html#challenge">Challenge: A Real-World Application of Digit Recognition</a>
-            </li>
-            <ul>
-                <li>
-                    <a href="task1.html#challenge-description">Task Description</a>
-                </li>
-                <ul>
-                    <li>
-                        <a href="task1.html#challenge-goal">Goal</a>
-                    </li>
-                    <li>
-                        <a href="task1.html#challenge-background">Background</a>
-                    </li>
-                    <li>
-                        <a href="task1.html#challenge-descript">Description</a>
-                    </li>
-                </ul>
-                <li>
-                    <a href="task1.html#challenge-steps">Steps to Take</a>
-                </li>
-                <li>
-                    <a href="task1.html#challenge-estimation">Estimating Computational Time</a>
-                </li>
-                <li>
-                    <a href="task1.html#challenge-solution">Solution</a>
-                </li>
-                <ul>
-                    <li>
-                        <a href="task1.html#challenge-layer-java">Layer.java</a>
-                    </li>
-                    <li>
-                        <a href="task1.html#challenge-neuron-java">Neuron.java</a>
-                    </li>
-                    <li>
-                        <a href="task1.html#challenge-initarray-java">initArray.java</a>
-                    </li>
-                    <li>
-                        <a href="task1.html#challenge-application-java">application.java</a>
-                    </li>
-                    <li>
-                        <a href="task1.html#challenge-test3-java">test3.java</a>
-                    </li>
-                </ul>
-                <li>
-                    <a href="task1.html#visualizing">Visualizing Weights</a>
-                </li>
-                <ul>
-                    <li>
-                        <a href="task1.html#challenge-visualize-java">visualize.java</a>
-                    </li>
-                </ul>
-            </ul>
-            <li>
-                <a href="task1.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
+  <li class="collapsible">
+    <a href="fitting.html">Overfitting and Underfitting</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="fitting.html#overfitting">Overfitting</a>
+    </li>
+    <li>
+      <a href="fitting.html#lsm">Least Squares Method</a>
+    </li>
+    <ul>
+      <li>
+        <a href="fitting.html#lsm-py">lsm.py</a>
+      </li>
+      <li>
+        <a href="fitting.html#lsm-java">lsm.java</a>
+      </li>
+    </ul>
+    <li>
+      <a href="fitting.html#underfitting">Underfitting</a>
+    </li>
+    <li>
+      <a href="fitting.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
 
-        <li class="collapsible">
-            <a href="fitting.html">Overfitting and Underfitting</a>
-        </li>
-        <ul class="content">
-            <li>
-                <a href="fitting.html#overfitting">Overfitting</a>
-            </li>
-            <li>
-                <a href="fitting.html#lsm">Least Squares Method</a>
-            </li>
-            <ul>
-                <li>
-                    <a href="fitting.html#lsm-py">lsm.py</a>
-                </li>
-                <li>
-                    <a href="fitting.html#lsm-java">lsm.java</a>
-                </li>
-            </ul>
-            <li>
-                <a href="fitting.html#underfitting">Underfitting</a>
-            </li>
-            <li>
-                <a href="fitting.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
+  <li class="collapsible">
+    <a href="validation.html">Validation Datasets</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="validation.html#separation">Separation of Testing, Training, and Validation Datasets</a>
+    </li>
 
-        <li class="collapsible">
-            <a href="validation.html">Validation Datasets</a>
-        </li>
-        <ul class="content">
-            <li>
-                <a href="validation.html#separation">Separation of Testing, Training, and Validation Datasets</a>
-            </li>
+    <li>
+      <a href="validation.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
 
-            <li>
-                <a href="validation.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
+  <li class="collapsible">
+    <a href="preprocessing.html">Data Preprocessing and Augmentation - ✨ New ✨</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="preprocessing.html#image-preprocessing">Image Preprocessing</a>
+    </li>
+    <li>
+      <a href="preprocessing.html#image-data-augmentation">Image Data Augmentation</a>
+    </li>
+    <li>
+      <a href="preprocessing.html#image-preprocessing-and-image-data-augmentation-techniques">Image Preprocessing and
+        Image Data Augmentation Techniques</a>
+    </li>
+    <li>
+      <a href="preprocessing.html#other-mediums-data-augmentation">Other Mediums of Data Augmentation</a>
+    </li>
+    <li>
+      <a href="preprocessing.html#other-mediums-data-preprocessing">Other Mediums of Data Preprocessing</a>
+    </li>
+    <li>
+      <a href="preprocessing.html#code-examples">Code Examples</a>
+    </li>
+    <ul>
+      <li>
+        <a href="preprocessing.html#task1">Task 1</a>
+      </li>
+      <li>
+        <a href="preprocessing.html#task2">Task 2</a>
+      </li>
+      <li>
+        <a href="preprocessing.html#task3">Task 3</a>
+      </li>
+    </ul>
+    <li>
+      <a href="preprocessing.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
 
-        <li class="collapsible">
-            <a href="preprocessing.html">Data Preprocessing and Augmentation - ✨ New ✨</a>
-        </li>
-        <ul class="content">
-            <li>
-                <a href="preprocessing.html#image-preprocessing">Image Preprocessing</a>
-            </li>
-            <li>
-                <a href="preprocessing.html#image-data-augmentation">Image Data Augmentation</a>
-            </li>
-            <li>
-                <a href="preprocessing.html#image-preprocessing-and-image-data-augmentation-techniques">Image Preprocessing and Image Data Augmentation Techniques</a>
-            </li>
-            <li>
-                <a href="preprocessing.html#other-mediums-data-augmentation">Other Mediums of Data Augmentation</a>
-            </li>
-            <li>
-                <a href="preprocessing.html#other-mediums-data-preprocessing">Other Mediums of Data Preprocessing</a>
-            </li>
-            <li>
-                <a href="preprocessing.html#code-examples">Code Examples</a>
-            </li>
-            <ul>
-                <li>
-                    <a href="preprocessing.html#task1">Task 1</a>
-                </li>
-                <li>
-                    <a href="preprocessing.html#task2">Task 2</a>
-                </li>
-                <li>
-                    <a href="preprocessing.html#task3">Task 3</a>
-                </li>
-            </ul>
-            <li>
-                <a href="preprocessing.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
+  <li class="collapsible">
+    <a href="backpropagation.html">Backpropagation - ✨ New ✨</a>
+  </li>
+  <ul class="content">
+    <li>
+      <a href="backpropagation.html#derivation">Derivation</a>
+    </li>
+    <li>
+      <a href="backpropagation.html#application">Application</a>
+    </li>
+    <li>
+      <a href="backpropagation.html#summary">Chapter Summary</a>
+    </li>
+  </ul>
 
-        <li class="collapsible">
-            <a href="backpropagation.html">Backpropagation - ✨ New ✨</a>
-        </li>
-        <ul class="content">
-            <li>
-                <a href="backpropagation.html#derivation">Derivation</a>
-            </li>
-            <li>
-                <a href="backpropagation.html#application">Application</a>
-            </li>
-            <li>
-                <a href="backpropagation.html#summary">Chapter Summary</a>
-            </li>
-        </ul>
+  <li class="collapsible">
+    <a>Optimizers - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>Optimizers - Under progress! 🙂</a>
-        </li>
+  <li class="collapsible">
+    <a>Generative Adversarial Networks - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>Generative Adversarial Networks - Under progress! 🙂</a>
-        </li>
+  <li class="collapsible">
+    <a>Task 2: Object Recognition - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>Task 2: Object Recognition - Under progress! 🙂</a>
-        </li>
+  <li class="collapsible">
+    <a>L1 & L2 Regularization - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>L1 & L2 Regularization - Under progress! 🙂</a>
-        </li>
+  <li class="collapsible">
+    <a>Convolutional Neural Networks - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>Convolutional Neural Networks - Under progress! 🙂</a>
-        </li>
+  <li class="collapsible">
+    <a>Conclusion - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>Conclusion - Under progress! 🙂</a>
-        </li>
+  <li class="collapsible">
+    <a>Chapter Summaries - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>Chapter Summaries - Under progress! 🙂</a>
-        </li>
+  <li class="collapsible">
+    <a>Further Reading & Resources - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>Further Reading & Resources - Under progress! 🙂</a>
-        </li>
+  <li class="collapsible">
+    <a>References - Under progress! 🙂</a>
+  </li>
 
-        <li class="collapsible">
-            <a>References - Under progress! 🙂</a>
-        </li>
-
-        <li class="collapsible">
-            <a>A Readable Bibliography - Under progress! 🙂</a>
-        </li>
-    </ol>
+  <li class="collapsible">
+    <a>A Readable Bibliography - Under progress! 🙂</a>
+  </li>
+</ol>
 </body>
 
 <script>
-    const countEl = document.getElementById('count');
+  // Courtesy to https://www.w3schools.com/howto/howto_js_collapsible.asp BELOW
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
 
-    updateVisitCount();
-
-    function updateVisitCount() {
-        fetch('https://api.countapi.xyz/hit/buildingnnsfromscratch.com/key')
-        .then(res => res.json())
-        .then(res => {
-            countEl.innerText = res.value;
-        })
-    }
-
-    // Courtesy to https://www.w3schools.com/howto/howto_js_collapsible.asp BELOW
-    var coll = document.getElementsByClassName("collapsible");
-    var i;
-
-    for (i = 0; i < coll.length; i++) {
-      coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.maxHeight){
-          content.style.maxHeight = null;
-        } else {
-          content.style.maxHeight = content.scrollHeight + "px";
-        }
-      });
-    }
-    // Code borrowed, please look at the link for the tutorial to make collapsible sections
-    // Code was modified for suitability purposes
-    // END W3SCHOOL CODE
-
-// Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
-var prevScrollpos = window.pageYOffset;
-window.onscroll = function() {
-  var currentScrollPos = window.pageYOffset;
-  if (prevScrollpos > currentScrollPos) {
-    document.getElementsByTagName("nav")[0].style.top = "0";
-  } else {
-    document.getElementsByTagName("nav")[0].style.top = -document.getElementsByTagName("nav")[0].offsetHeight + "px";
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function () {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
   }
-  prevScrollpos = currentScrollPos;
-}
-// Code borrowed, please look at the link for the tutorial to make collapsible sections
-// Code was modified for suitability purposes
-// END W3SCHOOL CODE
+  // Code borrowed, please look at the link for the tutorial to make collapsible sections
+  // Code was modified for suitability purposes
+  // END W3SCHOOL CODE
+
+  // Courtesy to https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp BELOW
+  var prevScrollpos = window.pageYOffset;
+  window.onscroll = function () {
+    var currentScrollPos = window.pageYOffset;
+    if (prevScrollpos > currentScrollPos) {
+      document.getElementsByTagName("nav")[0].style.top = "0";
+    } else {
+      document.getElementsByTagName("nav")[0].style.top = -document.getElementsByTagName("nav")[0].offsetHeight + "px";
+    }
+    prevScrollpos = currentScrollPos;
+  }
+  // Code borrowed, please look at the link for the tutorial to make collapsible sections
+  // Code was modified for suitability purposes
+  // END W3SCHOOL CODE
 
 </script>
 </html>

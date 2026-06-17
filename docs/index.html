@@ -1,272 +1,193 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="Description" content="Building neural networks from scratch using Java.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="Description" content="Building neural networks from scratch using Java.">
 
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript" >
-   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+  <title>Building Neural Networks From Scratch</title>
+  <style>
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Regular.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
 
-   ym(79958107, "init", {
-        clickmap:true,
-        trackLinks:true,
-        accurateTrackBounce:true
-   });
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/79958107" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Italic.ttf") format("truetype");
+      font-weight: normal;
+      font-style: italic;
+      font-display: swap;
+    }
 
-    <title>Building Neural Networks From Scratch</title>
-    <style>
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Regular.ttf") format("truetype");
-          font-weight: normal;
-          font-style: normal;
-          font-display: swap;
-        }
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-Bold.ttf") format("truetype");
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Italic.ttf") format("truetype");
-          font-weight: normal;
-          font-style: italic;
-          font-display: swap;
-        }
+    @font-face {
+      font-family: "Amiri";
+      src: url("fonts/Amiri/Amiri-BoldItalic.ttf") format("truetype");
+      font-weight: bold;
+      font-style: italic;
+      font-display: swap;
+    }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-Bold.ttf") format("truetype");
-          font-weight: bold;
-          font-style: normal;
-          font-display: swap;
-        }
+    @media only screen and (max-width: 800px) {
+      p, ol, ul, li {
+        font-size: 24px;
+      }
 
-        @font-face {
-          font-family: "Amiri";
-          src: url("fonts/Amiri/Amiri-BoldItalic.ttf") format("truetype");
-          font-weight: bold;
-          font-style: italic;
-          font-display: swap;
-        }
+      h2 {
+        font-size: 35px;
+      }
 
-        @media only screen and (max-width: 800px) {
-            p, ol, ul, li {
-                font-size: 24px;
-            }
+      h3 {
+        font-size: 30px;
+      }
 
-            h2 {
-                font-size: 35px;
-            }
+      ol, ul, li {
+        margin-left: 10px !important;
+        font-family: "Amiri", serif;
+        line-height: 1.8;
+      }
 
-            h3 {
-                font-size: 30px;
-            }
+      #visible {
+        width: 80% !important;
+        padding: 10px 20px !important;
+      }
 
-            .quote {
-                margin-left: 20px !important;
-                margin-right: 20px !important;
-            }
+      .writtenContent h2 {
+        margin-left: 20px !important;
+      }
 
-            ol, ul, li {
-                margin-left: 10px !important;
-                font-family: "Amiri";
-                line-height: 1.8;
-            }
+      .writtenContent p {
+        margin-left: 30px !important;
+      }
 
-            #visible {
-                width: 80% !important;
-                padding: 10px 20px !important;
-            }
+      aside {
+        margin-left: 10px !important;
+        margin-right: 10px !important;
+      }
+    }
 
-            .writtenContent h2 {
-                margin-left: 20px !important;
-            }
+    .imageDiv {
+      background-image: url("cover/image.jpeg");
+      padding-top: 80px;
+      padding-bottom: 80px;
+      width: 100%;
+      margin: 0;
+    }
 
-            .writtenContent p {
-                margin-left: 30px !important;
-            }
+    body {
+      margin: 0;
+    }
 
-            aside {
-                margin-left: 10px !important;
-                margin-right: 10px !important;
-            }
-        }
+    h1 {
+      font-family: "Amiri", serif;
+      font-size: 35px;
+      text-align: center;
+    }
 
-        .imageDiv {
-            background-image: url("cover/image.jpeg");
-            padding-top: 80px;
-            padding-bottom: 80px;
-            width: 100%;
-            margin: 0;
-        }
+    h3, p, h2 {
+      font-family: "Amiri", serif;
+    }
 
-        body {
-            margin: 0;
-        }
+    #visible {
+      width: 70%;
+      margin: 80px auto;
+      background-color: white;
+      padding: 20px 40px;
+      border-radius: 20px;
+    }
 
-        h1 {
-            font-family: "Amiri";
-            font-size: 35px;
-            text-align: center;
-        }
+    aside {
+      margin-left: 20px;
+      margin-right: 20px;
+      padding: 20px 20px 30px 30px;
+      background-color: rgb(245, 245, 245);
+      border-radius: 10px;
+    }
 
-        h3, p, h2 {
-            font-family: "Amiri";
-        }
+    a {
+      transition: color 800ms;
+      color: black;
+    }
 
-        #visible {
-            margin-top: 80px;
-            margin-bottom: 80px;
-            width: 70%;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: white;
-            padding: 20px 40px;
-            border-radius: 20px;
-        }
+    a:visited {
+      color: black;
+    }
 
-        aside {
-            margin-left: 20px;
-            margin-right: 20px;
-            padding: 20px 20px 30px 30px;
-            background-color: rgb(245, 245, 245);
-            border-radius: 10px;
-        }
+    a:hover {
+      color: burlywood;
+    }
 
-        a {
-            transition: color 800ms;
-            color: black;
-        }
+    #continue {
+      width: 150px;
+      height: 50px;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-        a:visited {
-            color: black;
-        }
+    #button {
+      width: 150px;
+      height: 50px;
+      font-size: 15px;
+      text-align: center;
+    }
 
-        a:hover {
-            color: burlywood;
-        }
+    .writtenContent h2 {
+      margin-left: 80px;
+      margin-top: 40px;
+    }
 
-        #continue {
-            width: 150px;
-            height: 50px;
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .writtenContent p {
+      margin-left: 120px;
+    }
 
-        #button {
-            width: 150px;
-            height: 50px;
-            font-size: 15px;
-            text-align: center;
-        }
+    p {
+      font-size: 20px;
+    }
 
-        .writtenContent h2 {
-            margin-left: 80px;
-            margin-top: 40px;
-        }
+    h2 {
+      font-size: 30px;
+    }
 
-        .writtenContent p {
-            margin-left: 120px;
-        }
-
-        .review {
-            width: 100%;
-            height: 400px;
-            display: block;
-        }
-
-        .review .response {
-            color: black;
-        }
-
-        .review:nth-child(1) {
-            background-color: #fff5c2;
-            color: #ffbb05;
-        }
-
-        .review:nth-child(2) {
-            background-color: #c2dcff;
-            color: #0c5dc9;
-        }
-
-        .review:nth-child(3) {
-            background-color: #d0edb2;
-            color: #61a120;
-        }
-
-        .text-content {
-            padding: 20px 40px;
-            text-align: center;
-            background-color: white;
-            border-radius: 40px;
-            width: 85%;
-            margin-left: auto;
-            margin-right: auto;
-            font-family: "Montserrat" !important;
-            height: 75%;
-        }
-
-        p {
-            font-size: 20px;
-        }
-
-        h2 {
-            font-size: 30px;
-        }
-
-        ::selection {
-            background: #fcd6a5;
-        }
-    </style>
+    ::selection {
+      background: #fcd6a5;
+    }
+  </style>
 </head>
 <body>
-    <div class="imageDiv">
-        <div id="visible">
-            <h1>Building Neural Networks from Scratch</h1>
-            <div id="continue">
-                <button id="button" onclick="location.href = 'content.html';">Start Reading!</button>
-            </div>
-            <p>In this mini-book, you will(hopefully) learn about different neural network structures. By the end of the book,
-                I hope you also will have a solid conceptual understanding of how neural networks function.</p><aside><p>NOTE:
-                This book is not written by a data scientist, please do contact me if you find mistakes that should be fixed,
-                thanks! I also welcome <a rel="noopener" href="https://forms.gle/U9yQyfQcAQZ8mDRF9" target="_blank">suggestions and tips</a>
-                that could be added to different sections of the book. See the contact
-                for more information!</p></aside><p>I will briefly go through some necessary formulas and equations, but will mainly
-                stick to broad definitions that are comprehendible to even middle school students(I’ll try!). Some topics are well
-                beyond those taught in middle school, so you may want to look at more thorough and step-by-step walkthroughs on the
-                topics on platforms like <a rel="noopener" href="https://khanacademy.org/" target="_blank">Khan Academy</a>.
-                As you go through this book, you will also encounter several different projects and real-world problems that I will
-                walk you through and solve. I highly recommend you take a try at solving them beforehand! Solutions that I give may
-                not be the best and most state-of-the-art, so you can also try and tweak it a bit to make it better! I will try to
-                add some optimizations to the code to make it faster and more efficient and give you a summary of what state-of-the-art
-                methods data scientists now use. All code in this book is either pseudocode or written in Java, so you should be able to
-                roughly interpret it if you have learned any C-like programming languages! You don’t need to learn one right away to
-                continue reading either… I provide detailed explanations of each line of code. You can also find it all on
-                <a rel="noopener" href="https://github.com/JC-ProgJava/Building-Neural-Networks-From-Scratch" target="_blank">GitHub</a> (with this book).</p>
-        </div>
+<div class="imageDiv">
+  <div id="visible">
+    <h1>Building Neural Networks from Scratch</h1>
+    <div id="continue">
+      <button id="button" onclick="location.href = 'content.html';">Start Reading!</button>
     </div>
-    <div class="writtenContent">
-        <h2>Tips & Thanks</h2>
-        <p>Currently none, you can have your feedback and review written here if you fill this <a rel="noopener" href="https://forms.gle/c9oB2PgWgAEwkKrEA" target="_blank">form</a>!</p>
-        <br>
-    </div>
-    <!--
-    <div>
-        <div class="review">
-            <br>
-            <div class="text-content">
-                <h3>JC-ProgJava</h3>
-                <p>This is a book on Neural Networks, I hope you enjoyed it!</p>
-            </div>
-        </div>
-        <div class="review"></div>
-        <div class="review"></div>
-    </div>
-    -->
+    <p>In this mini-book, you will (hopefully) learn about different neural network structures. By the end of the book,
+      I hope you also will have a solid conceptual understanding of how neural networks function.</p>
+    <p>I will briefly go through some necessary formulas and equations, but will mainly
+      stick to broad definitions that are comprehendible to even middle school students (I’ll try!). Some topics are
+      well beyond those taught in middle school, so you may want to look at more thorough and step-by-step walkthroughs
+      on the topics on platforms like <a rel="noopener" href="https://khanacademy.org/" target="_blank">Khan Academy</a>.
+      As you go through this book, you will also encounter several different projects and real-world problems that I
+      will walk you through and solve. I highly recommend you take a try at solving them beforehand! Solutions that I
+      give may not be the best and most state-of-the-art, so you can also try and tweak it a bit to make it better! I
+      will try to add some optimizations to the code to make it faster and more efficient and give you a summary of what
+      state-of-the-art methods data scientists now use. All code in this book is either pseudocode or written in Java,
+      so you should be able to roughly interpret it if you have learned any C-like programming languages! You don’t need
+      to learn one right away to continue reading either… I provide detailed explanations of each line of code. You can
+      also find it all on <a rel="noopener" href="https://github.com/ChJus/Building-Neural-Networks-From-Scratch"
+                             target="_blank">GitHub</a> (with this book).</p>
+  </div>
+</div>
 </body>
 </html>
